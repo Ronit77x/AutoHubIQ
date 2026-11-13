@@ -1,8 +1,10 @@
 
-import { NextRequest, NextResponse } from "next/server";
+import { connection, NextRequest, NextResponse } from "next/server";
 import { pool } from "../../../lib/db";
 
 export async function GET(request: NextRequest) {
+  await connection();
+
   try {
     const cityId = Number(
       request.nextUrl.searchParams.get("city_id")
@@ -25,6 +27,9 @@ export async function GET(request: NextRequest) {
         vl.asking_price,
         vl.description,
         vl.source_type,
+        estimate.estimated_price,
+        estimate.lower_price,
+        estimate.upper_price,
         v.vehicle_id,
         v.manufacturing_year,
         v.kms_driven,
@@ -72,6 +77,17 @@ export async function GET(request: NextRequest) {
         FROM app.listing_images li
         WHERE li.listing_id = vl.listing_id
       ) img ON TRUE
+
+      LEFT JOIN LATERAL (
+        SELECT
+          lpe.estimated_price,
+          lpe.lower_price,
+          lpe.upper_price
+        FROM app.listing_price_estimates lpe
+        WHERE lpe.listing_id = vl.listing_id
+        ORDER BY lpe.assessed_at DESC, lpe.estimate_id DESC
+        LIMIT 1
+      ) estimate ON TRUE
 
       WHERE vl.listing_status = 'active'
         AND dp.city_id = $1

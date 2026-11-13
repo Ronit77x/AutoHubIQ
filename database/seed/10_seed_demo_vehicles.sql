@@ -1,5 +1,7 @@
 BEGIN;
 
+SELECT pg_advisory_xact_lock(hashtext('AutoHubIQ demo vehicle seed'));
+
 WITH demo_vehicles (
     dealer_email,
     manufacturer_name,
@@ -16,64 +18,50 @@ WITH demo_vehicles (
     description
 ) AS (
     VALUES
-    -- Bangalore
     ('aarav@autohubiq.demo', 'Maruti Suzuki', 'Swift',
      'Petrol Manual', 2021, 2021, 28000, 'Red', 1,
      'good', 'KA01DEMO001', 550000,
      'Demo listing: well-maintained petrol hatchback.'),
-
     ('aarav@autohubiq.demo', 'Hyundai', 'Creta',
-     'Petrol Automatic', 2022, 2022, 22000, 'White', 1,
+     'Diesel Automatic', 2022, 2022, 22000, 'White', 1,
      'excellent', 'KA01DEMO002', 1250000,
-     'Demo listing: compact SUV with automatic transmission.'),
-
+     'Demo listing: diesel automatic compact SUV.'),
     ('aarav@autohubiq.demo', 'Tata Motors', 'Nexon',
-     'Diesel Manual', 2020, 2020, 42000, 'Blue', 2,
+     'Diesel AMT', 2020, 2020, 42000, 'Blue', 2,
      'good', 'KA01DEMO003', 750000,
      'Demo listing: diesel compact SUV.'),
-
     ('aarav@autohubiq.demo', 'Honda', 'City',
      'Petrol CVT', 2021, 2021, 30000, 'Silver', 1,
      'excellent', 'KA01DEMO004', 950000,
      'Demo listing: automatic petrol sedan.'),
-
-    -- Mumbai
     ('priya@autohubiq.demo', 'Kia', 'Seltos',
      'Petrol Manual', 2022, 2022, 25000, 'Grey', 1,
      'excellent', 'MH01DEMO001', 1150000,
      'Demo listing: petrol SUV in excellent condition.'),
-
     ('priya@autohubiq.demo', 'Toyota', 'Innova Crysta',
      'Diesel Manual', 2019, 2019, 65000, 'White', 2,
      'good', 'MH01DEMO002', 1450000,
      'Demo listing: family MPV with diesel engine.'),
-
     ('priya@autohubiq.demo', 'BMW', '3 Series',
      'Petrol Automatic', 2020, 2020, 35000, 'Black', 1,
      'excellent', 'MH01DEMO003', 3200000,
      'Demo listing: premium automatic sedan.'),
-
     ('priya@autohubiq.demo', 'MG Motor', 'Comet EV',
-     'Electric Automatic', 2023, 2023, 12000, 'Green', 1,
+     'Electric Single-speed', 2023, 2023, 12000, 'Green', 1,
      'excellent', 'MH01DEMO004', 650000,
      'Demo listing: electric city car.'),
-
-    -- Kolkata
     ('arjun@autohubiq.demo', 'Maruti Suzuki', 'Baleno',
      'Petrol Manual', 2021, 2021, 32000, 'Blue', 1,
      'good', 'WB01DEMO001', 600000,
      'Demo listing: petrol premium hatchback.'),
-
     ('arjun@autohubiq.demo', 'Mahindra', 'XUV700',
      'Diesel Manual', 2022, 2022, 27000, 'Black', 1,
      'excellent', 'WB01DEMO002', 1750000,
      'Demo listing: diesel SUV.'),
-
     ('arjun@autohubiq.demo', 'Renault', 'Kwid',
      'Petrol Manual', 2020, 2020, 38000, 'Orange', 2,
      'good', 'WB01DEMO003', 350000,
      'Demo listing: affordable petrol hatchback.'),
-
     ('arjun@autohubiq.demo', 'Volkswagen', 'Virtus',
      'Petrol Automatic', 2023, 2023, 15000, 'Silver', 1,
      'excellent', 'WB01DEMO004', 1350000,
@@ -114,7 +102,28 @@ inserted_vehicles AS (
     JOIN app.vehicle_variants vv
         ON vv.model_id = vm.model_id
        AND vv.variant_name = dv.variant_name
-    RETURNING vehicle_id
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM app.vehicles existing
+        WHERE existing.registration_number = dv.registration_number
+    )
+    RETURNING vehicle_id, registration_number
+),
+seed_vehicles AS (
+    SELECT vehicle_id, registration_number
+    FROM inserted_vehicles
+
+    UNION ALL
+
+    SELECT v.vehicle_id, v.registration_number
+    FROM demo_vehicles dv
+    JOIN app.vehicles v
+        ON v.registration_number = dv.registration_number
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM inserted_vehicles inserted
+        WHERE inserted.vehicle_id = v.vehicle_id
+    )
 )
 INSERT INTO app.vehicle_listings (
     vehicle_id,
@@ -129,10 +138,48 @@ SELECT
     dv.description,
     'active',
     'demo'
-FROM inserted_vehicles v
-JOIN app.vehicles av
-    ON av.vehicle_id = v.vehicle_id
-JOIN demo_vehicles dv
-    ON dv.registration_number = av.registration_number;
+FROM demo_vehicles dv
+JOIN seed_vehicles v
+    ON v.registration_number = dv.registration_number
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM app.vehicle_listings existing
+    WHERE existing.vehicle_id = v.vehicle_id
+      AND existing.listing_status = 'active'
+);
+
+DO $verify$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM (
+            VALUES
+                ('KA01DEMO001'),
+                ('KA01DEMO002'),
+                ('KA01DEMO003'),
+                ('KA01DEMO004'),
+                ('MH01DEMO001'),
+                ('MH01DEMO002'),
+                ('MH01DEMO003'),
+                ('MH01DEMO004'),
+                ('WB01DEMO001'),
+                ('WB01DEMO002'),
+                ('WB01DEMO003'),
+                ('WB01DEMO004')
+        ) expected(registration_number)
+        LEFT JOIN app.vehicles v
+            ON v.registration_number = expected.registration_number
+        LEFT JOIN app.vehicle_listings vl
+            ON vl.vehicle_id = v.vehicle_id
+           AND vl.listing_status = 'active'
+           AND vl.source_type = 'demo'
+        WHERE v.vehicle_id IS NULL
+           OR vl.listing_id IS NULL
+    ) THEN
+        RAISE EXCEPTION
+            'Demo seed did not produce all 12 active demo vehicle listings';
+    END IF;
+END
+$verify$;
 
 COMMIT;

@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import Link from "next/link";
 import {
   CarFront,
   MapPin,
@@ -28,6 +29,9 @@ interface CarImage {
 interface Listing {
   listing_id: number;
   asking_price: string;
+  estimated_price: string | null;
+  lower_price: string | null;
+  upper_price: string | null;
   description: string;
   manufacturing_year: number;
   kms_driven: number;
@@ -43,6 +47,7 @@ interface Listing {
   city_name: string;
   source_type: string;
   images: CarImage[];
+  similarity?: number;
 }
 
 export default function Home() {
@@ -51,6 +56,11 @@ export default function Home() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loadingCities, setLoadingCities] = useState(true);
   const [loadingListings, setLoadingListings] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [searchResults, setSearchResults] = useState<Listing[] | null>(null);
+  const [searching, setSearching] = useState(false);
+  const [searchError, setSearchError] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -74,7 +84,6 @@ export default function Home() {
 
   useEffect(() => {
     if (selectedCity === null) {
-      setListings([]);
       return;
     }
 
@@ -103,6 +112,42 @@ export default function Home() {
     fetchListings();
   }, [selectedCity]);
 
+  async function handleSemanticSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (selectedCity === null) return;
+
+    setSearching(true);
+    setSearchError("");
+
+    try {
+      const response = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: searchQuery,
+          city_id: selectedCity,
+          max_price: maxPrice ? Number(maxPrice) : null,
+        }),
+      });
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message ?? "Search failed");
+      }
+
+      setSearchResults(data.listings);
+    } catch (searchFailure) {
+      setSearchResults(null);
+      setSearchError(
+        searchFailure instanceof Error
+          ? searchFailure.message
+          : "Unable to complete semantic search."
+      );
+    } finally {
+      setSearching(false);
+    }
+  }
+
   const formatPrice = (price: string) =>
     new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -118,14 +163,14 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-20 border-b border-gray-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="rounded-xl bg-blue-700 p-2 text-white">
               <CarFront size={25} />
             </div>
             <span className="text-2xl font-extrabold tracking-tight">
               AutoHub<span className="text-blue-700">IQ</span>
             </span>
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-8 text-sm font-medium text-gray-600 md:flex">
             <a href="#cities" className="hover:text-blue-700">
@@ -136,9 +181,17 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
-            <ShieldCheck size={17} />
-            Smarter Car Search
+          <div className="flex items-center gap-3">
+            <Link
+              href="/account"
+              className="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+            >
+              Account
+            </Link>
+            <div className="hidden items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 sm:flex">
+              <ShieldCheck size={17} />
+              Smarter Car Search
+            </div>
           </div>
         </div>
       </nav>
@@ -215,7 +268,12 @@ export default function Home() {
             {cities.map((city) => (
               <button
                 key={city.city_id}
-                onClick={() => setSelectedCity(city.city_id)}
+                onClick={() => {
+                  setSearchResults(null);
+                  setSearchError("");
+                  setListings([]);
+                  setSelectedCity(city.city_id);
+                }}
                 className={`rounded-2xl border p-7 text-left transition hover:-translate-y-1 hover:shadow-lg ${
                   selectedCity === city.city_id
                     ? "border-blue-600 bg-blue-50 shadow-md"
@@ -264,29 +322,92 @@ export default function Home() {
               </div>
 
               <button
-                onClick={() => setSelectedCity(null)}
+                onClick={() => {
+                  setSearchResults(null);
+                  setListings([]);
+                  setLoadingListings(false);
+                  setSelectedCity(null);
+                }}
                 className="text-sm font-semibold text-blue-700 hover:underline"
               >
                 Change city
               </button>
             </div>
 
-            {loadingListings ? (
+            <form
+              onSubmit={handleSemanticSearch}
+              className="mb-8 grid gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-5 md:grid-cols-[1fr_220px_auto]"
+            >
+              <label className="sr-only" htmlFor="semantic-query">
+                Describe the car you are looking for
+              </label>
+              <input
+                id="semantic-query"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                minLength={3}
+                maxLength={500}
+                required
+                placeholder="e.g. automatic SUV for a family, good for long trips"
+                className="min-w-0 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
+              />
+              <label className="sr-only" htmlFor="semantic-max-price">
+                Maximum asking price in rupees
+              </label>
+              <input
+                id="semantic-max-price"
+                type="number"
+                min="1"
+                step="10000"
+                value={maxPrice}
+                onChange={(event) => setMaxPrice(event.target.value)}
+                placeholder="Max budget (₹)"
+                className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                disabled={searching}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800 disabled:cursor-wait disabled:opacity-70"
+              >
+                <Search size={17} />
+                {searching ? "Searching..." : "Semantic search"}
+              </button>
+              {searchError && (
+                <p className="text-sm text-red-700 md:col-span-3">{searchError}</p>
+              )}
+              {searchResults !== null && (
+                <button
+                  type="button"
+                  onClick={() => setSearchResults(null)}
+                  className="text-left text-sm font-semibold text-blue-700 hover:underline md:col-span-3"
+                >
+                  Clear search and show all city listings
+                </button>
+              )}
+            </form>
+
+            {searching || loadingListings ? (
               <p className="py-16 text-center text-gray-500">
-                Finding cars in {selectedCityName}...
+                {searching
+                  ? "Finding vehicles that match your description..."
+                  : `Finding cars in ${selectedCityName}...`}
               </p>
-            ) : listings.length === 0 ? (
+            ) : (searchResults ?? listings).length === 0 ? (
               <p className="rounded-2xl bg-gray-50 py-16 text-center text-gray-500">
-                No active listings found in this city.
+                {searchResults !== null
+                  ? "No semantic matches found. Try a different description or budget."
+                  : "No active listings found in this city."}
               </p>
             ) : (
               <>
                 <p className="mb-6 text-sm text-gray-500">
-                  {listings.length} vehicles available
+                  {searchResults !== null
+                    ? `${searchResults.length} semantic matches`
+                    : `${listings.length} vehicles available`}
                 </p>
 
                 <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-                  {listings.map((car) => {
+                  {(searchResults ?? listings).map((car) => {
                     const primaryImage =
                       car.images?.find((image) => image.is_primary) ??
                       car.images?.[0];
@@ -313,7 +434,18 @@ export default function Home() {
                             {car.condition}
                           </span>
 
+                          <span className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow">
+                            {car.source_type === "demo"
+                              ? "Demo listing"
+                              : car.source_type === "dealer"
+                                ? "Dealer listing"
+                                : "External reference"}
+                          </span>
+
                           <span className="absolute bottom-4 right-4 rounded-lg bg-white px-3 py-2 text-lg font-extrabold text-blue-700 shadow">
+                            <span className="block text-[10px] font-semibold uppercase tracking-wide text-gray-500">
+                              Asking price
+                            </span>
                             {formatPrice(car.asking_price)}
                           </span>
                         </div>
@@ -330,6 +462,26 @@ export default function Home() {
                           <p className="mt-1 text-sm text-gray-500">
                             {car.variant_name}
                           </p>
+
+                          {car.estimated_price && (
+                            <div className="mt-4 rounded-xl bg-blue-50 px-4 py-3">
+                              <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
+                                Indicative market estimate
+                              </p>
+                              <p className="mt-1 font-bold text-gray-900">
+                                {formatPrice(car.estimated_price)}
+                              </p>
+                              {car.lower_price && car.upper_price && (
+                                <p className="mt-1 text-xs text-gray-600">
+                                  Typical range: {formatPrice(car.lower_price)} –{" "}
+                                  {formatPrice(car.upper_price)}
+                                </p>
+                              )}
+                              <p className="mt-1 text-xs text-gray-500">
+                                Estimate only; not a confirmed sale price.
+                              </p>
+                            </div>
+                          )}
 
                           <div className="my-5 grid grid-cols-2 gap-4 border-y border-gray-100 py-4 text-sm text-gray-600">
                             <div className="flex items-center gap-2">
@@ -365,6 +517,14 @@ export default function Home() {
                           <p className="mt-3 text-xs text-gray-400">
                             {car.ownership_count} owner(s) · {car.source_type}
                           </p>
+
+                          <Link
+                            href={`/listings/${car.listing_id}`}
+                            className="mt-4 inline-flex items-center gap-2 font-semibold text-blue-700 hover:text-blue-900"
+                          >
+                            View vehicle details
+                            <ArrowRight size={17} />
+                          </Link>
                         </div>
                       </article>
                     );

@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-default-type=module --experimental-strip-types --test lib/auth-crypto.test.mjs",
+    "db:embed": "node scripts/seed-listing-embeddings.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
     "lucide-react": "^1.66.0",
     "next": "16.4.3",
     "pg": "^8.23.1",
