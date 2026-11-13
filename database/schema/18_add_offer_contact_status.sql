@@ -1,0 +1,4 @@
+BEGIN;
+ALTER TABLE app.listing_enquiries ADD COLUMN IF NOT EXISTS contacted_at TIMESTAMPTZ;
+ALTER TABLE app.listing_enquiries ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ;
+COMMIT;

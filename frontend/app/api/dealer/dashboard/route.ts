@@ -91,10 +91,23 @@ export async function GET(request: NextRequest) {
       [user.dealer_id]
     );
 
+    const enquiries = await pool.query(`SELECT e.enquiry_id, e.listing_id, e.message, e.phone,
+      e.request_type, e.offer_amount, e.contacted_at, e.updated_at, e.created_at, u.full_name, u.email,
+      m.manufacturer_name, vm.model_name
+      FROM app.listing_enquiries e
+      JOIN app.users u ON u.user_id=e.user_id
+      JOIN app.vehicle_listings vl ON vl.listing_id=e.listing_id
+      JOIN app.vehicles v ON v.vehicle_id=vl.vehicle_id
+      JOIN app.vehicle_variants vv ON vv.variant_id=v.variant_id
+      JOIN app.vehicle_models vm ON vm.model_id=vv.model_id
+      JOIN app.manufacturers m ON m.manufacturer_id=vm.manufacturer_id
+      WHERE v.dealer_id=$1 ORDER BY e.created_at DESC, e.enquiry_id DESC LIMIT 100`, [user.dealer_id]);
+
     return NextResponse.json({
       success: true,
       profile: result.rows[0],
       listings: listings.rows,
+      enquiries: enquiries.rows,
     });
   } catch (error) {
     if (error instanceof AuthConfigurationError) {

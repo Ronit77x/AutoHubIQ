@@ -7,6 +7,7 @@ import {
   setSessionCookie,
 } from "../../../../lib/auth";
 import { pool } from "../../../../lib/db";
+import { rateLimit } from "../../../../lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   if (!isSameOrigin(request)) {
@@ -55,6 +56,8 @@ export async function POST(request: NextRequest) {
 
   try {
     getAuthSecret();
+    const limited = await rateLimit(`login:${email}`, 10, 600);
+    if (limited) return limited;
     const result = await pool.query<{
       user_id: string;
       full_name: string;

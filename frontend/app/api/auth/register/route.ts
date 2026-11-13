@@ -7,6 +7,7 @@ import {
   setSessionCookie,
 } from "../../../../lib/auth";
 import { pool } from "../../../../lib/db";
+import { rateLimit } from "../../../../lib/rate-limit";
 
 interface RegistrationBody {
   full_name?: unknown;
@@ -105,6 +106,8 @@ export async function POST(request: NextRequest) {
   let client;
   try {
     getAuthSecret();
+    const limited = await rateLimit("registration", 30, 600);
+    if (limited) return limited;
     const passwordHash = await hashPassword(password);
     client = await pool.connect();
     await client.query("BEGIN");

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 
@@ -19,6 +20,7 @@ export default function AccountPage() {
   const [cities, setCities] = useState<City[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -53,6 +55,12 @@ export default function AccountPage() {
       active = false;
     };
   }, [router]);
+
+  useEffect(() => {
+    const restore = () => setMode(new URLSearchParams(window.location.search).get("mode") === "register" ? "register" : "login");
+    restore(); window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -108,19 +116,19 @@ export default function AccountPage() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
+    "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-accent-600 focus:ring-2 focus:ring-accent-100";
 
   return (
-    <main className="min-h-screen bg-slate-50 px-5 py-10 text-slate-900">
+    <main className="min-h-screen bg-neutral-50 px-5 py-10 text-slate-900">
       <div className="mx-auto max-w-xl">
-        <Link href="/" className="font-bold text-blue-700 hover:underline">
+        <Link href="/" className="font-semibold text-accent-700 hover:underline">
           ← Back to AutoHubIQ
         </Link>
-        <section className="mt-6 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm sm:p-10">
-          <p className="text-sm font-bold uppercase tracking-widest text-blue-700">
+        <section className="mt-6 rounded-xl border border-slate-200 bg-white p-7 shadow-sm sm:p-10">
+          <p className="text-sm font-semibold uppercase tracking-wide text-accent-700">
             AutoHubIQ account
           </p>
-          <h1 className="mt-2 text-3xl font-extrabold">
+          <h1 className="mt-2 text-3xl font-semibold">
             {mode === "login" ? "Welcome back" : "Create your account"}
           </h1>
           <p className="mt-2 text-sm leading-6 text-slate-500">
@@ -135,12 +143,14 @@ export default function AccountPage() {
                 type="button"
                 onClick={() => {
                   setMode(value);
+                  setShowPassword(false);
+                  window.history.pushState({}, "", "/account?mode="+value);
                   setError("");
                 }}
                 className={`rounded-lg px-4 py-2 text-sm font-semibold capitalize ${
                   mode === value
-                    ? "bg-white text-blue-700 shadow-sm"
-                    : "text-slate-500"
+                    ? "bg-accent-700 text-white shadow-sm"
+                    : "border border-slate-300 bg-white text-slate-700"
                 }`}
               >
                 {value === "login" ? "Sign in" : "Register"}
@@ -157,7 +167,7 @@ export default function AccountPage() {
                   onClick={() => setAccountType(value)}
                   className={`rounded-lg px-3 py-2 text-sm font-semibold capitalize ${
                     accountType === value
-                      ? "bg-blue-700 text-white"
+                      ? "bg-accent-700 text-white"
                       : "text-slate-600"
                   }`}
                 >
@@ -167,6 +177,7 @@ export default function AccountPage() {
             </div>
           )}
 
+          {mode === "login" && <p className="mt-3 text-xs leading-5 text-slate-500">Choose what brings you here. Your saved account role determines your workspace; administrators also use this sign-in form.</p>}
           <form onSubmit={submit} className="mt-6 space-y-4">
             {mode === "register" && (
               <>
@@ -206,10 +217,12 @@ export default function AccountPage() {
             </label>
             <label className="block space-y-2 text-sm font-semibold">
               Password
+              <span className="relative block">
               <input
-                className={inputClass}
+                className={`${inputClass} pr-12`}
                 name="password"
-                type="password"
+                id="account-password"
+                type={showPassword ? "text" : "password"}
                 autoComplete={
                   mode === "login" ? "current-password" : "new-password"
                 }
@@ -217,6 +230,13 @@ export default function AccountPage() {
                 minLength={mode === "register" ? 12 : 1}
                 maxLength={128}
               />
+              <button type="button" aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword} aria-controls="account-password"
+                onClick={() => setShowPassword(value => !value)}
+                className="absolute inset-y-0 right-0 flex items-center rounded-r-xl px-3 text-slate-500 focus-visible:outline-2 focus-visible:outline-accent-700">
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+              </span>
               {mode === "register" && (
                 <span className="block text-xs font-normal text-slate-500">
                   Use at least 12 characters.
@@ -282,7 +302,7 @@ export default function AccountPage() {
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-xl bg-blue-700 px-5 py-3 font-bold text-white transition hover:bg-blue-800 disabled:cursor-wait disabled:opacity-60"
+              className="w-full rounded-xl bg-accent-700 px-5 py-3 font-semibold text-white transition hover:bg-accent-800 disabled:cursor-wait disabled:opacity-60"
             >
               {busy
                 ? "Please wait..."

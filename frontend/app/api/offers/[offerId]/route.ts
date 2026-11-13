@@ -1,0 +1,60 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUser, isSameOrigin } from "../../../../lib/auth";
+import { pool } from "../../../../lib/db";
+import { rateLimit } from "../../../../lib/rate-limit";
+
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ offerId: string }> }) {
+  if (!isSameOrigin(request)) return NextResponse.json({ message: "Cross-origin requests are not allowed" }, { status: 403 });
+  const { offerId } = await params;
+  if (!/^[1-9]\d{0,14}$/.test(offerId)) return NextResponse.json({ message: "Invalid offer ID" }, { status: 400 });
+  try {
+    const user = await getAuthenticatedUser(request);
+    if (!user) return NextResponse.json({ message: "Sign in to manage offers" }, { status: 401 });
+    const limited = await rateLimit(`offer-update:${user.user_id}`, 30, 600);
+    if (limited) return limited;
+    let body;
+    try { body = await request.json(); } catch { return NextResponse.json({ message: "Valid JSON is required" }, { status: 400 }); }
+    if (!body || typeof body !== "object" || Array.isArray(body)) return NextResponse.json({ message: "An object is required" }, { status: 400 });
+    const contacting = body.action === "mark_contacted";
+    if (contacting ? user.user_role !== "dealer" : user.user_role !== "customer") return NextResponse.json({ message: "This action is not available for your account" }, { status: 403 });
+    const amount = typeof body.offer_amount === "string" || typeof body.offer_amount === "number" ? String(body.offer_amount) : "";
+    const message = typeof body.message === "string" ? body.message.trim() : "";
+    const phone = typeof body.phone === "string" ? body.phone.trim() : "";
+    if (!contacting && (!/^\d{1,10}(\.\d{1,2})?$/.test(amount) || Number(amount) <= 0 || message.length < 10 || message.length > 2000 || (phone && !/^[+\d ()-]{7,20}$/.test(phone)))) {
+      return NextResponse.json({ message: "Provide a positive offer with at most two decimal places, a message of 10–2000 characters, and a valid phone if supplied" }, { status: 400 });
+    }
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      // Serialize buyer edits against dealer contact and listing/profile changes.
+      const result = await client.query(`SELECT e.contacted_at, vl.listing_status, dp.verification_status
+        FROM app.listing_enquiries e JOIN app.vehicle_listings vl USING(listing_id)
+        JOIN app.vehicles v USING(vehicle_id) JOIN app.dealer_profiles dp USING(dealer_id)
+        WHERE e.enquiry_id=$1 AND e.request_type='offer'
+          AND (($3::boolean AND dp.user_id=$2) OR (NOT $3::boolean AND e.user_id=$2))
+        FOR UPDATE OF e, vl, v, dp`, [offerId, user.user_id, contacting]);
+      if (!result.rowCount) {
+        await client.query("ROLLBACK");
+        return NextResponse.json({ message: "Offer not found" }, { status: 404 });
+      }
+      const offer = result.rows[0];
+      if (!contacting && (offer.contacted_at || offer.listing_status !== "active" || offer.verification_status !== "verified")) {
+        await client.query("ROLLBACK");
+        return NextResponse.json({ message: "This offer can no longer be edited. The dealer has marked it contacted or the listing is unavailable." }, { status: 409 });
+      }
+      if (contacting) {
+        await client.query("UPDATE app.listing_enquiries SET contacted_at=COALESCE(contacted_at,CURRENT_TIMESTAMP) WHERE enquiry_id=$1", [offerId]);
+      } else {
+        await client.query("UPDATE app.listing_enquiries SET offer_amount=$2, message=$3, phone=$4, updated_at=CURRENT_TIMESTAMP WHERE enquiry_id=$1", [offerId, amount, message, phone || null]);
+      }
+      await client.query("COMMIT");
+      return NextResponse.json({ success: true });
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally { client.release(); }
+  } catch (error) {
+    console.error("Offer update failed:", error);
+    return NextResponse.json({ message: "Unable to update offer" }, { status: 500 });
+  }
+}

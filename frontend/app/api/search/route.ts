@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { embedText } from "../../../lib/embeddings";
 import { pool } from "../../../lib/db";
+import { rateLimit } from "../../../lib/rate-limit";
+import { parseSearchIntent } from "../../../lib/search-intent";
 
 const FUEL_TYPES = [
   "Petrol",
@@ -48,6 +50,13 @@ export async function POST(request: NextRequest) {
   const maxPrice = body.max_price;
   const fuelType = body.fuel_type;
   const transmission = body.transmission;
+  const page = body.page ?? 1;
+  const pageSize = body.page_size ?? 12;
+  if (typeof page !== "number" || !Number.isInteger(page) || page < 1 || page > 10000 ||
+    typeof pageSize !== "number" || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 48 ||
+    (typeof cityId === "number" && cityId > 32767)) {
+    return NextResponse.json({ success: false, message: "Invalid page or city" }, { status: 400 });
+  }
 
   if (query.length < 3 || query.length > 500) {
     return NextResponse.json(
@@ -110,6 +119,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Anonymous model work shares a global budget; deployments can add trusted edge IP limits.
+    const limited = await rateLimit("semantic-search", 120, 60);
+    if (limited) return limited;
+    const intent = parseSearchIntent(query);
+    const effectiveMaxPrice = Math.min(typeof maxPrice === "number" ? maxPrice : Infinity, intent.maxPrice ?? Infinity);
     const embedding = await embedText(query);
     const vector = `[${embedding.join(",")}]`;
     const result = await pool.query(
@@ -156,17 +170,24 @@ export async function POST(request: NextRequest) {
         AND ($3::NUMERIC IS NULL OR ald.asking_price <= $3)
         AND ($4::TEXT IS NULL OR LOWER(ald.fuel_type) = LOWER($4))
         AND ($5::TEXT IS NULL OR LOWER(ald.transmission) = LOWER($5))
+        AND ($8::TEXT IS NULL OR LOWER(ald.body_type) = LOWER($8))
+        AND ($9::TEXT IS NULL OR
+          ($9 = 'automatic' AND ald.transmission IN ('Automatic', 'AMT', 'CVT', 'DCT', 'Single-speed')) OR
+          ($9 = 'manual' AND ald.transmission = 'Manual'))
       ORDER BY embedding.embedding <=> $1::vector, ald.listing_id
-      LIMIT 20;
+      LIMIT $6 OFFSET $7;
       `,
-      [vector, cityId ?? null, maxPrice ?? null, fuelType ?? null, transmission ?? null]
+      [vector, cityId ?? null, Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuelType ?? intent.fuel, transmission ?? null, pageSize + 1, (page - 1) * pageSize, intent.bodyType, transmission ? null : intent.transmissionGroup]
     );
 
     return NextResponse.json({
       success: true,
       query,
-      count: result.rows.length,
-      listings: result.rows,
+      applied_filters: { city_id: cityId ?? null, max_price: Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuel_type: fuelType ?? intent.fuel, transmission: transmission ?? intent.transmissionGroup, body_type: intent.bodyType },
+      count: Math.min(result.rows.length, pageSize),
+      page,
+      has_more: result.rows.length > pageSize,
+      listings: result.rows.slice(0, pageSize),
     });
   } catch (error) {
     console.error("Semantic search API error:", error);

@@ -8,7 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --experimental-default-type=module --experimental-strip-types --test lib/auth-crypto.test.mjs",
-    "db:embed": "node scripts/seed-listing-embeddings.mjs"
+    "db:embed": "node scripts/seed-listing-embeddings.mjs",
+    "db:gallery": "node scripts/seed-demo-gallery.mjs --apply",
+    "db:check": "node scripts/check-database.mjs",
+    "setup:local": "node scripts/setup-local.mjs",
+    "demo:admin": "node --experimental-default-type=module --experimental-strip-types scripts/create-demo-admin.mjs",
+    "demo:dealers": "node --experimental-default-type=module --experimental-strip-types scripts/provision-demo-dealers.mjs",
+    "test:workflow": "node scripts/smoke-test.mjs",
+    "test:vector": "node scripts/verify-vector-rud.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "^4.3.2",
@@ -16,7 +23,8 @@
     "next": "16.4.3",
     "pg": "^8.23.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

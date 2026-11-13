@@ -20,6 +20,25 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const params = request.nextUrl.searchParams;
+    const page = Number(params.get("page") ?? 1);
+    const pageSize = Number(params.get("page_size") ?? 12);
+    const maxPrice = params.get("max_price") ? Number(params.get("max_price")) : null;
+    const fuel = params.get("fuel_type") || null;
+    const transmission = params.get("transmission") || null;
+    const sort = params.get("sort") ?? "newest";
+    const orders: Record<string, string> = {
+      newest: "vl.published_at DESC NULLS LAST, vl.listing_id DESC",
+      price_asc: "vl.asking_price ASC, vl.listing_id DESC",
+      price_desc: "vl.asking_price DESC, vl.listing_id DESC",
+      mileage_asc: "v.kms_driven ASC, vl.listing_id DESC",
+    };
+    if (cityId > 32767 || !Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 48 ||
+      (maxPrice !== null && (!Number.isFinite(maxPrice) || maxPrice <= 0)) ||
+      (fuel && !["Petrol", "Diesel", "CNG", "LPG", "Electric", "Hybrid"].includes(fuel)) ||
+      (transmission && !["Manual", "Automatic", "AMT", "CVT", "DCT", "Single-speed"].includes(transmission)) || !Object.hasOwn(orders, sort)) {
+      return NextResponse.json({ success: false, message: "Invalid filters, sort order or page" }, { status: 400 });
+    }
     const result = await pool.query(
       `
       SELECT
@@ -91,17 +110,21 @@ export async function GET(request: NextRequest) {
 
       WHERE vl.listing_status = 'active'
         AND dp.city_id = $1
-
-      ORDER BY vl.published_at DESC NULLS LAST,
-               vl.created_at DESC;
+        AND ($2::numeric IS NULL OR vl.asking_price <= $2)
+        AND ($3::text IS NULL OR vv.fuel_type = $3)
+        AND ($4::text IS NULL OR vv.transmission = $4)
+      ORDER BY ${orders[sort]}
+      LIMIT $5 OFFSET $6;
       `,
-      [cityId]
+      [cityId, maxPrice, fuel, transmission, pageSize + 1, (page - 1) * pageSize]
     );
 
     return NextResponse.json({
       success: true,
-      count: result.rows.length,
-      listings: result.rows,
+      count: Math.min(result.rows.length, pageSize),
+      page,
+      has_more: result.rows.length > pageSize,
+      listings: result.rows.slice(0, pageSize),
     });
 
   } catch (error) {

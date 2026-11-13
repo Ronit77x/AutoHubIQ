@@ -44,6 +44,9 @@ erDiagram
     VEHICLE_LISTINGS ||--o{ LISTING_IMAGES : pictured_by
     VEHICLE_LISTINGS ||--o{ LISTING_PRICE_ESTIMATES : assessed_by
     VEHICLE_LISTINGS ||--o| LISTING_EMBEDDINGS : indexed_by
+    LISTING_IMAGES ||--o| LISTING_IMAGE_DATA : stores_upload
+    VEHICLE_LISTINGS ||--o{ LISTING_ENQUIRIES : receives
+    USERS ||--o{ LISTING_ENQUIRIES : submits
 
     CITIES {
         smallint city_id PK
@@ -133,6 +136,9 @@ erDiagram
 | `app.listing_images` | Listing image URLs and display order | Images are associated with a listing; deleting a listing cascades to its images. |
 | `app.listing_price_estimates` | Market estimate and its methodology/source note | Estimate is separate from seller asking price; one listing can have multiple dated estimates. |
 | `app.listing_embeddings` | Semantic-search vector and embedding source | One 384-dimensional vector per listing; listing deletion cascades to its embedding. |
+| `app.listing_image_data` | Uploaded JPEG bytes | One payload per uploaded image; maximum 2 MB after normalization; image deletion cascades to its payload. |
+| `app.listing_enquiries` | Buyer enquiries and test-drive requests | References a buyer and listing; request type and message length are constrained. |
+| `app.request_limits` | Shared request budgets | Hashed identifier key, time window, and request count; supports server-side throttling. |
 
 Two views expose active listing details and dealer inventory summaries. The
 `app.search_active_listings` function provides structured city, price, fuel,
@@ -154,8 +160,49 @@ timestamps on mutable profile, vehicle, and listing rows.
    marketplace and in semantic search.
 6. Reject a verified dealership in a test environment and show that its active
    listings are withdrawn rather than deleted.
+7. Upload a real vehicle photo from the dealer's inventory. Show that the
+   marketplace displays it; uploaded photos are normalized JPEGs stored in
+   PostgreSQL through `listing_images` and `listing_image_data`.
+8. Sign in as a separate customer and submit an enquiry or test-drive request
+   on the new dealer listing. Return to the dealer's **Buyer requests** inbox
+   to show the stored request and buyer contact details. This is an in-app
+   demonstration; no email or SMS is sent. Illustrative seed listings also
+   accept requests and customer price offers, while retaining their demo labels.
+9. Browse with budget, fuel and transmission filters, change the price order,
+   and compare it with relevance-ranked semantic results. Both modes support
+   pagination.
 
 Admin access is deliberately not available through public registration. For a
 demo, a trusted database operator must provision an administrator account
 beforehand. Use a dedicated test database for this walkthrough; do not use
 seed demo account placeholders as passwords.
+
+For this local college setup, `npm.cmd run demo:admin` provisions a clearly
+labelled demo administrator only if no administrator exists. The generated
+password is in ignored `frontend/.demo-credentials.txt`. `npm.cmd run
+test:workflow` performs an automated walkthrough in a fresh temporary database
+and removes that database afterward.
+
+### Dealer logins and approval
+
+From `frontend`, run `npm.cmd run setup:local`, then `npm.cmd run demo:dealers`.
+This adds customer offers and provisions six local demo dealer logins: two each
+in Bangalore, Mumbai, and Kolkata, with two existing demo cars per dealership.
+Generated passwords are saved in ignored `frontend/.demo-credentials.txt`;
+rerunning the command preserves working passwords and does not duplicate cars.
+The original dealer emails are aarav@autohubiq.demo, priya@autohubiq.demo, and
+arjun@autohubiq.demo; the additional emails are neha@autohubiq.demo,
+rohan@autohubiq.demo, and ishita@autohubiq.demo.
+
+Run `npm.cmd run demo:admin` if an administrator has not been provisioned.
+Open the local credentials file, sign in at `/account` as the administrator,
+open `/admin`, and approve the pending dealership. Sign back in as that dealer
+and refresh `/dealer`. Demo dealerships are already verified. A verified dealer
+can publish without photos, with the required vehicle details and a description
+of 20–5000 characters, and upload photos later.
+
+Customers can select **Make an offer** under **Contact the dealer**, supply an
+amount in rupees and a message, and submit. The owning dealer sees the amount
+and customer contact details in **Buyer requests**. Offers do not reserve cars;
+the dealer follows up directly. Login and registration support a password eye
+button; passwords start hidden.

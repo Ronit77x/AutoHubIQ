@@ -117,7 +117,17 @@ export async function POST(request: NextRequest) {
       description.length > 5000
     ) {
       return NextResponse.json(
-        { success: false, message: "Listing details are invalid or incomplete" },
+        { success: false, message: [
+          !Number.isSafeInteger(variantId) || Number(variantId) <= 0 ? "Choose a vehicle variant." : "",
+          !Number.isInteger(manufacturingYear) || Number(manufacturingYear) < 1990 || Number(manufacturingYear) > currentYear ? `Manufacturing year must be between 1990 and ${currentYear}.` : "",
+          registrationYear !== null && (!Number.isInteger(registrationYear) || Number(registrationYear) < Number(manufacturingYear) || Number(registrationYear) > currentYear) ? "Registration year must be between the manufacturing year and the current year." : "",
+          !Number.isSafeInteger(kmsDriven) || Number(kmsDriven) < 0 ? "Kilometres driven must be a nonnegative whole number." : "",
+          !Number.isInteger(ownershipCount) || Number(ownershipCount) < 1 || Number(ownershipCount) > 10 ? "Owner count must be between 1 and 10." : "",
+          typeof condition !== "string" || !CONDITIONS.includes(condition) ? "Choose a valid vehicle condition." : "",
+          typeof askingPrice !== "number" || !Number.isFinite(askingPrice) || askingPrice <= 0 || askingPrice > 9999999999.99 ? "Enter an asking price greater than zero and no more than ₹9,999,999,999.99." : "",
+          colour.length > 40 ? "Colour must be at most 40 characters." : "",
+          description.length < 20 || description.length > 5000 ? "Description must contain 20–5000 characters." : "",
+        ].filter(Boolean).join(" ") || "Listing details are invalid or incomplete" },
         { status: 400 }
       );
     }

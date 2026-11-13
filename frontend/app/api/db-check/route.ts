@@ -1,12 +1,16 @@
 
-import { connection, NextResponse } from "next/server";
+import { connection, NextRequest, NextResponse } from "next/server";
 import { pool } from "../../../lib/db";
+import { getAuthenticatedUser } from "../../../lib/auth";
 
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   await connection();
 
   try {
+    const user = await getAuthenticatedUser(request);
+    if (!user) return NextResponse.json({ success: false, message: "Sign in required" }, { status: 401 });
+    if (user.user_role !== "admin") return NextResponse.json({ success: false, message: "Administrator access required" }, { status: 403 });
     const result = await pool.query(`
       SELECT
         current_database() AS database,

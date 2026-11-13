@@ -51,6 +51,50 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## College-demo quick start
+
+The existing local database has been configured with authentication, semantic
+search tables, 12 listing embeddings, and a local demo administrator. Its
+generated login is in the ignored `frontend/.demo-credentials.txt` file. Open
+that file locally; do not commit or share it. Sign in at `/account` to access
+`/admin`. The `.test` email address is a demo identifier and receives no email.
+
+From `frontend`, start the project with:
+
+```powershell
+npm.cmd run dev
+```
+
+On another development checkout with the core database already populated:
+
+```powershell
+npm.cmd install
+npm.cmd run setup:local
+npm.cmd run db:embed
+npm.cmd run demo:admin
+npm.cmd run db:check
+```
+
+`setup:local` preserves database connection settings, configures `AUTH_SECRET`
+if missing, and applies the additive view, embedding, upload, and enquiry
+schemas. `demo:admin` creates an administrator only when none exists; it does
+not promote existing accounts or replace existing passwords.
+
+For the full demonstration, register a new dealer, sign out, sign in as the
+demo administrator and verify the application, then return as the dealer to
+publish a vehicle. Add up to six JPEG, PNG or WebP photos (5 MB each maximum).
+Sign in as a separate customer to submit an enquiry or test-drive request;
+the request appears in the dealer's **Buyer requests** inbox. Seed demo cars
+are illustrative and do not accept enquiries. No email or SMS is sent.
+
+The marketplace supports budget, fuel, transmission, sorting and paged browsing.
+An optional description enables semantic ranking with the same filters and
+paging; semantic matches are always ordered by relevance.
+
+Photos are decoded, resized, stripped of metadata, and stored as JPEG bytes in
+PostgreSQL. They survive app restarts without requiring an external upload
+service. This storage choice is intended for the small college demo.
+
 ## Account and role workflows
 
 - Customers and dealers register at `/account`. Passwords are stored as salted
@@ -101,11 +145,38 @@ The backfill updates an embedding only when its source text or model changes.
 - `GET /api/admin/dealers`, `PATCH /api/admin/dealers` — administrator-only
   dealership review
 
+Additional endpoints:
+
+- `POST /api/dealer/listings/<listingId>/images` — owner-only multipart photo
+  upload with a `photo` field; maximum six photos per listing
+- `GET /api/images/<imageId>` — uploaded JPEG content
+- `POST /api/listings/<listingId>/enquiries` — authenticated buyer request with
+  `message`, optional `phone`, and `request_type` (`enquiry` or `test_drive`)
+- `GET /api/dealer/dashboard` also returns the latest 100 buyer requests for
+  the authenticated dealer's inventory
+- `GET /api/db-check` requires administrator access
+
+Listings accept `page`, `page_size` (1–48), `max_price`, `fuel_type`,
+`transmission`, and `sort` (`newest`, `price_asc`, `price_desc`, `mileage_asc`).
+Search accepts `page` and `page_size` in its JSON body. Both endpoints return
+`has_more` and `page`. Login, registration, search, uploads and enquiries have
+database-backed request budgets. Anonymous search/registration budgets are
+shared across the demo; public hosting should also enforce trusted edge limits.
+
 Database writes use parameterized queries. Role and account status are checked
 on the server for protected operations; the UI is not an authorization
 boundary.
 
 ## Validation
+
+For dealer demo logins, run `npm.cmd run setup:local` and
+`npm.cmd run demo:dealers` from this directory. Six dealer accounts (two per
+supported city) share the existing demo inventory. New passwords are saved in
+ignored `.demo-credentials.txt`; existing working passwords are preserved.
+Run `npm.cmd run demo:admin` to provision an administrator if needed. Sign in
+at `/account`, open `/admin`, and approve newly registered dealers before they
+publish. Photos are optional. Customers can send price offers from listing
+details; dealers receive them in **Buyer requests** and follow up directly.
 
 Run the TypeScript checks, lint, focused auth tests, and production build:
 
@@ -120,3 +191,37 @@ npm run build
 connecting to or changing the configured database. Exercise account
 registration, dealer verification, and marketplace APIs only against a
 dedicated test database before deployment.
+
+After a successful production build, run the full workflow regression:
+
+```powershell
+npm.cmd run test:workflow
+```
+
+For the rubric's vector read/update/delete evidence, run:
+
+```powershell
+npm.cmd run test:vector
+```
+
+This executes `database/queries/28_vector_read_update_delete_demo.sql` and
+checks that rollback restores every original embedding and metadata value.
+
+The nine-section college submission draft and evidence checklist are in
+[`../docs/project-report-draft.md`](../docs/project-report-draft.md). Fill the
+student names/SRNs and contribution statements and capture current application
+screenshots before exporting the final report.
+
+This creates a randomly named temporary database using the configured database
+role, applies the schemas and seeds, starts an isolated server on port 3101,
+and tests registration, admin verification, publishing, image validation and
+limits, buyer enquiries, ownership checks, filters, pagination, semantic search,
+listing status changes, and rate limiting. It removes its temporary database
+and stops its server afterward. The configured role therefore needs permission
+to create databases. Existing demo accounts and inventory are not used for test
+writes. Run `db:embed` first so the seeded search vectors are available.
+
+This is a local college demo. Public deployment still needs an operator-chosen
+host and HTTPS configuration, production secrets and accounts, backups,
+monitoring, and an email provider for password recovery. Do not publish the
+generated demo administrator or local credential file.

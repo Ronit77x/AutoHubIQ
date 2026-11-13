@@ -32,8 +32,8 @@ export default function WorkspaceHeader({
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
         <div>
-          <Link href="/" className="text-xl font-extrabold text-slate-900">
-            AutoHub<span className="text-blue-700">IQ</span>
+          <Link href="/" className="text-xl font-semibold text-slate-900">
+            AutoHub<span className="text-accent-700">IQ</span>
           </Link>
           <p className="text-sm text-slate-500">{title}</p>
         </div>
@@ -44,7 +44,7 @@ export default function WorkspaceHeader({
           <button
             type="button"
             onClick={signOut}
-            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-neutral-50"
           >
             Sign out
           </button>

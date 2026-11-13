@@ -113,7 +113,7 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <main className="grid min-h-screen place-items-center bg-slate-50 text-slate-600">
+      <main className="grid min-h-screen place-items-center bg-neutral-50 text-slate-600">
         Loading administration...
       </main>
     );
@@ -121,7 +121,7 @@ export default function AdminPage() {
 
   if (!account) {
     return (
-      <main className="grid min-h-screen place-items-center bg-slate-50 text-slate-600">
+      <main className="grid min-h-screen place-items-center bg-neutral-50 text-slate-600">
         {error || "Redirecting to sign in..."}
       </main>
     );
@@ -132,15 +132,15 @@ export default function AdminPage() {
   ).length;
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
+    <main className="min-h-screen bg-neutral-50 text-slate-900">
       <WorkspaceHeader title="Administration" userName={account.full_name} />
       <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-blue-700">
+            <p className="text-sm font-semibold uppercase tracking-wide text-accent-700">
               Administrator workspace
             </p>
-            <h1 className="mt-1 text-3xl font-extrabold">
+            <h1 className="mt-1 text-3xl font-semibold">
               Dealership verification
             </h1>
             <p className="mt-2 text-slate-500">
@@ -148,14 +148,14 @@ export default function AdminPage() {
               inventory.
             </p>
           </div>
-          <Link href="/" className="text-sm font-semibold text-blue-700 hover:underline">
+          <Link href="/" className="text-sm font-semibold text-accent-700 hover:underline">
             View marketplace
           </Link>
         </div>
 
-        <div className="mt-7 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-7 rounded-xl border border-slate-200 bg-white p-5">
           <p className="text-sm text-slate-500">Pending applications</p>
-          <p className="mt-1 text-3xl font-extrabold">{pendingCount}</p>
+          <p className="mt-1 text-3xl font-semibold">{pendingCount}</p>
         </div>
 
         {(error || notice) && (
@@ -172,9 +172,9 @@ export default function AdminPage() {
         )}
 
         <section className="mt-8">
-          <h2 className="mb-4 text-xl font-extrabold">All dealerships</h2>
+          <h2 className="mb-4 text-xl font-semibold">All dealerships</h2>
           {dealers.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+            <p className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
               No dealer applications are available.
             </p>
           ) : (
@@ -182,11 +182,11 @@ export default function AdminPage() {
               {dealers.map((dealer) => (
                 <article
                   key={dealer.dealer_id}
-                  className="rounded-2xl border border-slate-200 bg-white p-6"
+                  className="rounded-xl border border-slate-200 bg-white p-6"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-lg font-bold">
+                      <h3 className="text-lg font-semibold">
                         {dealer.dealership_name}
                       </h3>
                       <p className="mt-1 text-sm text-slate-500">
@@ -194,7 +194,7 @@ export default function AdminPage() {
                       </p>
                     </div>
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-bold capitalize ${
+                      className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ${
                         dealer.verification_status === "verified"
                           ? "bg-emerald-100 text-emerald-800"
                           : dealer.verification_status === "rejected"
@@ -253,7 +253,7 @@ export default function AdminPage() {
                         type="button"
                         disabled={busyDealer === dealer.dealer_id}
                         onClick={() => decide(dealer.dealer_id, "verified")}
-                        className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-800 disabled:opacity-60"
+                        className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-60"
                       >
                         Verify dealership
                       </button>
@@ -262,7 +262,7 @@ export default function AdminPage() {
                           type="button"
                           disabled={busyDealer === dealer.dealer_id}
                           onClick={() => decide(dealer.dealer_id, "rejected")}
-                          className="rounded-lg border border-red-300 px-4 py-2 text-sm font-bold text-red-700 hover:bg-red-50 disabled:opacity-60"
+                          className="rounded-lg border border-red-300 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50 disabled:opacity-60"
                         >
                           Reject
                         </button>

@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import VehicleGallery from "../../../components/vehicle-gallery";
+import EnquiryForm from "../../../components/enquiry-form";
 import { useEffect, useState } from "react";
 import { ArrowLeft, CarFront, Fuel, Gauge, MapPin, Settings2 } from "lucide-react";
 
@@ -75,7 +77,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f7f8fa] text-gray-600">
+      <main className="flex min-h-screen items-center justify-center bg-neutral-50 text-gray-600">
         Loading vehicle details...
       </main>
     );
@@ -83,11 +85,11 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
 
   if (!listing) {
     return (
-      <main className="min-h-screen bg-[#f7f8fa] px-6 py-16 text-center">
+      <main className="min-h-screen bg-neutral-50 px-6 py-16 text-center">
         <p className="text-lg font-semibold text-gray-700">
           {error || "This listing is not available."}
         </p>
-        <Link href="/" className="mt-5 inline-flex items-center gap-2 font-semibold text-blue-700">
+        <Link href="/" className="mt-5 inline-flex items-center gap-2 font-semibold text-accent-700">
           <ArrowLeft size={18} />
           Back to listings
         </Link>
@@ -95,16 +97,13 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
     );
   }
 
-  const sortedImages = [...listing.images].sort(
-    (first, second) => Number(second.is_primary) - Number(first.is_primary)
-  );
   const isDemo = listing.source_type === "demo";
 
   return (
-    <main className="min-h-screen bg-[#f7f8fa] text-[#172033]">
+    <main className="min-h-screen bg-neutral-50 text-[#172033]">
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-6xl px-6 py-5">
-          <Link href="/" className="inline-flex items-center gap-2 font-semibold text-blue-700 hover:text-blue-900">
+          <Link href="/" className="inline-flex items-center gap-2 font-semibold text-accent-700 hover:text-accent-900">
             <ArrowLeft size={18} />
             Back to listings
           </Link>
@@ -113,37 +112,21 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
 
       <div className="mx-auto max-w-6xl px-6 py-10">
         {isDemo && (
-          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-900">
+          <div className="mb-6 rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-amber-900">
             Demo listing: vehicle details and images are illustrative and do not represent a verified vehicle.
           </div>
         )}
 
-        <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-          <section aria-label="Vehicle images">
-            {sortedImages.length > 0 ? (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {sortedImages.map((image) => (
-                  <img
-                    key={image.image_id}
-                    src={image.image_url}
-                    alt={`${listing.manufacturer_name} ${listing.model_name}${isDemo ? " illustrative demo image" : ""}`}
-                    className="h-64 w-full rounded-2xl bg-gray-200 object-cover"
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex h-72 items-center justify-center rounded-2xl bg-gray-200 text-gray-500">
-                <CarFront size={72} />
-              </div>
-            )}
-          </section>
+        <div className="grid gap-8 lg:grid-cols-[1.45fr_1fr] lg:items-start">
+          <VehicleGallery key={listingId} images={listing.images}
+            vehicle={`${listing.manufacturer_name} ${listing.model_name}`} isDemo={isDemo} />
 
-          <section className="rounded-2xl border border-gray-200 bg-white p-6">
+          <section className="rounded-xl border border-neutral-200 bg-white p-6 lg:p-8">
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase text-blue-700">
+              <span className="rounded-full bg-accent-50 px-3 py-1 text-xs font-semibold uppercase text-accent-700">
                 {listing.condition}
               </span>
-              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700">
+              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold uppercase text-gray-700">
                 {isDemo
                   ? "Demo listing"
                   : listing.source_type === "dealer"
@@ -155,7 +138,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
             <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-gray-500">
               {listing.manufacturer_name}
             </p>
-            <h1 className="mt-1 text-3xl font-extrabold">
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight">
               {listing.manufacturer_name} {listing.model_name}
             </h1>
             <p className="mt-2 text-gray-600">{listing.variant_name}</p>
@@ -164,17 +147,17 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
               <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                 Asking price
               </p>
-              <p className="mt-1 text-3xl font-extrabold text-blue-700">
+              <p className="mt-1 text-3xl font-semibold text-accent-700">
                 {formatPrice(listing.asking_price)}
               </p>
             </div>
 
             {listing.estimated_price && (
-              <div className="mt-5 rounded-xl bg-blue-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
+              <div className="mt-5 rounded-xl bg-accent-50 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-accent-700">
                   Indicative market estimate
                 </p>
-                <p className="mt-1 text-xl font-bold">
+                <p className="mt-1 text-xl font-semibold">
                   {formatPrice(listing.estimated_price)}
                 </p>
                 {listing.lower_price && listing.upper_price && (
@@ -190,14 +173,14 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
             )}
 
             <p className="mt-5 flex items-center gap-2 text-sm text-gray-600">
-              <MapPin size={17} className="text-blue-600" />
+              <MapPin size={17} className="text-accent-600" />
               {listing.dealership_name}, {listing.city_name}
             </p>
           </section>
         </div>
 
-        <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
-          <h2 className="text-xl font-bold">Vehicle specifications</h2>
+        <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">
+          <h2 className="text-xl font-semibold">Vehicle specifications</h2>
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <Specification label="Year" value={String(listing.manufacturing_year)} icon={<CarFront size={18} />} />
             <Specification label="Registration year" value={listing.registration_year ? String(listing.registration_year) : "Not provided"} />
@@ -221,12 +204,14 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
           </div>
         </section>
 
-        <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
-          <h2 className="text-xl font-bold">Description</h2>
+        <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">
+          <h2 className="text-xl font-semibold">Description</h2>
           <p className="mt-3 whitespace-pre-wrap leading-7 text-gray-600">
             {listing.description}
           </p>
         </section>
+
+        <EnquiryForm listingId={String(listing.listing_id)} />
 
         {listing.estimated_price && (listing.methodology || listing.source_summary) && (
           <p className="mt-5 text-xs leading-5 text-gray-500">
@@ -250,7 +235,7 @@ function Specification({
 }) {
   return (
     <div className="flex items-start gap-3">
-      {icon && <span className="mt-0.5 text-blue-600">{icon}</span>}
+      {icon && <span className="mt-0.5 text-accent-600">{icon}</span>}
       <div>
         <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
           {label}

@@ -1,0 +1,56 @@
+{
+  "nexon": { "model": "Nexon", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Tata-Nexon-13.jpg", "source": "https://www.motorbeam.com/2020-tata-nexon-review-test-drive/" },
+    { "view": "rear-seats", "label": "Rear seats", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Tata-Nexon-15.jpg", "source": "https://www.motorbeam.com/2020-tata-nexon-review-test-drive/" },
+    { "view": "cabin", "label": "Cabin & sunroof", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Tata-Nexon-12.jpg", "source": "https://www.motorbeam.com/2020-tata-nexon-review-test-drive/" }
+  ]},
+  "swift": { "model": "Swift", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/2021-Maruti-Swift-18.jpg", "source": "https://www.motorbeam.com/2021-maruti-swift-review-test-drive/" },
+    { "view": "instruments", "label": "Instrument cluster", "url": "https://www.motorbeam.com/wp-content/uploads/2021-Maruti-Swift-19.jpg", "source": "https://www.motorbeam.com/2021-maruti-swift-review-test-drive/" }
+  ]},
+  "creta": { "model": "Creta", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Hyundai-Creta-4.jpg", "source": "https://www.motorbeam.com/2020-hyundai-creta-review-test-drive/" },
+    { "view": "rear-seats", "label": "Rear seats", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Hyundai-Creta-20.jpg", "source": "https://www.motorbeam.com/2020-hyundai-creta-review-test-drive/" },
+    { "view": "boot", "label": "Boot space", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Hyundai-Creta-19.jpg", "source": "https://www.motorbeam.com/2020-hyundai-creta-review-test-drive/" }
+  ]},
+  "xuv700": { "model": "XUV700", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/Mahindra-XUV700-5.jpg", "source": "https://www.motorbeam.com/mahindra-xuv700-review-test-drive/" },
+    { "view": "cabin", "label": "Centre console", "url": "https://www.motorbeam.com/wp-content/uploads/Mahindra-XUV700-11.jpg", "source": "https://www.motorbeam.com/mahindra-xuv700-review-test-drive/" },
+    { "view": "boot", "label": "Boot space", "url": "https://www.motorbeam.com/wp-content/uploads/Mahindra-XUV700-1.jpg", "source": "https://www.motorbeam.com/mahindra-xuv700-review-test-drive/" }
+  ]},
+  "innova_crysta": { "model": "Innova Crysta", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/Toyota-Innova-Crysta-BS6-4.jpg", "source": "https://www.motorbeam.com/toyota-innova-crysta-bs6-review-test-drive/" },
+    { "view": "rear-seats", "label": "Third-row seats", "url": "https://www.motorbeam.com/wp-content/uploads/Toyota-Innova-Crysta-BS6-3.jpg", "source": "https://www.motorbeam.com/toyota-innova-crysta-bs6-review-test-drive/" },
+    { "view": "boot", "label": "Boot & seating", "url": "https://www.motorbeam.com/wp-content/uploads/Toyota-Innova-Crysta-BS6-1.jpg", "source": "https://www.motorbeam.com/toyota-innova-crysta-bs6-review-test-drive/" }
+  ]},
+  "city": { "model": "City", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Honda-City-10.jpg", "source": "https://www.motorbeam.com/2020-honda-city-review-test-drive/" },
+    { "view": "cabin", "label": "Cabin & sunroof", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Honda-City-13.jpg", "source": "https://www.motorbeam.com/2020-honda-city-review-test-drive/" },
+    { "view": "boot", "label": "Boot space", "url": "https://www.motorbeam.com/wp-content/uploads/2020-Honda-City-30.jpg", "source": "https://www.motorbeam.com/2020-honda-city-review-test-drive/" }
+  ]},
+  "baleno": { "model": "Baleno", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/2019-Maruti-Baleno-Dashboard.jpg", "source": "https://www.motorbeam.com/2019-maruti-baleno-price-rs-5-45-lakhs/" },
+    { "view": "cabin", "label": "Cabin", "url": "https://www.motorbeam.com/wp-content/uploads/2019-Maruti-Baleno-Interior.jpg", "source": "https://www.motorbeam.com/2019-maruti-baleno-price-rs-5-45-lakhs/" },
+    { "view": "infotainment", "label": "Infotainment", "url": "https://www.motorbeam.com/wp-content/uploads/2019-Maruti-Baleno-Features.jpg", "source": "https://www.motorbeam.com/2019-maruti-baleno-price-rs-5-45-lakhs/" }
+  ]},
+  "virtus": { "model": "Virtus", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/Volkswagen-Virtus-Long-Term-7.jpg", "source": "https://www.motorbeam.com/one-month-with-the-volkswagen-virtus/" },
+    { "view": "seats", "label": "Seats & upholstery", "url": "https://www.motorbeam.com/wp-content/uploads/Volkswagen-Virtus-Long-Term-9.jpg", "source": "https://www.motorbeam.com/one-month-with-the-volkswagen-virtus/" }
+  ]},
+  "comet_ev": { "model": "Comet EV", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.motorbeam.com/wp-content/uploads/MG-Comet-Long-Term-6.jpg", "source": "https://www.motorbeam.com/mg-comet-long-term-review-first-report/" },
+    { "view": "cabin", "label": "Exterior profile", "url": "https://www.motorbeam.com/wp-content/uploads/MG-Comet-Long-Term-15.jpg", "source": "https://www.motorbeam.com/mg-comet-long-term-review-first-report/" }
+  ]},
+  "seltos": { "model": "Seltos", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://www.caarsnation.net/images/listing/interior/16075062901774477708.jpeg", "source": "https://www.caarsnation.net/kia/234/kia-seltos-htk-plus-g" },
+    { "view": "rear-seats", "label": "Rear seats", "url": "https://marketplace-cdn.cars24.com/production/10206109717/interior/2025-09-02/car_replace_bg_5287bdc6-f48a-4890-bc1c-49853dc35a39.png?dpr=2&format=auto&w=700", "source": "https://www.cars24.com/buy-used-kia-seltos-2022-cars-bangalore-10206109717/" }
+  ]},
+  "kwid": { "model": "Kwid", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://img-ik.cars.co.za/news-site-za/images/2019/10/11283c48-2020-renault-kwid-india-spec-8.jpg?tr=w-1200%2Ch-800", "source": "https://www.cars.co.za/motoring-news/renault-kwid-restyled-for-2020/27053/" },
+    { "view": "rear-seats", "label": "Rear seats", "url": "https://cdni.autocarindia.com/Reviews/20191012043417_2019-Renault-Kwid-rear-seat.jpg", "source": "https://www.autocarindia.com/car-reviews/renault-kwid-facelift-review-test-drive-414480" }
+  ]},
+  "bmw_3_series": { "model": "3 Series", "photos": [
+    { "view": "dashboard", "label": "Dashboard", "url": "https://images.thewest.com.au/publication/B881403387Z/1575620735806_G2Q2GV2C4.1-0.jpg?impolicy=wan_v3&imwidth=1000", "source": "https://thewest.com.au/features/2019-cars-of-the-year/luxury-car-of-the-year-2019-bmw-3-series-ng-b881403387z" },
+    { "view": "rear-seats", "label": "Rear seats", "url": "https://cdni.autocarindia.com/Reviews/2019-BMW-320d-rear-seats.jpg", "source": "https://www.autocarindia.com/car-reviews/2019-bmw-3-series-india-review-test-drive-413842" }
+  ]}
+}
