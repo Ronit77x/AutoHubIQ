@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-15",
+  "city_checks": [
+    {
+      "city": "Bangalore",
+      "listings": 4,
+      "filtered": 2,
+      "empty_results_ok": true,
+      "details_with_images_and_estimates": 4
+    },
+    {
+      "city": "Kolkata",
+      "listings": 4,
+      "filtered": 3,
+      "empty_results_ok": true,
+      "details_with_images_and_estimates": 4
+    },
+    {
+      "city": "Mumbai",
+      "listings": 4,
+      "filtered": 1,
+      "empty_results_ok": true,
+      "details_with_images_and_estimates": 4
+    }
+  ],
+  "http_get_checks": 22,
+  "method": "GET only on isolated production server; configured database read without application writes"
+}

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1545" height="1211" viewBox="0 0 1545 1211" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ · buyer offers and dealer ownership</title><desc id="desc">Parent-to-child connectors show cardinalities. All foreign keys are mandatory on the child; parents may have zero children. Full constraints and nullability are in the data dictionary.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#64748b"/></marker></defs>
+<rect width="1545" height="1211" fill="#f8fafc"/><text x="40" y="38" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a">AutoHubIQ · buyer offers and dealer ownership</text><text x="40" y="67" font-family="Arial" font-size="15" fill="#475569">15 Nov 2026 · PK primary · FK foreign · UK unique membership · Parent 1 → child 0..* / 0..1</text>
+<path d="M485 188 H497 V118 H772.5 V140" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/><text x="777.5" y="133" font-family="Arial" font-size="12" fill="#334155">1 → 0..1</text>
+<path d="M995 886 H1014 V783 H188.33333333333334 V820" fill="none" stroke="#0f766e" stroke-width="1.5" marker-end="url(#arrow)"/><text x="193.33333333333334" y="813" font-family="Arial" font-size="12" fill="#334155">1 → 0..*</text>
+<path d="M485 224 H511 V768 H336.6666666666667 V820" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow)"/><text x="341.6666666666667" y="813" font-family="Arial" font-size="12" fill="#334155">1 → 0..*</text>
+<path d="M1505 242 H1517 V798 H772.5 V820" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/><text x="777.5" y="813" font-family="Arial" font-size="12" fill="#334155">1 → 0..*</text>
+<path d="M995 188 H1014 V103 H1282.5 V140" fill="none" stroke="#0f766e" stroke-width="1.5" marker-end="url(#arrow)"/><text x="1287.5" y="133" font-family="Arial" font-size="12" fill="#334155">1 → 0..*</text>
+<rect x="40" y="140" width="445" height="265" rx="8" fill="white" stroke="#94a3b8"/><rect x="40" y="140" width="445" height="37" rx="8" fill="#0f766e"/><text x="52" y="165" font-family="Arial" font-size="18" font-weight="bold" fill="white">users</text>
+<text x="52" y="199" font-family="Consolas,monospace" font-size="13" fill="#0f172a">PK user_id : bigint</text>
+<text x="52" y="222" font-family="Consolas,monospace" font-size="13" fill="#0f172a">full_name : character varying(120)</text>
+<text x="52" y="245" font-family="Consolas,monospace" font-size="13" fill="#0f172a">UK email : character varying(255)</text>
+<text x="52" y="268" font-family="Consolas,monospace" font-size="13" fill="#0f172a">phone : character varying(20)</text>
+<text x="52" y="291" font-family="Consolas,monospace" font-size="13" fill="#0f172a">password_hash : text</text>
+<text x="52" y="314" font-family="Consolas,monospace" font-size="13" fill="#0f172a">user_role : character varying(20)</text>
+<text x="52" y="337" font-family="Consolas,monospace" font-size="13" fill="#0f172a">account_status : character varying(20)</text>
+<text x="52" y="360" font-family="Consolas,monospace" font-size="13" fill="#0f172a">created_at : timestamp with time zone</text>
+<text x="52" y="383" font-family="Consolas,monospace" font-size="13" fill="#0f172a">updated_at : timestamp with time zone</text>
+<rect x="550" y="140" width="445" height="311" rx="8" fill="white" stroke="#94a3b8"/><rect x="550" y="140" width="445" height="37" rx="8" fill="#0f766e"/><text x="562" y="165" font-family="Arial" font-size="18" font-weight="bold" fill="white">dealer_profiles</text>
+<text x="562" y="199" font-family="Consolas,monospace" font-size="13" fill="#0f172a">PK dealer_id : bigint</text>
+<text x="562" y="222" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK,UK user_id : bigint</text>
+<text x="562" y="245" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK city_id : smallint</text>
+<text x="562" y="268" font-family="Consolas,monospace" font-size="13" fill="#0f172a">dealership_name : character varying(150)</text>
+<text x="562" y="291" font-family="Consolas,monospace" font-size="13" fill="#0f172a">business_phone : character varying(20)</text>
+<text x="562" y="314" font-family="Consolas,monospace" font-size="13" fill="#0f172a">business_email : character varying(255)</text>
+<text x="562" y="337" font-family="Consolas,monospace" font-size="13" fill="#0f172a">street_address : text</text>
+<text x="562" y="360" font-family="Consolas,monospace" font-size="13" fill="#0f172a">description : text</text>
+<text x="562" y="383" font-family="Consolas,monospace" font-size="13" fill="#0f172a">verification_status : character varying(20)</text>
+<text x="562" y="406" font-family="Consolas,monospace" font-size="13" fill="#0f172a">created_at : timestamp with time zone</text>
+<text x="562" y="429" font-family="Consolas,monospace" font-size="13" fill="#0f172a">updated_at : timestamp with time zone</text>
+<rect x="1060" y="140" width="445" height="334" rx="8" fill="white" stroke="#94a3b8"/><rect x="1060" y="140" width="445" height="37" rx="8" fill="#0f766e"/><text x="1072" y="165" font-family="Arial" font-size="18" font-weight="bold" fill="white">vehicles</text>
+<text x="1072" y="199" font-family="Consolas,monospace" font-size="13" fill="#0f172a">PK vehicle_id : bigint</text>
+<text x="1072" y="222" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK dealer_id : bigint</text>
+<text x="1072" y="245" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK variant_id : bigint</text>
+<text x="1072" y="268" font-family="Consolas,monospace" font-size="13" fill="#0f172a">manufacturing_year : smallint</text>
+<text x="1072" y="291" font-family="Consolas,monospace" font-size="13" fill="#0f172a">registration_year : smallint</text>
+<text x="1072" y="314" font-family="Consolas,monospace" font-size="13" fill="#0f172a">kms_driven : integer</text>
+<text x="1072" y="337" font-family="Consolas,monospace" font-size="13" fill="#0f172a">colour : character varying(40)</text>
+<text x="1072" y="360" font-family="Consolas,monospace" font-size="13" fill="#0f172a">ownership_count : smallint</text>
+<text x="1072" y="383" font-family="Consolas,monospace" font-size="13" fill="#0f172a">condition : character varying(20)</text>
+<text x="1072" y="406" font-family="Consolas,monospace" font-size="13" fill="#0f172a">registration_number : character varying(20)</text>
+<text x="1072" y="429" font-family="Consolas,monospace" font-size="13" fill="#0f172a">created_at : timestamp with time zone</text>
+<text x="1072" y="452" font-family="Consolas,monospace" font-size="13" fill="#0f172a">updated_at : timestamp with time zone</text>
+<rect x="550" y="820" width="445" height="311" rx="8" fill="white" stroke="#94a3b8"/><rect x="550" y="820" width="445" height="37" rx="8" fill="#0f766e"/><text x="562" y="845" font-family="Arial" font-size="18" font-weight="bold" fill="white">vehicle_listings</text>
+<text x="562" y="879" font-family="Consolas,monospace" font-size="13" fill="#0f172a">PK listing_id : bigint</text>
+<text x="562" y="902" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK vehicle_id : bigint</text>
+<text x="562" y="925" font-family="Consolas,monospace" font-size="13" fill="#0f172a">asking_price : numeric(12,2)</text>
+<text x="562" y="948" font-family="Consolas,monospace" font-size="13" fill="#0f172a">description : text</text>
+<text x="562" y="971" font-family="Consolas,monospace" font-size="13" fill="#0f172a">listing_status : character varying(20)</text>
+<text x="562" y="994" font-family="Consolas,monospace" font-size="13" fill="#0f172a">source_type : character varying(20)</text>
+<text x="562" y="1017" font-family="Consolas,monospace" font-size="13" fill="#0f172a">source_url : text</text>
+<text x="562" y="1040" font-family="Consolas,monospace" font-size="13" fill="#0f172a">source_verified_at : timestamp with time zone</text>
+<text x="562" y="1063" font-family="Consolas,monospace" font-size="13" fill="#0f172a">published_at : timestamp with time zone</text>
+<text x="562" y="1086" font-family="Consolas,monospace" font-size="13" fill="#0f172a">created_at : timestamp with time zone</text>
+<text x="562" y="1109" font-family="Consolas,monospace" font-size="13" fill="#0f172a">updated_at : timestamp with time zone</text>
+<rect x="40" y="820" width="445" height="288" rx="8" fill="white" stroke="#94a3b8"/><rect x="40" y="820" width="445" height="37" rx="8" fill="#0f766e"/><text x="52" y="845" font-family="Arial" font-size="18" font-weight="bold" fill="white">listing_enquiries</text>
+<text x="52" y="879" font-family="Consolas,monospace" font-size="13" fill="#0f172a">PK enquiry_id : bigint</text>
+<text x="52" y="902" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK listing_id : bigint</text>
+<text x="52" y="925" font-family="Consolas,monospace" font-size="13" fill="#0f172a">FK user_id : bigint</text>
+<text x="52" y="948" font-family="Consolas,monospace" font-size="13" fill="#0f172a">message : text</text>
+<text x="52" y="971" font-family="Consolas,monospace" font-size="13" fill="#0f172a">phone : character varying(20)</text>
+<text x="52" y="994" font-family="Consolas,monospace" font-size="13" fill="#0f172a">request_type : text</text>
+<text x="52" y="1017" font-family="Consolas,monospace" font-size="13" fill="#0f172a">created_at : timestamp with time zone</text>
+<text x="52" y="1040" font-family="Consolas,monospace" font-size="13" fill="#0f172a">offer_amount : numeric(12,2)</text>
+<text x="52" y="1063" font-family="Consolas,monospace" font-size="13" fill="#0f172a">contacted_at : timestamp with time zone</text>
+<text x="52" y="1086" font-family="Consolas,monospace" font-size="13" fill="#0f172a">updated_at : timestamp with time zone</text>
+</svg>

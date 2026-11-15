@@ -1,0 +1,1894 @@
+{
+  "date": "2026-11-15",
+  "columns": [
+    {
+      "table_name": "cities",
+      "column_name": "city_id",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "cities",
+      "column_name": "city_name",
+      "type": "character varying(100)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "cities",
+      "column_name": "state_name",
+      "type": "character varying(100)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "cities",
+      "column_name": "is_active",
+      "type": "boolean",
+      "not_null": true,
+      "identity": "",
+      "default_value": "true"
+    },
+    {
+      "table_name": "cities",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "dealer_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "user_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "city_id",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "dealership_name",
+      "type": "character varying(150)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "business_phone",
+      "type": "character varying(20)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "business_email",
+      "type": "character varying(255)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "street_address",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "description",
+      "type": "text",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "verification_status",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'pending'::character varying"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "column_name": "updated_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "column_name": "listing_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_embeddings",
+      "column_name": "embedding",
+      "type": "vector(384)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_embeddings",
+      "column_name": "source_text",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_embeddings",
+      "column_name": "model_name",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_embeddings",
+      "column_name": "generated_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "enquiry_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "listing_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "user_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "message",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "phone",
+      "type": "character varying(20)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "request_type",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "offer_amount",
+      "type": "numeric(12,2)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "contacted_at",
+      "type": "timestamp with time zone",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_enquiries",
+      "column_name": "updated_at",
+      "type": "timestamp with time zone",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_image_data",
+      "column_name": "image_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_image_data",
+      "column_name": "content",
+      "type": "bytea",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_image_data",
+      "column_name": "content_type",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'image/jpeg'::text"
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "image_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "listing_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "image_url",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "display_order",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": "1"
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "is_primary",
+      "type": "boolean",
+      "not_null": true,
+      "identity": "",
+      "default_value": "false"
+    },
+    {
+      "table_name": "listing_images",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "estimate_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "listing_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "estimated_price",
+      "type": "numeric(12,2)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "lower_price",
+      "type": "numeric(12,2)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "upper_price",
+      "type": "numeric(12,2)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "methodology",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "source_summary",
+      "type": "text",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "source_url",
+      "type": "text",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "column_name": "assessed_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "manufacturers",
+      "column_name": "manufacturer_id",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "manufacturers",
+      "column_name": "manufacturer_name",
+      "type": "character varying(100)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "manufacturers",
+      "column_name": "country_of_origin",
+      "type": "character varying(100)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "manufacturers",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "request_limits",
+      "column_name": "key_hash",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "request_limits",
+      "column_name": "window_start",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "request_limits",
+      "column_name": "request_count",
+      "type": "integer",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "user_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "full_name",
+      "type": "character varying(120)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "email",
+      "type": "character varying(255)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "phone",
+      "type": "character varying(20)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "password_hash",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "users",
+      "column_name": "user_role",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'customer'::character varying"
+    },
+    {
+      "table_name": "users",
+      "column_name": "account_status",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'active'::character varying"
+    },
+    {
+      "table_name": "users",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "users",
+      "column_name": "updated_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "listing_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "vehicle_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "asking_price",
+      "type": "numeric(12,2)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "description",
+      "type": "text",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "listing_status",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'draft'::character varying"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "source_type",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'demo'::character varying"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "source_url",
+      "type": "text",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "source_verified_at",
+      "type": "timestamp with time zone",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "published_at",
+      "type": "timestamp with time zone",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "column_name": "updated_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "model_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "manufacturer_id",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "model_name",
+      "type": "character varying(120)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "body_type",
+      "type": "character varying(30)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "description",
+      "type": "text",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_models",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "variant_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "model_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "variant_name",
+      "type": "character varying(120)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "fuel_type",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "transmission",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "engine_displacement_cc",
+      "type": "integer",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "battery_capacity_kwh",
+      "type": "numeric(6,2)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "seating_capacity",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": "5"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "vehicle_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "a",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "dealer_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "variant_id",
+      "type": "bigint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "manufacturing_year",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "registration_year",
+      "type": "smallint",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "kms_driven",
+      "type": "integer",
+      "not_null": true,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "colour",
+      "type": "character varying(40)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "ownership_count",
+      "type": "smallint",
+      "not_null": true,
+      "identity": "",
+      "default_value": "1"
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "condition",
+      "type": "character varying(20)",
+      "not_null": true,
+      "identity": "",
+      "default_value": "'good'::character varying"
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "registration_number",
+      "type": "character varying(20)",
+      "not_null": false,
+      "identity": "",
+      "default_value": null
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "created_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    },
+    {
+      "table_name": "vehicles",
+      "column_name": "updated_at",
+      "type": "timestamp with time zone",
+      "not_null": true,
+      "identity": "",
+      "default_value": "CURRENT_TIMESTAMP"
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "cities",
+      "name": "cities_city_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL city_id"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_city_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL city_name"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_is_active_not_null",
+      "kind": "n",
+      "definition": "NOT NULL is_active"
+    },
+    {
+      "table_name": "cities",
+      "name": "cities_state_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL state_name"
+    },
+    {
+      "table_name": "cities",
+      "name": "pk_cities",
+      "kind": "p",
+      "definition": "PRIMARY KEY (city_id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "uq_cities_name_state",
+      "kind": "u",
+      "definition": "UNIQUE (city_name, state_name)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "chk_dealer_verification_status",
+      "kind": "c",
+      "definition": "CHECK (verification_status::text = ANY (ARRAY['pending'::character varying, 'verified'::character varying, 'rejected'::character varying]::text[]))"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_city_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL city_id"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_dealer_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL dealer_id"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_dealership_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL dealership_name"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_street_address_not_null",
+      "kind": "n",
+      "definition": "NOT NULL street_address"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_updated_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_user_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "dealer_profiles_verification_status_not_null",
+      "kind": "n",
+      "definition": "NOT NULL verification_status"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "fk_dealer_profiles_city",
+      "kind": "f",
+      "definition": "FOREIGN KEY (city_id) REFERENCES app.cities(city_id)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "fk_dealer_profiles_user",
+      "kind": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES app.users(user_id)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "pk_dealer_profiles",
+      "kind": "p",
+      "definition": "PRIMARY KEY (dealer_id)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "uq_dealer_profiles_user",
+      "kind": "u",
+      "definition": "UNIQUE (user_id)"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_embedding_not_null",
+      "kind": "n",
+      "definition": "NOT NULL embedding"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_generated_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL generated_at"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_listing_id_fkey",
+      "kind": "f",
+      "definition": "FOREIGN KEY (listing_id) REFERENCES app.vehicle_listings(listing_id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_listing_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_id"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_model_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL model_name"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_pkey",
+      "kind": "p",
+      "definition": "PRIMARY KEY (listing_id)"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_source_text_not_null",
+      "kind": "n",
+      "definition": "NOT NULL source_text"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_enquiry_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL enquiry_id"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_listing_id_fkey",
+      "kind": "f",
+      "definition": "FOREIGN KEY (listing_id) REFERENCES app.vehicle_listings(listing_id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_listing_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_id"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_message_check",
+      "kind": "c",
+      "definition": "CHECK (length(message) >= 10 AND length(message) <= 2000)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_message_not_null",
+      "kind": "n",
+      "definition": "NOT NULL message"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_offer_amount_check",
+      "kind": "c",
+      "definition": "CHECK (request_type = 'offer'::text AND offer_amount IS NOT NULL AND offer_amount > 0::numeric OR request_type <> 'offer'::text AND offer_amount IS NULL)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_pkey",
+      "kind": "p",
+      "definition": "PRIMARY KEY (enquiry_id)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_request_type_check",
+      "kind": "c",
+      "definition": "CHECK (request_type = ANY (ARRAY['enquiry'::text, 'test_drive'::text, 'offer'::text]))"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_request_type_not_null",
+      "kind": "n",
+      "definition": "NOT NULL request_type"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_user_id_fkey",
+      "kind": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES app.users(user_id)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_user_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_content_check",
+      "kind": "c",
+      "definition": "CHECK (octet_length(content) <= 2097152)"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_content_not_null",
+      "kind": "n",
+      "definition": "NOT NULL content"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_content_type_check",
+      "kind": "c",
+      "definition": "CHECK (content_type = 'image/jpeg'::text)"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_content_type_not_null",
+      "kind": "n",
+      "definition": "NOT NULL content_type"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_image_id_fkey",
+      "kind": "f",
+      "definition": "FOREIGN KEY (image_id) REFERENCES app.listing_images(image_id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_image_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL image_id"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_pkey",
+      "kind": "p",
+      "definition": "PRIMARY KEY (image_id)"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "chk_image_display_order",
+      "kind": "c",
+      "definition": "CHECK (display_order > 0)"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "fk_listing_images_listing",
+      "kind": "f",
+      "definition": "FOREIGN KEY (listing_id) REFERENCES app.vehicle_listings(listing_id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_display_order_not_null",
+      "kind": "n",
+      "definition": "NOT NULL display_order"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_image_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL image_id"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_image_url_not_null",
+      "kind": "n",
+      "definition": "NOT NULL image_url"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_is_primary_not_null",
+      "kind": "n",
+      "definition": "NOT NULL is_primary"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "listing_images_listing_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_id"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "pk_listing_images",
+      "kind": "p",
+      "definition": "PRIMARY KEY (image_id)"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "chk_estimated_price_positive",
+      "kind": "c",
+      "definition": "CHECK (estimated_price > 0::numeric)"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "chk_price_range",
+      "kind": "c",
+      "definition": "CHECK ((lower_price IS NULL OR lower_price > 0::numeric) AND (upper_price IS NULL OR upper_price > 0::numeric) AND (lower_price IS NULL OR upper_price IS NULL OR lower_price <= upper_price))"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_assessed_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL assessed_at"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_estimate_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL estimate_id"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_estimated_price_not_null",
+      "kind": "n",
+      "definition": "NOT NULL estimated_price"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_listing_id_fkey",
+      "kind": "f",
+      "definition": "FOREIGN KEY (listing_id) REFERENCES app.vehicle_listings(listing_id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_listing_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_id"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_methodology_not_null",
+      "kind": "n",
+      "definition": "NOT NULL methodology"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_pkey",
+      "kind": "p",
+      "definition": "PRIMARY KEY (estimate_id)"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "manufacturers_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "manufacturers_manufacturer_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL manufacturer_id"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "manufacturers_manufacturer_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL manufacturer_name"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "pk_manufacturers",
+      "kind": "p",
+      "definition": "PRIMARY KEY (manufacturer_id)"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "uq_manufacturer_name",
+      "kind": "u",
+      "definition": "UNIQUE (manufacturer_name)"
+    },
+    {
+      "table_name": "request_limits",
+      "name": "request_limits_key_hash_not_null",
+      "kind": "n",
+      "definition": "NOT NULL key_hash"
+    },
+    {
+      "table_name": "request_limits",
+      "name": "request_limits_pkey",
+      "kind": "p",
+      "definition": "PRIMARY KEY (key_hash)"
+    },
+    {
+      "table_name": "request_limits",
+      "name": "request_limits_request_count_not_null",
+      "kind": "n",
+      "definition": "NOT NULL request_count"
+    },
+    {
+      "table_name": "request_limits",
+      "name": "request_limits_window_start_not_null",
+      "kind": "n",
+      "definition": "NOT NULL window_start"
+    },
+    {
+      "table_name": "users",
+      "name": "chk_users_role",
+      "kind": "c",
+      "definition": "CHECK (user_role::text = ANY (ARRAY['customer'::character varying, 'dealer'::character varying, 'admin'::character varying]::text[]))"
+    },
+    {
+      "table_name": "users",
+      "name": "chk_users_status",
+      "kind": "c",
+      "definition": "CHECK (account_status::text = ANY (ARRAY['active'::character varying, 'suspended'::character varying, 'pending'::character varying]::text[]))"
+    },
+    {
+      "table_name": "users",
+      "name": "pk_users",
+      "kind": "p",
+      "definition": "PRIMARY KEY (user_id)"
+    },
+    {
+      "table_name": "users",
+      "name": "uq_users_email",
+      "kind": "u",
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "users_account_status_not_null",
+      "kind": "n",
+      "definition": "NOT NULL account_status"
+    },
+    {
+      "table_name": "users",
+      "name": "users_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "users",
+      "name": "users_email_not_null",
+      "kind": "n",
+      "definition": "NOT NULL email"
+    },
+    {
+      "table_name": "users",
+      "name": "users_full_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL full_name"
+    },
+    {
+      "table_name": "users",
+      "name": "users_password_hash_not_null",
+      "kind": "n",
+      "definition": "NOT NULL password_hash"
+    },
+    {
+      "table_name": "users",
+      "name": "users_updated_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "users",
+      "name": "users_user_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL user_id"
+    },
+    {
+      "table_name": "users",
+      "name": "users_user_role_not_null",
+      "kind": "n",
+      "definition": "NOT NULL user_role"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "chk_listing_price",
+      "kind": "c",
+      "definition": "CHECK (asking_price > 0::numeric)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "chk_listing_source",
+      "kind": "c",
+      "definition": "CHECK (source_type::text = ANY (ARRAY['demo'::character varying, 'dealer'::character varying, 'external_reference'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "chk_listing_status",
+      "kind": "c",
+      "definition": "CHECK (listing_status::text = ANY (ARRAY['draft'::character varying, 'active'::character varying, 'reserved'::character varying, 'sold'::character varying, 'withdrawn'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "fk_vehicle_listings_vehicle",
+      "kind": "f",
+      "definition": "FOREIGN KEY (vehicle_id) REFERENCES app.vehicles(vehicle_id)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "pk_vehicle_listings",
+      "kind": "p",
+      "definition": "PRIMARY KEY (listing_id)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_asking_price_not_null",
+      "kind": "n",
+      "definition": "NOT NULL asking_price"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_description_not_null",
+      "kind": "n",
+      "definition": "NOT NULL description"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_listing_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_id"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_listing_status_not_null",
+      "kind": "n",
+      "definition": "NOT NULL listing_status"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_source_type_not_null",
+      "kind": "n",
+      "definition": "NOT NULL source_type"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_updated_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "vehicle_listings_vehicle_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL vehicle_id"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "chk_vehicle_body_type",
+      "kind": "c",
+      "definition": "CHECK (body_type::text = ANY (ARRAY['Hatchback'::character varying, 'Sedan'::character varying, 'SUV'::character varying, 'MUV'::character varying, 'Coupe'::character varying, 'Convertible'::character varying, 'Pickup'::character varying, 'Other'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "fk_vehicle_models_manufacturer",
+      "kind": "f",
+      "definition": "FOREIGN KEY (manufacturer_id) REFERENCES app.manufacturers(manufacturer_id)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "pk_vehicle_models",
+      "kind": "p",
+      "definition": "PRIMARY KEY (model_id)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "uq_manufacturer_model",
+      "kind": "u",
+      "definition": "UNIQUE (manufacturer_id, model_name)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "vehicle_models_body_type_not_null",
+      "kind": "n",
+      "definition": "NOT NULL body_type"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "vehicle_models_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "vehicle_models_manufacturer_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL manufacturer_id"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "vehicle_models_model_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL model_id"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "vehicle_models_model_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL model_name"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "chk_battery_capacity",
+      "kind": "c",
+      "definition": "CHECK (battery_capacity_kwh IS NULL OR battery_capacity_kwh > 0::numeric)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "chk_engine_displacement",
+      "kind": "c",
+      "definition": "CHECK (engine_displacement_cc IS NULL OR engine_displacement_cc > 0)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "chk_seating_capacity",
+      "kind": "c",
+      "definition": "CHECK (seating_capacity >= 1 AND seating_capacity <= 20)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "chk_variant_fuel_type",
+      "kind": "c",
+      "definition": "CHECK (fuel_type::text = ANY (ARRAY['Petrol'::character varying, 'Diesel'::character varying, 'CNG'::character varying, 'LPG'::character varying, 'Electric'::character varying, 'Hybrid'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "chk_variant_transmission",
+      "kind": "c",
+      "definition": "CHECK (transmission::text = ANY (ARRAY['Manual'::character varying, 'Automatic'::character varying, 'AMT'::character varying, 'CVT'::character varying, 'DCT'::character varying, 'Single-speed'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "fk_vehicle_variants_model",
+      "kind": "f",
+      "definition": "FOREIGN KEY (model_id) REFERENCES app.vehicle_models(model_id)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "pk_vehicle_variants",
+      "kind": "p",
+      "definition": "PRIMARY KEY (variant_id)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "uq_model_variant",
+      "kind": "u",
+      "definition": "UNIQUE (model_id, variant_name)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_fuel_type_not_null",
+      "kind": "n",
+      "definition": "NOT NULL fuel_type"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_model_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL model_id"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_seating_capacity_not_null",
+      "kind": "n",
+      "definition": "NOT NULL seating_capacity"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_transmission_not_null",
+      "kind": "n",
+      "definition": "NOT NULL transmission"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_variant_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL variant_id"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "vehicle_variants_variant_name_not_null",
+      "kind": "n",
+      "definition": "NOT NULL variant_name"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "chk_kms_driven",
+      "kind": "c",
+      "definition": "CHECK (kms_driven >= 0)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "chk_manufacturing_year",
+      "kind": "c",
+      "definition": "CHECK (manufacturing_year >= 1990 AND manufacturing_year <= 2030)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "chk_ownership_count",
+      "kind": "c",
+      "definition": "CHECK (ownership_count >= 1 AND ownership_count <= 10)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "chk_registration_year",
+      "kind": "c",
+      "definition": "CHECK (registration_year IS NULL OR registration_year >= 1990 AND registration_year <= 2030)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "chk_vehicle_condition",
+      "kind": "c",
+      "definition": "CHECK (condition::text = ANY (ARRAY['excellent'::character varying, 'good'::character varying, 'fair'::character varying, 'needs_repair'::character varying]::text[]))"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "fk_vehicles_dealer",
+      "kind": "f",
+      "definition": "FOREIGN KEY (dealer_id) REFERENCES app.dealer_profiles(dealer_id)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "fk_vehicles_variant",
+      "kind": "f",
+      "definition": "FOREIGN KEY (variant_id) REFERENCES app.vehicle_variants(variant_id)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "pk_vehicles",
+      "kind": "p",
+      "definition": "PRIMARY KEY (vehicle_id)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_condition_not_null",
+      "kind": "n",
+      "definition": "NOT NULL condition"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_created_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_dealer_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL dealer_id"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_kms_driven_not_null",
+      "kind": "n",
+      "definition": "NOT NULL kms_driven"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_manufacturing_year_not_null",
+      "kind": "n",
+      "definition": "NOT NULL manufacturing_year"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_ownership_count_not_null",
+      "kind": "n",
+      "definition": "NOT NULL ownership_count"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_updated_at_not_null",
+      "kind": "n",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_variant_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL variant_id"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "vehicles_vehicle_id_not_null",
+      "kind": "n",
+      "definition": "NOT NULL vehicle_id"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "cities",
+      "name": "pk_cities",
+      "definition": "CREATE UNIQUE INDEX pk_cities ON app.cities USING btree (city_id)"
+    },
+    {
+      "table_name": "cities",
+      "name": "uq_cities_name_state",
+      "definition": "CREATE UNIQUE INDEX uq_cities_name_state ON app.cities USING btree (city_name, state_name)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "idx_dealer_profiles_city",
+      "definition": "CREATE INDEX idx_dealer_profiles_city ON app.dealer_profiles USING btree (city_id)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "pk_dealer_profiles",
+      "definition": "CREATE UNIQUE INDEX pk_dealer_profiles ON app.dealer_profiles USING btree (dealer_id)"
+    },
+    {
+      "table_name": "dealer_profiles",
+      "name": "uq_dealer_profiles_user",
+      "definition": "CREATE UNIQUE INDEX uq_dealer_profiles_user ON app.dealer_profiles USING btree (user_id)"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "idx_listing_embeddings_cosine",
+      "definition": "CREATE INDEX idx_listing_embeddings_cosine ON app.listing_embeddings USING hnsw (embedding vector_cosine_ops)"
+    },
+    {
+      "table_name": "listing_embeddings",
+      "name": "listing_embeddings_pkey",
+      "definition": "CREATE UNIQUE INDEX listing_embeddings_pkey ON app.listing_embeddings USING btree (listing_id)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "idx_enquiries_listing_created",
+      "definition": "CREATE INDEX idx_enquiries_listing_created ON app.listing_enquiries USING btree (listing_id, created_at DESC)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "idx_enquiries_user_created",
+      "definition": "CREATE INDEX idx_enquiries_user_created ON app.listing_enquiries USING btree (user_id, created_at DESC)"
+    },
+    {
+      "table_name": "listing_enquiries",
+      "name": "listing_enquiries_pkey",
+      "definition": "CREATE UNIQUE INDEX listing_enquiries_pkey ON app.listing_enquiries USING btree (enquiry_id)"
+    },
+    {
+      "table_name": "listing_image_data",
+      "name": "listing_image_data_pkey",
+      "definition": "CREATE UNIQUE INDEX listing_image_data_pkey ON app.listing_image_data USING btree (image_id)"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "idx_listing_images_listing",
+      "definition": "CREATE INDEX idx_listing_images_listing ON app.listing_images USING btree (listing_id)"
+    },
+    {
+      "table_name": "listing_images",
+      "name": "pk_listing_images",
+      "definition": "CREATE UNIQUE INDEX pk_listing_images ON app.listing_images USING btree (image_id)"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "idx_price_estimates_listing",
+      "definition": "CREATE INDEX idx_price_estimates_listing ON app.listing_price_estimates USING btree (listing_id, assessed_at DESC)"
+    },
+    {
+      "table_name": "listing_price_estimates",
+      "name": "listing_price_estimates_pkey",
+      "definition": "CREATE UNIQUE INDEX listing_price_estimates_pkey ON app.listing_price_estimates USING btree (estimate_id)"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "pk_manufacturers",
+      "definition": "CREATE UNIQUE INDEX pk_manufacturers ON app.manufacturers USING btree (manufacturer_id)"
+    },
+    {
+      "table_name": "manufacturers",
+      "name": "uq_manufacturer_name",
+      "definition": "CREATE UNIQUE INDEX uq_manufacturer_name ON app.manufacturers USING btree (manufacturer_name)"
+    },
+    {
+      "table_name": "request_limits",
+      "name": "request_limits_pkey",
+      "definition": "CREATE UNIQUE INDEX request_limits_pkey ON app.request_limits USING btree (key_hash)"
+    },
+    {
+      "table_name": "users",
+      "name": "pk_users",
+      "definition": "CREATE UNIQUE INDEX pk_users ON app.users USING btree (user_id)"
+    },
+    {
+      "table_name": "users",
+      "name": "uq_users_email",
+      "definition": "CREATE UNIQUE INDEX uq_users_email ON app.users USING btree (email)"
+    },
+    {
+      "table_name": "users",
+      "name": "uq_users_email_lower",
+      "definition": "CREATE UNIQUE INDEX uq_users_email_lower ON app.users USING btree (lower((email)::text))"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "idx_listings_price",
+      "definition": "CREATE INDEX idx_listings_price ON app.vehicle_listings USING btree (asking_price)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "idx_listings_status",
+      "definition": "CREATE INDEX idx_listings_status ON app.vehicle_listings USING btree (listing_status)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "pk_vehicle_listings",
+      "definition": "CREATE UNIQUE INDEX pk_vehicle_listings ON app.vehicle_listings USING btree (listing_id)"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "uq_active_listing_per_vehicle",
+      "definition": "CREATE UNIQUE INDEX uq_active_listing_per_vehicle ON app.vehicle_listings USING btree (vehicle_id) WHERE ((listing_status)::text = 'active'::text)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "idx_vehicle_models_manufacturer",
+      "definition": "CREATE INDEX idx_vehicle_models_manufacturer ON app.vehicle_models USING btree (manufacturer_id)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "pk_vehicle_models",
+      "definition": "CREATE UNIQUE INDEX pk_vehicle_models ON app.vehicle_models USING btree (model_id)"
+    },
+    {
+      "table_name": "vehicle_models",
+      "name": "uq_manufacturer_model",
+      "definition": "CREATE UNIQUE INDEX uq_manufacturer_model ON app.vehicle_models USING btree (manufacturer_id, model_name)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "idx_vehicle_variants_fuel",
+      "definition": "CREATE INDEX idx_vehicle_variants_fuel ON app.vehicle_variants USING btree (fuel_type)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "idx_vehicle_variants_model",
+      "definition": "CREATE INDEX idx_vehicle_variants_model ON app.vehicle_variants USING btree (model_id)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "idx_vehicle_variants_transmission",
+      "definition": "CREATE INDEX idx_vehicle_variants_transmission ON app.vehicle_variants USING btree (transmission)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "pk_vehicle_variants",
+      "definition": "CREATE UNIQUE INDEX pk_vehicle_variants ON app.vehicle_variants USING btree (variant_id)"
+    },
+    {
+      "table_name": "vehicle_variants",
+      "name": "uq_model_variant",
+      "definition": "CREATE UNIQUE INDEX uq_model_variant ON app.vehicle_variants USING btree (model_id, variant_name)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "idx_vehicles_dealer",
+      "definition": "CREATE INDEX idx_vehicles_dealer ON app.vehicles USING btree (dealer_id)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "idx_vehicles_kms",
+      "definition": "CREATE INDEX idx_vehicles_kms ON app.vehicles USING btree (kms_driven)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "idx_vehicles_variant",
+      "definition": "CREATE INDEX idx_vehicles_variant ON app.vehicles USING btree (variant_id)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "idx_vehicles_year",
+      "definition": "CREATE INDEX idx_vehicles_year ON app.vehicles USING btree (manufacturing_year)"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "pk_vehicles",
+      "definition": "CREATE UNIQUE INDEX pk_vehicles ON app.vehicles USING btree (vehicle_id)"
+    }
+  ],
+  "views": [
+    {
+      "name": "active_listing_details",
+      "definition": " SELECT vl.listing_id,\n    v.vehicle_id,\n    vl.asking_price,\n    vl.description,\n    vl.source_type,\n    v.manufacturing_year,\n    v.registration_year,\n    v.kms_driven,\n    v.colour,\n    v.ownership_count,\n    v.condition,\n    m.manufacturer_name,\n    vm.model_name,\n    vm.body_type,\n    vv.variant_name,\n    vv.fuel_type,\n    vv.transmission,\n    dp.dealer_id,\n    dp.dealership_name,\n    c.city_id,\n    c.city_name,\n    estimate.estimated_price,\n    estimate.lower_price,\n    estimate.upper_price,\n        CASE\n            WHEN (estimate.estimated_price IS NULL) THEN 'estimate_unavailable'::text\n            WHEN (vl.asking_price < COALESCE(estimate.lower_price, estimate.estimated_price)) THEN 'below_estimate_range'::text\n            WHEN (vl.asking_price > COALESCE(estimate.upper_price, estimate.estimated_price)) THEN 'above_estimate_range'::text\n            ELSE 'within_estimate_range'::text\n        END AS estimate_comparison\n   FROM (((((((app.vehicle_listings vl\n     JOIN app.vehicles v ON ((v.vehicle_id = vl.vehicle_id)))\n     JOIN app.vehicle_variants vv ON ((vv.variant_id = v.variant_id)))\n     JOIN app.vehicle_models vm ON ((vm.model_id = vv.model_id)))\n     JOIN app.manufacturers m ON ((m.manufacturer_id = vm.manufacturer_id)))\n     JOIN app.dealer_profiles dp ON ((dp.dealer_id = v.dealer_id)))\n     JOIN app.cities c ON ((c.city_id = dp.city_id)))\n     LEFT JOIN LATERAL ( SELECT lpe.estimated_price,\n            lpe.lower_price,\n            lpe.upper_price\n           FROM app.listing_price_estimates lpe\n          WHERE (lpe.listing_id = vl.listing_id)\n          ORDER BY lpe.assessed_at DESC, lpe.estimate_id DESC\n         LIMIT 1) estimate ON (true))\n  WHERE ((vl.listing_status)::text = 'active'::text);"
+    },
+    {
+      "name": "dealer_inventory_summary",
+      "definition": " SELECT dp.dealer_id,\n    dp.dealership_name,\n    c.city_name,\n    count(vl.listing_id) FILTER (WHERE ((vl.listing_status)::text = 'active'::text)) AS active_listing_count,\n    COALESCE(sum(vl.asking_price) FILTER (WHERE ((vl.listing_status)::text = 'active'::text)), (0)::numeric) AS active_asking_price_total,\n    round(avg(vl.asking_price) FILTER (WHERE ((vl.listing_status)::text = 'active'::text)), 2) AS active_average_asking_price\n   FROM (((app.dealer_profiles dp\n     JOIN app.cities c ON ((c.city_id = dp.city_id)))\n     LEFT JOIN app.vehicles v ON ((v.dealer_id = dp.dealer_id)))\n     LEFT JOIN app.vehicle_listings vl ON ((vl.vehicle_id = v.vehicle_id)))\n  GROUP BY dp.dealer_id, dp.dealership_name, c.city_name;"
+    }
+  ],
+  "functions": [
+    {
+      "name": "search_active_listings",
+      "arguments": "p_city_id smallint, p_max_price numeric, p_fuel_type text, p_transmission text"
+    },
+    {
+      "name": "set_updated_at",
+      "arguments": ""
+    }
+  ],
+  "triggers": [
+    {
+      "table_name": "dealer_profiles",
+      "name": "trg_dealer_profiles_set_updated_at",
+      "action_statement": "EXECUTE FUNCTION app.set_updated_at()"
+    },
+    {
+      "table_name": "vehicle_listings",
+      "name": "trg_vehicle_listings_set_updated_at",
+      "action_statement": "EXECUTE FUNCTION app.set_updated_at()"
+    },
+    {
+      "table_name": "vehicles",
+      "name": "trg_vehicles_set_updated_at",
+      "action_statement": "EXECUTE FUNCTION app.set_updated_at()"
+    }
+  ]
+}

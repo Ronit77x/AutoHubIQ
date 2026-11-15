@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-15",
+  "versions": {
+    "postgresql": "18.6",
+    "pgvector": "0.8.7"
+  },
+  "counts": {
+    "cities": 3,
+    "listings": 12,
+    "active_listings": 12,
+    "estimates": 12,
+    "embeddings": 12
+  },
+  "table_count": 14,
+  "cities": [
+    {
+      "city_name": "Bangalore",
+      "dealers": 3,
+      "listings": 4
+    },
+    {
+      "city_name": "Kolkata",
+      "dealers": 2,
+      "listings": 4
+    },
+    {
+      "city_name": "Mumbai",
+      "dealers": 2,
+      "listings": 4
+    }
+  ],
+  "coverage": {
+    "missing_embeddings": 0,
+    "missing_estimates": 0
+  },
+  "integrity": [
+    {
+      "check_name": "Vehicles without dealer profiles",
+      "issue_count": "0"
+    },
+    {
+      "check_name": "Vehicles without valid variants",
+      "issue_count": "0"
+    },
+    {
+      "check_name": "Listings without vehicles",
+      "issue_count": "0"
+    },
+    {
+      "check_name": "Images without listings",
+      "issue_count": "0"
+    }
+  ],
+  "schema_matches_clean_install": true,
+  "trigger_tests": [
+    "dealer_profiles",
+    "vehicles",
+    "vehicle_listings"
+  ],
+  "advanced_queries_passed": true,
+  "vector_rud": {
+    "matches": 5,
+    "updated": 1,
+    "deleted": 1,
+    "rollback_restored": true
+  },
+  "configured_database_access": "READ ONLY; tests ran in disposable database"
+}

@@ -72,6 +72,7 @@ npm.cmd install
 npm.cmd run setup:local
 npm.cmd run db:embed
 npm.cmd run demo:admin
+npm.cmd run demo:dealers
 npm.cmd run db:check
 ```
 
@@ -85,7 +86,8 @@ demo administrator and verify the application, then return as the dealer to
 publish a vehicle. Add up to six JPEG, PNG or WebP photos (5 MB each maximum).
 Sign in as a separate customer to submit an enquiry or test-drive request;
 the request appears in the dealer's **Buyer requests** inbox. Seed demo cars
-are illustrative and do not accept enquiries. No email or SMS is sent.
+are illustrative and accept enquiries, test-drive requests and customer offers.
+No email or SMS is sent.
 
 The marketplace supports budget, fuel, transmission, sorting and paged browsing.
 An optional description enables semantic ranking with the same filters and
@@ -111,8 +113,9 @@ service. This storage choice is intended for the small college demo.
   cannot create an administrator account. A trusted database administrator
   must grant the `admin` role after independently verifying the account; there
   is no default admin account or automatic promotion.
-- Demo dealer seed users have placeholder, non-login password values and are
-  not credentials for the application.
+- SQL seeds initially use non-login placeholders. Run `npm.cmd run demo:dealers`
+  to provision six usable demo dealer accounts without replacing working
+  passwords; generated credentials stay in ignored `.demo-credentials.txt`.
 
 ## Semantic vehicle search
 
@@ -151,9 +154,13 @@ Additional endpoints:
   upload with a `photo` field; maximum six photos per listing
 - `GET /api/images/<imageId>` — uploaded JPEG content
 - `POST /api/listings/<listingId>/enquiries` — authenticated buyer request with
-  `message`, optional `phone`, and `request_type` (`enquiry` or `test_drive`)
+  `message`, optional `phone`, and `request_type` (`enquiry`, `test_drive` or
+  `offer`); offers require a positive `offer_amount` and a customer account
 - `GET /api/dealer/dashboard` also returns the latest 100 buyer requests for
   the authenticated dealer's inventory
+- `GET /api/offers` — customer-only offer history
+- `PATCH /api/offers/<offerId>` — customer edits owned offers before contact;
+  owning dealer sends `{ "action": "mark_contacted" }` to close editing
 - `GET /api/db-check` requires administrator access
 
 Listings accept `page`, `page_size` (1–48), `max_price`, `fuel_type`,
@@ -225,3 +232,25 @@ This is a local college demo. Public deployment still needs an operator-chosen
 host and HTTPS configuration, production secrets and accounts, backups,
 monitoring, and an email provider for password recovery. Do not publish the
 generated demo administrator or local credential file.
+
+## Submission documentation and audit
+
+- [Dated rubric audit and remaining tasks](../docs/completion-audit.md)
+- [Architecture and complete/focused ER diagrams](../docs/architecture-and-demo.md)
+- [Relational schema and complete data dictionary](../docs/relational-schema.md)
+- [Submission report draft](../docs/project-report-draft.md)
+
+Buyers can view/edit their offers at /offers until the owning dealer marks them
+contacted or the listing becomes unavailable. Only the customer's own amount,
+message and phone are editable; old offers remain visible. Dealer contact status
+is entered manually and does not detect external email/calls. Inventory
+analytics use asking prices; no confirmed-sales ledger, general user-management
+UI, or PostgreSQL end-user RLS/GRANT implementation is claimed.
+
+Validation on 15 November 2026: auth tests, lint, isolated production build,
+93 workflow HTTP checks, 22 GET-only city/detail checks, live/fresh schema
+comparison, trigger/function/view and vector RUD verification passed. Current
+application screenshots and final report export remain pending; see the audit
+for coverage limits. The fresh build requires access to the existing Google
+Fonts dependencies. The main application and existing data were unchanged by
+the documentation audit.
