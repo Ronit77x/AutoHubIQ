@@ -1,0 +1,162 @@
+[
+  {
+    "module": "01-accounts",
+    "title": "Accounts and dealership ownership",
+    "kind": "chen",
+    "file": "chen-01-accounts.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "cities",
+      "users",
+      "dealer_profiles",
+      "request_limits"
+    ]
+  },
+  {
+    "module": "01-accounts",
+    "title": "Accounts and dealership ownership",
+    "kind": "mapping",
+    "file": "mapping-01-accounts.svg",
+    "width": 2410,
+    "height": 1820,
+    "entities": [
+      "cities",
+      "users",
+      "dealer_profiles",
+      "request_limits"
+    ]
+  },
+  {
+    "module": "02-catalogue",
+    "title": "Vehicle catalogue",
+    "kind": "chen",
+    "file": "chen-02-catalogue.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "manufacturers",
+      "vehicle_models",
+      "vehicle_variants"
+    ]
+  },
+  {
+    "module": "02-catalogue",
+    "title": "Vehicle catalogue",
+    "kind": "mapping",
+    "file": "mapping-02-catalogue.svg",
+    "width": 2196,
+    "height": 1430,
+    "entities": [
+      "manufacturers",
+      "vehicle_models",
+      "vehicle_variants"
+    ]
+  },
+  {
+    "module": "03-inventory",
+    "title": "Physical inventory and listings",
+    "kind": "chen",
+    "file": "chen-03-inventory.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "dealer_profiles",
+      "vehicle_variants",
+      "vehicles",
+      "vehicle_listings"
+    ]
+  },
+  {
+    "module": "03-inventory",
+    "title": "Physical inventory and listings",
+    "kind": "mapping",
+    "file": "mapping-03-inventory.svg",
+    "width": 2628,
+    "height": 1820,
+    "entities": [
+      "dealer_profiles",
+      "vehicle_variants",
+      "vehicles",
+      "vehicle_listings"
+    ]
+  },
+  {
+    "module": "04-images",
+    "title": "Listing images and uploaded content",
+    "kind": "chen",
+    "file": "chen-04-images.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "vehicle_listings",
+      "listing_images",
+      "listing_image_data"
+    ]
+  },
+  {
+    "module": "04-images",
+    "title": "Listing images and uploaded content",
+    "kind": "mapping",
+    "file": "mapping-04-images.svg",
+    "width": 2382,
+    "height": 1430,
+    "entities": [
+      "vehicle_listings",
+      "listing_images",
+      "listing_image_data"
+    ]
+  },
+  {
+    "module": "05-estimates",
+    "title": "Price estimates and semantic embeddings",
+    "kind": "chen",
+    "file": "chen-05-estimates.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "vehicle_listings",
+      "listing_price_estimates",
+      "listing_embeddings"
+    ]
+  },
+  {
+    "module": "05-estimates",
+    "title": "Price estimates and semantic embeddings",
+    "kind": "mapping",
+    "file": "mapping-05-estimates.svg",
+    "width": 2382,
+    "height": 1430,
+    "entities": [
+      "vehicle_listings",
+      "listing_price_estimates",
+      "listing_embeddings"
+    ]
+  },
+  {
+    "module": "06-interactions",
+    "title": "Buyer enquiries test drives and offers",
+    "kind": "chen",
+    "file": "chen-06-interactions.svg",
+    "width": 1800,
+    "height": 1640,
+    "entities": [
+      "users",
+      "vehicle_listings",
+      "listing_enquiries"
+    ]
+  },
+  {
+    "module": "06-interactions",
+    "title": "Buyer enquiries test drives and offers",
+    "kind": "mapping",
+    "file": "mapping-06-interactions.svg",
+    "width": 2382,
+    "height": 1430,
+    "entities": [
+      "users",
+      "vehicle_listings",
+      "listing_enquiries"
+    ]
+  }
+]

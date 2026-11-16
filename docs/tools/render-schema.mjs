@@ -1,4 +1,4 @@
-// Generate schema documentation and SVG diagrams from catalog metadata; no database writes.
+// Generate schema documentation from catalog metadata; no database writes.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 const root=new URL('../../',import.meta.url), out=new URL('docs/diagrams/',root);
 const catalog=JSON.parse(await readFile(new URL('docs/evidence/schema-catalog.json',root),'utf8'));
@@ -34,31 +34,4 @@ lines.push('## Derived objects','',...catalog.views.map(v=>`- View \`app.${v.nam
 '- Registration numbers are not unique; primary-image selection has no unique partial index. Do not claim these constraints in the report.',
 '- Positive estimate bounds and lower <= upper are enforced. No CHECK requires the central estimate to lie within those bounds.','');
 await writeFile(new URL('docs/relational-schema.md',root),lines.join('\n'));
-const xml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-async function diagram(name,selected,positions,title) {
-  const rels=relations.filter(r=>selected.includes(r.parent)&&selected.includes(r.child));
-  const m=['erDiagram',...rels.map(r=>`    ${r.parent.toUpperCase()} ||--${r.card==='0..1'?'o|':'o{'} ${r.child.toUpperCase()} : ${r.fk}`)];
-  for(const t of selected) {m.push(`    ${t.toUpperCase()} {`);for(const c of tables[t]) m.push(`        ${c.type.replaceAll('character varying','varchar').replace(/[^a-zA-Z0-9_\[\]]/g,'_')} ${c.column_name}${keys[t][c.column_name]?' '+keys[t][c.column_name].join(','):''}`);m.push('    }');}
-  await writeFile(new URL(name+'.mmd',out),m.join('\n')+'\n');
-  const boxes=Object.fromEntries(selected.map(t=>[t,{x:positions[t][0],y:positions[t][1],w:445,h:58+tables[t].length*23}]));
-  const width=Math.max(...Object.values(boxes).map(b=>b.x+b.w))+40,height=Math.max(...Object.values(boxes).map(b=>b.y+b.h))+80;
-  const s=[`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title desc"><title id="title">${xml(title)}</title><desc id="desc">Parent-to-child connectors show cardinalities. All foreign keys are mandatory on the child; parents may have zero children. Full constraints and nullability are in the data dictionary.</desc>`, '<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#64748b"/></marker></defs>',`<rect width="${width}" height="${height}" fill="#f8fafc"/><text x="40" y="38" font-family="Arial" font-size="24" font-weight="bold" fill="#0f172a">${xml(title)}</text><text x="40" y="67" font-family="Arial" font-size="15" fill="#475569">15 Nov 2026 · PK primary · FK foreign · UK unique membership · Parent 1 → child 0..* / 0..1</text>`];
-  // Route edges through row gutters. Same-row edges arc above the boxes.
-  const incomingSlots={};
-  for(const [i,r] of rels.entries()) {
-    const a=boxes[r.parent],b=boxes[r.child];let path,lx,ly;
-    const slot=incomingSlots[r.child]??0;incomingSlots[r.child]=slot+1;
-    const incomingCount=rels.filter(edge=>edge.child===r.child).length;
-    const sx=a.x+a.w,sy=a.y+48+(i%4)*18,ex=b.x+b.w*(slot+1)/(incomingCount+1),ey=b.y,gutter=sx+12+(i%3)*7,mid=b.y-22-(i%3)*15;
-    path=`M${sx} ${sy} H${gutter} V${mid} H${ex} V${ey}`;lx=ex+5;ly=ey-7;
-    s.push(`<path d="${path}" fill="none" stroke="${['#64748b','#0f766e','#7c3aed'][i%3]}" stroke-width="1.5" marker-end="url(#arrow)"/><text x="${lx}" y="${ly}" font-family="Arial" font-size="12" fill="#334155">1 → ${r.card}</text>`);
-  }
-  for(const [t,b] of Object.entries(boxes)) {s.push(`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="8" fill="white" stroke="#94a3b8"/><rect x="${b.x}" y="${b.y}" width="${b.w}" height="37" rx="8" fill="#0f766e"/><text x="${b.x+12}" y="${b.y+25}" font-family="Arial" font-size="18" font-weight="bold" fill="white">${t}</text>`);tables[t].forEach((c,i)=>s.push(`<text x="${b.x+12}" y="${b.y+59+i*23}" font-family="Consolas,monospace" font-size="13" fill="#0f172a">${xml((keys[t][c.column_name]?.join(',')+' ').replace('undefined ','')+c.column_name+' : '+c.type)}</text>`));}
-  s.push('</svg>');await writeFile(new URL(name+'.svg',out),s.join('\n'));
-}
-const full=['cities','users','manufacturers','request_limits','dealer_profiles','vehicles','vehicle_variants','vehicle_models','listing_enquiries','vehicle_listings','listing_images','listing_image_data','listing_embeddings','listing_price_estimates'];
-await diagram('erd-complete',full,Object.fromEntries(full.map((t,i)=>[t,[40+(i%4)*510,140+Math.floor(i/4)*660]])),'AutoHubIQ · complete physical schema (14 tables)');
-const market=['cities','dealer_profiles','manufacturers','vehicle_models','vehicle_variants','vehicles','vehicle_listings','listing_images','listing_price_estimates','listing_embeddings','listing_image_data'];
-await diagram('erd-marketplace',market,Object.fromEntries(market.map((t,i)=>[t,[40+(i%3)*510,140+Math.floor(i/3)*630]])),'AutoHubIQ · marketplace schema');
-await diagram('erd-buyer-offers',['users','dealer_profiles','vehicles','vehicle_listings','listing_enquiries'],{users:[40,140],dealer_profiles:[550,140],vehicles:[1060,140],listing_enquiries:[40,820],vehicle_listings:[550,820]},'AutoHubIQ · buyer offers and dealer ownership');
-console.log('Generated relational schema, three Mermaid sources, and three SVG ER diagrams.');
+console.log('Generated relational schema and data dictionary. Generate course diagrams with node docs/tools/render-course-diagrams.cjs.');

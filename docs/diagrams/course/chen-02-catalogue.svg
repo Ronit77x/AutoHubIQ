@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ Chen ER diagram 02</title><desc id="desc">Vehicle catalogue</desc><rect width="1800" height="1640" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ Chen ER diagram 02</text>
+<text x="50" y="95" font-family="Times New Roman,serif" font-size="28" fill="black" >Vehicle catalogue</text>
+<text x="50" y="136" font-family="Times New Roman,serif" font-size="23" fill="black" >Rectangle entity   Diamond relationship   Oval attribute   Underline primary key</text>
+<polyline points="450,420 450,205 820,205" fill="none" stroke="black" stroke-width="2"/>
+<polyline points="1350,420 1350,205 980,205" fill="none" stroke="black" stroke-width="2"/><polyline points="1355,425 1355,210 985,210" fill="none" stroke="black" stroke-width="2"/>
+<polygon points="900,167 980,205 900,243 820,205" fill="white" stroke="black" stroke-width="2"/>
+<text x="900" y="212" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle">makes</text>
+<text x="465" y="402" font-family="Times New Roman,serif" font-size="25" fill="black" >(0,N)</text>
+<text x="1365" y="402" font-family="Times New Roman,serif" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1305,480 1305,695 900,695 900,737" fill="none" stroke="black" stroke-width="2"/>
+<polyline points="450,1070 450,855 900,855 900,813" fill="none" stroke="black" stroke-width="2"/><polyline points="455,1075 455,860 905,860 905,818" fill="none" stroke="black" stroke-width="2"/>
+<polygon points="900,737 980,775 900,813 820,775" fill="white" stroke="black" stroke-width="2"/>
+<text x="900" y="782" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle">offers variant</text>
+<text x="1320" y="558" font-family="Times New Roman,serif" font-size="25" fill="black" >(0,N)</text>
+<text x="465" y="1052" font-family="Times New Roman,serif" font-size="25" fill="black" >(1,1)</text>
+<polyline points="330,450 256.81911032535396,433.99168038367117" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="415" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="422" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">manufacturer_id</text>
+<polyline points="330,450 256.81911032535396,466.00831961632883" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="485" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="492" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >manufacturer_name</text>
+<polyline points="570,450 643.1808896746461,433.99168038367117" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="415" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="422" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >country_of_origin</text>
+<polyline points="570,450 643.1808896746461,466.00831961632883" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="485" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="492" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<rect x="330" y="420" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="450" y="458" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">manufacturers</text>
+<polyline points="1230,450 1121.1714271408523,402.3874993741229" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="380" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="387" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">model_id</text>
+<polyline points="1230,450 1212,450" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="450" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="457" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >model_name</text>
+<polyline points="1230,450 1121.1714271408523,497.6125006258771" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="520" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="527" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >body_type</text>
+<polyline points="1470,450 1543.180889674646,433.99168038367117" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="415" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="422" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >description</text>
+<polyline points="1470,450 1543.180889674646,466.00831961632883" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="485" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="492" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<rect x="1230" y="420" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="1350" y="458" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">vehicle_models</text>
+<polyline points="330,1100 205.41573012746727,1018.2415728961504" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="995" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1002" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">variant_id</text>
+<polyline points="330,1100 256.81911032535396,1083.991680383671" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1065" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1072" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >variant_name</text>
+<polyline points="330,1100 256.81911032535396,1116.008319616329" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1135" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1142" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >fuel_type</text>
+<polyline points="330,1100 205.41573012746727,1181.7584271038495" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1205" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1212" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >transmission</text>
+<polyline points="570,1100 694.5842698725328,1018.2415728961504" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="995" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1002" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >engine_displacement_cc</text>
+<polyline points="570,1100 643.1808896746461,1083.991680383671" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1065" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1072" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >battery_capacity_kwh</text>
+<polyline points="570,1100 643.1808896746461,1116.008319616329" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1135" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1142" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >seating_capacity</text>
+<polyline points="570,1100 694.5842698725328,1181.7584271038495" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1205" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1212" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<rect x="330" y="1070" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="450" y="1108" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">vehicle_variants</text>
+<text x="50" y="1515" font-family="Times New Roman,serif" font-size="24" fill="black" >(min,max) labels describe participation at the adjacent entity; N means many.</text>
+<text x="50" y="1554" font-family="Times New Roman,serif" font-size="23" fill="black" >Double line marks total participation of the child. Non-key foreign keys appear only in the mapping.</text>
+<text x="50" y="1593" font-family="Times New Roman,serif" font-size="22" fill="black" >Shared primary identifiers are underlined; they are not invented partial keys. Operational request_limits is independent.</text>
+</svg>

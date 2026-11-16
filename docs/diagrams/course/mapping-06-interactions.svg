@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2382" height="1430" viewBox="0 0 2382 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to relational mapping 06</title><desc id="desc">Buyer enquiries test drives and offers</desc><rect width="2382" height="1430" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to relational mapping 06</text>
+<text x="50" y="100" font-family="Times New Roman,serif" font-size="28" fill="black" >Buyer enquiries test drives and offers</text>
+<text x="50" y="145" font-family="Times New Roman,serif" font-size="24" fill="black" >Underlined attribute primary key   FK label foreign key   Arrows child FK to referenced parent PK</text>
+<defs><marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="black"/></marker></defs>
+<path d="M305 1100 V1122 H2317 V602 H135 V620" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
+<path d="M454 1100 V1122 H2302 V202 H114 V230" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
+<text x="50" y="188" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">USERS</text>
+<rect x="50" y="230" width="128" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="114" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">user_id</text>
+<rect x="178" y="230" width="156" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="256" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >full_name</text>
+<rect x="334" y="230" width="120" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="394" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >email</text>
+<rect x="454" y="230" width="120" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="514" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >phone</text>
+<rect x="574" y="230" width="212" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="680" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >password_hash</text>
+<rect x="786" y="230" width="156" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="864" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >user_role</text>
+<rect x="942" y="230" width="226" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1055" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >account_status</text>
+<rect x="1168" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1253" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="1338" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1423" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<text x="50" y="393" font-family="Times New Roman,serif" font-size="24" fill="black" >No foreign key in this relation.</text>
+<text x="50" y="578" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">VEHICLE_LISTINGS</text>
+<rect x="50" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="135" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">listing_id</text>
+<rect x="220" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >vehicle_id</text>
+<text x="305" y="688" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="390" y="620" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="489" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >asking_price</text>
+<rect x="588" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="680" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >description</text>
+<rect x="772" y="620" width="226" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="885" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >listing_status</text>
+<rect x="998" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1090" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_type</text>
+<rect x="1182" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1267" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<rect x="1352" y="620" width="282" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1493" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_verified_at</text>
+<rect x="1634" y="620" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1733" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >published_at</text>
+<rect x="1832" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1917" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="2002" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="2087" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<text x="50" y="783" font-family="Times New Roman,serif" font-size="24" fill="black" >vehicle_listings.vehicle_id -&gt; vehicles.vehicle_id</text>
+<text x="50" y="968" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">LISTING_ENQUIRIES</text>
+<rect x="50" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="135" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">enquiry_id</text>
+<rect x="220" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >listing_id</text>
+<text x="305" y="1078" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="390" y="1010" width="128" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="454" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >user_id</text>
+<text x="454" y="1078" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="518" y="1010" width="128" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="582" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >message</text>
+<rect x="646" y="1010" width="120" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="706" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >phone</text>
+<rect x="766" y="1010" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="865" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >request_type</text>
+<rect x="964" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1049" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="1134" y="1010" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1233" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >offer_amount</text>
+<rect x="1332" y="1010" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1431" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >contacted_at</text>
+<rect x="1530" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1615" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<text x="50" y="1173" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_enquiries.listing_id -&gt; vehicle_listings.listing_id</text>
+<text x="50" y="1208" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_enquiries.user_id -&gt; users.user_id</text>
+<text x="50" y="1385" font-family="Times New Roman,serif" font-size="23" fill="black" >All columns are shown. Composite UNIQUE and CHECK rules remain in the data dictionary; PK underlining does not imply a composite key.</text>
+</svg>

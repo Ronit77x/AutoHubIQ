@@ -12,7 +12,7 @@ Ronit Prasad | PES1UG24CS549
 Sanjana Medarametla | PES1UG24CS908
 
 Repository https://github.com/Ronit77x/AutoHubIQ
-Report prepared 15 November 2026
+Report revised 16 November 2026
 
 ## Abstract
 
@@ -76,7 +76,7 @@ Protected requests verify a signed HttpOnly session cookie, then re-read the cur
 
 The physical design contains fourteen base tables. Manufacturers, models and variants form the reusable vehicle catalogue. Vehicles represent physical inventory; listings hold asking prices, descriptions, publication state and provenance. Keeping vehicles separate from listings permits historical listing records while a partial unique index allows at most one active listing per vehicle.
 
-![Marketplace schema](diagrams/erd-marketplace.svg)
+![Chen catalogue diagram](diagrams/course/chen-02-catalogue.svg)
 
 Each model belongs to one manufacturer and each variant to one model. A vehicle belongs to one dealer and one catalogue variant. A dealership belongs to one city and one user account; the user_id constraint permits at most one dealer profile per account. A city may contain multiple dealerships.
 
@@ -88,7 +88,7 @@ The design reduces repetition of catalogue attributes and separates records with
 
 Enquiries, test drives and offers share listing_enquiries. request_type distinguishes the interaction; offer_amount is present only for offers. There is no separate bids or auction table. contacted_at records the dealer-entered contact status, while updated_at records an offer edit.
 
-![Buyer offers](diagrams/erd-buyer-offers.svg)
+![Chen buyer interactions](diagrams/course/chen-06-interactions.svg)
 
 A customer submits an offer from a listing and views it under My offers. The customer can revise the owned amount, message and phone while the listing is active, the dealership is verified and contacted_at is NULL. The dealer sees revised data in the existing inbox. After contacting the buyer, the owning dealer selects Mark contacted, which closes editing. External calls and emails are not detected automatically.
 
@@ -352,11 +352,34 @@ Future enhancements may include a confirmed-sale ledger and actual revenue analy
 
 The project is presented for Semester 5, Section I, Database Management System Experiential Learning Level 3, August-December 2026. Both authors retain shared responsibility for reviewing the report, validating the contribution statement and explaining the implementation during evaluation.
 
-## Appendix A Complete physical schema
+## Appendix A Chen ER diagrams and relational mapping
 
-This overview includes all fourteen audited base tables. Each arrow runs from a referenced parent to its child. PK and FK identify key membership. Every child FK is NOT NULL; parent records may have zero children. Dealer user_id, embedding listing_id and image payload image_id are unique on the child, giving a maximum of one corresponding child. Other relationships permit multiple children. The independent request_limits table has no foreign key.
+The following sheets use the course notation: rectangles for entity sets, diamonds for relationships, ovals for attributes and underlined primary keys. Participation is written as (min,max) at each entity, with a double line for total child participation. Six modules collectively cover all fourteen entities and thirteen implemented foreign-key relationships. Repeated entities connect the modules and retain the same identifier.
 
-![Complete physical schema](diagrams/erd-complete.svg)
+### Mapping rules
+Map each entity to a relation and retain its underlined primary key. For 1:N, copy the parent key into the N-side as a NOT NULL foreign key. For 1:1, use a UNIQUE foreign key on the mandatory child side. Preserve the shared PK/FK identifiers of embeddings and uploaded image payloads.
+
+No M:N relationship, multivalued attribute or partial key is invented. Non-key foreign keys are omitted from ER ovals and restored in the relational mapping. request_limits is independent. CHECK constraints, composite uniqueness and API rules are documented separately.
+
+### Relationship to relation mapping
+| Relationship | Cardinality | Relational mapping |
+| --- | --- | --- |
+| City locates dealership | 1:N | dealer_profiles.city_id -> cities.city_id |
+| User owns dealer profile | 1:1 | dealer_profiles.user_id UNIQUE FK -> users.user_id |
+| Manufacturer makes model | 1:N | vehicle_models.manufacturer_id -> manufacturers.manufacturer_id |
+| Model offers variant | 1:N | vehicle_variants.model_id -> vehicle_models.model_id |
+| Dealer owns vehicle | 1:N | vehicles.dealer_id -> dealer_profiles.dealer_id |
+| Variant describes vehicle | 1:N | vehicles.variant_id -> vehicle_variants.variant_id |
+| Vehicle has listing | 1:N | vehicle_listings.vehicle_id -> vehicles.vehicle_id |
+| Listing has image | 1:N | listing_images.listing_id -> vehicle_listings.listing_id |
+| Image stores uploaded content | 1:1 | listing_image_data.image_id PK/FK -> listing_images.image_id |
+| Listing has dated estimate | 1:N | listing_price_estimates.listing_id -> vehicle_listings.listing_id |
+| Listing has embedding | 1:1 | listing_embeddings.listing_id PK/FK -> vehicle_listings.listing_id |
+| Listing receives interaction | 1:N | listing_enquiries.listing_id -> vehicle_listings.listing_id |
+| User submits interaction | 1:N | listing_enquiries.user_id -> users.user_id |
+
+[Course Chen ER diagrams and relational mapping](../output/pdf/AutoHubIQ_ER_and_Relational_Mapping.pdf)
+
 
 ## Appendix B Data dictionary
 

@@ -2,13 +2,13 @@
 
 **Audit date:** 15 November 2026. **Baseline:** commit `e363f78` and the user-supplied 50-mark rubric. This is a completion assessment, not an awarded score. The one-page institutional rubric, DBMS Level 3 (2).pdf, was subsequently supplied and visually reviewed on 15 November 2026. The team accepts the combined nested/correlated-query category, database-backed API authorization and vector DELETE demonstration as sufficient; these are team interpretations, not instructor confirmations.
 
-The application is substantially ahead of the pasted progress report. Semantic search, details pages, estimates, authentication, dealer/admin workflows, image uploads, customer offers, and buyer offer editing are implemented. The main remaining submission work is current web-interface visual evidence and student review/submission. A 28-page formal PDF and editable report now include member details, a balanced joint contribution statement, schema diagrams, query examples and the rubric mapping.
+The application is substantially ahead of the pasted progress report. Semantic search, details pages, estimates, authentication, dealer/admin workflows, image uploads, customer offers, and buyer offer editing are implemented. The main remaining submission work is current web-interface visual evidence and student review/submission. A formal PDF and editable report now include member details, a balanced joint contribution statement, schema diagrams, query examples and the rubric mapping.
 
 ## Rubric assessment
 
 | Criterion | Maximum | Status | Evidence and remaining action |
 | --- | ---: | --- | --- |
-| ER diagram | 2 | Updated | [Complete and focused ERDs](architecture-and-demo.md#entity-relationship-diagrams) now cover all 14 tables and offer/contact columns. Include legible diagrams in the final report. |
+| ER diagram | 2 | Updated | [Course Chen ERDs and relational mapping](course-er-mapping.md) now cover all 14 tables and offer/contact columns. Include legible diagrams in the final report. |
 | Relational schema | 3 | Updated | [Schema and column dictionary](relational-schema.md) lists every column, PK/FK, nullability, default, constraint, and index; live metadata matches a clean install. |
 | SQL DDL and constraints | 4 | Implemented, verified | All schema scripts apply successfully to a disposable database; FK/unique/check definitions are catalogued. Four orphan checks return zero issues. This is not a claim of exhaustive invalid-input coverage. |
 | Vector database creation | 4 | Implemented, verified | Schema 15 creates pgvector, `vector(384)`, and an HNSW cosine index. All 12 active listings have embeddings. pgvector is inside PostgreSQL, not a separate NoSQL server. |
@@ -56,7 +56,7 @@ The application is substantially ahead of the pasted progress report. Semantic s
 | `npm.cmd run test:workflow` | 93 HTTP checks plus assertions passed | Existing regression creates/removes its own temporary database. |
 | `node docs/tools/audit-schema.mjs` | Passed | Configured database inspected in a repeatable-read READ ONLY transaction; schema/seed, trigger, function/view, correlated-query and vector RUD tests ran in a separate disposable database, subsequently removed. |
 | `node docs/tools/check-public-cities.mjs` | 22 HTTP GET checks passed | Isolated production server; all cities, sorted petrol/budget results, empty results, and 12 details with images/estimates. Configured DB was only read. |
-| Diagram/schema generation | Complete | `node docs/tools/render-schema.mjs`; SVG output visually inspected, sources retained. |
+| Diagram/schema generation | Complete | `node docs/tools/render-schema.mjs` for the dictionary; `node docs/tools/render-course-diagrams.cjs` for the revised Chen and mapping sheets; PDF output visually inspected. |
 
 Database evidence: [database validation](evidence/database-validation.json), [schema catalog](evidence/schema-catalog.json), [city validation](evidence/city-validation.json). Versions: PostgreSQL 18.6, pgvector 0.8.7. Observed data: 3 cities, 12 active listings, 12 estimates and 12 embeddings. Six seeded dealers own two demo cars each; the live database additionally has a Bangalore dealership (3 Bangalore / 2 Mumbai / 2 Kolkata profiles). No accounts were removed.
 
@@ -71,3 +71,14 @@ The automated workflow concentrates on one selected city for writes and semantic
 5. Review and commit documentation, inspect contribution history, and verify the final GitHub upload. No commit, push, account change, feature change or existing-data cleanup was performed by this audit.
 
 Historical screenshots `05_demo_inventory_verified.png` and `21_database_integrity_checks.png` were visually inspected: the former shows the old one-dealer-per-city arrangement, and the latter covers only four orphan checks. Keep them explicitly historical; replace the inventory screenshot for a current-state submission. The remaining numbered screenshots are SQL-oriented files and should not be presented as proof of current app workflows without individual inspection.
+
+## Course diagram revision 16 November 2026
+
+The course example prompted a notation correction. The primary submission set
+now contains Chen ER entity/attribute/relationship diagrams and separate
+compartment-style ER-to-relational mapping sheets, not just physical table
+boxes. Six modules cover all 14 entities and 13 FK relationships. Every mapped
+column is retained; min-max participation, PK underlining, UNIQUE FK 1:1 mappings
+and PK/FK shared identifiers are explicit. The revised report embeds the full
+set. This is a documentation-only revision; the 15 November database validation
+and application implementation are unchanged.

@@ -36,172 +36,23 @@ the database.
 
 ## Entity relationship diagrams
 
-Audited against all 14 live base tables and a fresh SQL install on 15 November 2026.
-The complete physical diagram includes every column. Offers are rows in
-listing_enquiries, not a separate bids table. request_limits is independent
-and has no FK. PK/FK/UK denote key membership; composite unique definitions,
-nullability and deletion behavior are specified in the dictionary.
+The primary submission diagrams now follow the supplied course format:
+Chen ER diagrams with rectangles, relationship diamonds, attribute ovals,
+underlined primary keys and (min,max) participation, followed by separate
+relational schemas with attribute compartments and child-FK to parent-PK arrows.
 
-- [Complete ERD (SVG)](diagrams/erd-complete.svg) · [Mermaid source](diagrams/erd-complete.mmd)
-- [Marketplace ERD (SVG)](diagrams/erd-marketplace.svg) · [Mermaid source](diagrams/erd-marketplace.mmd)
-- [Buyer offers ERD (SVG)](diagrams/erd-buyer-offers.svg) · [Mermaid source](diagrams/erd-buyer-offers.mmd)
+See [Course ER diagrams and mapping rules](course-er-mapping.md) for all six
+modules and the [printable diagram PDF](../output/pdf/AutoHubIQ_ER_and_Relational_Mapping.pdf).
+The modules cover all fourteen tables and thirteen FK relationships. The
+[typed relational schema and dictionary](relational-schema.md) remains the
+source for exact column types, nullability, uniqueness, CHECKs and indexes.
 
-![Buyer offers and dealer ownership](diagrams/erd-buyer-offers.svg)
-
-Use the split diagrams at readable scale in the final report, with the complete
-diagram/schema as an appendix. All child FKs are NOT NULL; parents may have
-zero children. A user has at most one dealer profile, a listing at most one
-embedding, and an image at most one stored upload payload. Cities may have
-multiple dealerships; vehicles may have multiple historical listings but only
-one active listing, enforced by a partial unique index.
-
-```mermaid
-erDiagram
-    CITIES ||--o{ DEALER_PROFILES : city_id
-    USERS ||--o| DEALER_PROFILES : user_id
-    VEHICLE_LISTINGS ||--o| LISTING_EMBEDDINGS : listing_id
-    VEHICLE_LISTINGS ||--o{ LISTING_ENQUIRIES : listing_id
-    USERS ||--o{ LISTING_ENQUIRIES : user_id
-    LISTING_IMAGES ||--o| LISTING_IMAGE_DATA : image_id
-    VEHICLE_LISTINGS ||--o{ LISTING_IMAGES : listing_id
-    VEHICLE_LISTINGS ||--o{ LISTING_PRICE_ESTIMATES : listing_id
-    VEHICLES ||--o{ VEHICLE_LISTINGS : vehicle_id
-    MANUFACTURERS ||--o{ VEHICLE_MODELS : manufacturer_id
-    VEHICLE_MODELS ||--o{ VEHICLE_VARIANTS : model_id
-    DEALER_PROFILES ||--o{ VEHICLES : dealer_id
-    VEHICLE_VARIANTS ||--o{ VEHICLES : variant_id
-    CITIES {
-        smallint city_id PK
-        varchar_100_ city_name UK
-        varchar_100_ state_name UK
-        boolean is_active
-        timestamp_with_time_zone created_at
-    }
-    USERS {
-        bigint user_id PK
-        varchar_120_ full_name
-        varchar_255_ email UK
-        varchar_20_ phone
-        text password_hash
-        varchar_20_ user_role
-        varchar_20_ account_status
-        timestamp_with_time_zone created_at
-        timestamp_with_time_zone updated_at
-    }
-    MANUFACTURERS {
-        smallint manufacturer_id PK
-        varchar_100_ manufacturer_name UK
-        varchar_100_ country_of_origin
-        timestamp_with_time_zone created_at
-    }
-    REQUEST_LIMITS {
-        text key_hash PK
-        timestamp_with_time_zone window_start
-        integer request_count
-    }
-    DEALER_PROFILES {
-        bigint dealer_id PK
-        bigint user_id FK,UK
-        smallint city_id FK
-        varchar_150_ dealership_name
-        varchar_20_ business_phone
-        varchar_255_ business_email
-        text street_address
-        text description
-        varchar_20_ verification_status
-        timestamp_with_time_zone created_at
-        timestamp_with_time_zone updated_at
-    }
-    VEHICLES {
-        bigint vehicle_id PK
-        bigint dealer_id FK
-        bigint variant_id FK
-        smallint manufacturing_year
-        smallint registration_year
-        integer kms_driven
-        varchar_40_ colour
-        smallint ownership_count
-        varchar_20_ condition
-        varchar_20_ registration_number
-        timestamp_with_time_zone created_at
-        timestamp_with_time_zone updated_at
-    }
-    VEHICLE_VARIANTS {
-        bigint variant_id PK
-        bigint model_id FK,UK
-        varchar_120_ variant_name UK
-        varchar_20_ fuel_type
-        varchar_20_ transmission
-        integer engine_displacement_cc
-        numeric_6_2_ battery_capacity_kwh
-        smallint seating_capacity
-        timestamp_with_time_zone created_at
-    }
-    VEHICLE_MODELS {
-        bigint model_id PK
-        smallint manufacturer_id FK,UK
-        varchar_120_ model_name UK
-        varchar_30_ body_type
-        text description
-        timestamp_with_time_zone created_at
-    }
-    LISTING_ENQUIRIES {
-        bigint enquiry_id PK
-        bigint listing_id FK
-        bigint user_id FK
-        text message
-        varchar_20_ phone
-        text request_type
-        timestamp_with_time_zone created_at
-        numeric_12_2_ offer_amount
-        timestamp_with_time_zone contacted_at
-        timestamp_with_time_zone updated_at
-    }
-    VEHICLE_LISTINGS {
-        bigint listing_id PK
-        bigint vehicle_id FK
-        numeric_12_2_ asking_price
-        text description
-        varchar_20_ listing_status
-        varchar_20_ source_type
-        text source_url
-        timestamp_with_time_zone source_verified_at
-        timestamp_with_time_zone published_at
-        timestamp_with_time_zone created_at
-        timestamp_with_time_zone updated_at
-    }
-    LISTING_IMAGES {
-        bigint image_id PK
-        bigint listing_id FK
-        text image_url
-        smallint display_order
-        boolean is_primary
-        timestamp_with_time_zone created_at
-    }
-    LISTING_IMAGE_DATA {
-        bigint image_id FK,PK
-        bytea content
-        text content_type
-    }
-    LISTING_EMBEDDINGS {
-        bigint listing_id FK,PK
-        vector_384_ embedding
-        text source_text
-        text model_name
-        timestamp_with_time_zone generated_at
-    }
-    LISTING_PRICE_ESTIMATES {
-        bigint estimate_id PK
-        bigint listing_id FK
-        numeric_12_2_ estimated_price
-        numeric_12_2_ lower_price
-        numeric_12_2_ upper_price
-        text methodology
-        text source_summary
-        text source_url
-        timestamp_with_time_zone assessed_at
-    }
-```
+Repeated entities join the modules using the same identifiers. Non-key foreign
+keys are shown in the relational mapping rather than duplicated as ER ovals.
+A mandatory child FK gives child participation (1,1); an optional parent may
+participate in (0,N) or, for unique child FKs, (0,1). No weak entity or M:N
+relationship has been invented. Offers remain rows of listing_enquiries;
+request_limits is an independent operational entity.
 
 ## Data dictionary
 

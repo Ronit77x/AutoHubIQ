@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ Chen ER diagram 01</title><desc id="desc">Accounts and dealership ownership</desc><rect width="1800" height="1640" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ Chen ER diagram 01</text>
+<text x="50" y="95" font-family="Times New Roman,serif" font-size="28" fill="black" >Accounts and dealership ownership</text>
+<text x="50" y="136" font-family="Times New Roman,serif" font-size="23" fill="black" >Rectangle entity   Diamond relationship   Oval attribute   Underline primary key</text>
+<polyline points="450,480 450,737" fill="none" stroke="black" stroke-width="2"/>
+<polyline points="405,1070 405,813 450,813" fill="none" stroke="black" stroke-width="2"/><polyline points="410,1075 410,818 455,818" fill="none" stroke="black" stroke-width="2"/>
+<polygon points="450,737 530,775 450,813 370,775" fill="white" stroke="black" stroke-width="2"/>
+<text x="450" y="782" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle">located in</text>
+<text x="465" y="516" font-family="Times New Roman,serif" font-size="25" fill="black" >(0,N)</text>
+<text x="420" y="1052" font-family="Times New Roman,serif" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1305,480 1305,695 900,695 900,737" fill="none" stroke="black" stroke-width="2"/>
+<polyline points="495,1070 495,855 900,855 900,813" fill="none" stroke="black" stroke-width="2"/><polyline points="500,1075 500,860 905,860 905,818" fill="none" stroke="black" stroke-width="2"/>
+<polygon points="900,737 980,775 900,813 820,775" fill="white" stroke="black" stroke-width="2"/>
+<text x="900" y="782" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle">owns profile</text>
+<text x="1320" y="558" font-family="Times New Roman,serif" font-size="25" fill="black" >(0,1)</text>
+<text x="510" y="1052" font-family="Times New Roman,serif" font-size="25" fill="black" >(1,1)</text>
+<polyline points="330,450 221.17142714085242,402.3874993741229" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="380" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="387" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">city_id</text>
+<polyline points="330,450 312,450" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="450" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="457" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >city_name</text>
+<polyline points="330,450 221.17142714085242,497.6125006258771" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="520" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="527" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >state_name</text>
+<polyline points="570,450 643.1808896746461,433.99168038367117" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="415" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="422" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >is_active</text>
+<polyline points="570,450 643.1808896746461,466.00831961632883" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="485" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="492" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<rect x="330" y="420" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="450" y="458" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">cities</text>
+<polyline points="1230,450 1096.9307734513632,333.5644267699429" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="310" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="317" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">user_id</text>
+<polyline points="1230,450 1121.1714271408523,402.3874993741229" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="380" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="387" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >full_name</text>
+<polyline points="1230,450 1212,450" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="450" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="457" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >email</text>
+<polyline points="1230,450 1121.1714271408523,497.6125006258771" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="520" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="527" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >phone</text>
+<polyline points="1230,450 1096.9307734513632,566.4355732300571" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="590" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="597" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >password_hash</text>
+<polyline points="1470,450 1594.5842698725328,368.2415728961504" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="345" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="352" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >user_role</text>
+<polyline points="1470,450 1543.180889674646,433.99168038367117" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="415" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="422" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >account_status</text>
+<polyline points="1470,450 1543.180889674646,466.00831961632883" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="485" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="492" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="1470,450 1594.5842698725328,531.7584271038496" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="555" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="562" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="1230" y="420" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="1350" y="458" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">users</text>
+<polyline points="330,1100 196.93077345136328,983.5644267699429" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="960" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="967" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">dealer_id</text>
+<polyline points="330,1100 221.17142714085242,1052.3874993741229" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1030" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1037" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >dealership_name</text>
+<polyline points="330,1100 312,1100" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1100" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1107" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >business_phone</text>
+<polyline points="330,1100 221.17142714085242,1147.6125006258771" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1170" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1177" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >business_email</text>
+<polyline points="330,1100 196.93077345136328,1216.4355732300571" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="170" cy="1240" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="170" y="1247" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >street_address</text>
+<polyline points="570,1100 694.5842698725328,1018.2415728961504" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="995" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1002" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >description</text>
+<polyline points="570,1100 643.1808896746461,1083.991680383671" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1065" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1072" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >verification_status</text>
+<polyline points="570,1100 643.1808896746461,1116.008319616329" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1135" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1142" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="570,1100 694.5842698725328,1181.7584271038495" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="730" cy="1205" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="730" y="1212" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="330" y="1070" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="450" y="1108" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">dealer_profiles</text>
+<polyline points="1230,1100 1156.819110325354,1083.991680383671" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="1065" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="1072" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" text-decoration="underline">key_hash</text>
+<polyline points="1230,1100 1156.819110325354,1116.008319616329" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1070" cy="1135" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1070" y="1142" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >window_start</text>
+<polyline points="1470,1100 1488,1100" fill="none" stroke="black" stroke-width="2"/>
+<ellipse cx="1630" cy="1100" rx="142" ry="24" fill="white" stroke="black" stroke-width="2"/>
+<text x="1630" y="1107" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >request_count</text>
+<rect x="1230" y="1070" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
+<text x="1350" y="1108" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">request_limits</text>
+<text x="50" y="1515" font-family="Times New Roman,serif" font-size="24" fill="black" >(min,max) labels describe participation at the adjacent entity; N means many.</text>
+<text x="50" y="1554" font-family="Times New Roman,serif" font-size="23" fill="black" >Double line marks total participation of the child. Non-key foreign keys appear only in the mapping.</text>
+<text x="50" y="1593" font-family="Times New Roman,serif" font-size="22" fill="black" >Shared primary identifiers are underlined; they are not invented partial keys. Operational request_limits is independent.</text>
+</svg>

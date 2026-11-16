@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2382" height="1430" viewBox="0 0 2382 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to relational mapping 05</title><desc id="desc">Price estimates and semantic embeddings</desc><rect width="2382" height="1430" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to relational mapping 05</text>
+<text x="50" y="100" font-family="Times New Roman,serif" font-size="28" fill="black" >Price estimates and semantic embeddings</text>
+<text x="50" y="145" font-family="Times New Roman,serif" font-size="24" fill="black" >Underlined attribute primary key   FK label foreign key   Arrows child FK to referenced parent PK</text>
+<defs><marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="black"/></marker></defs>
+<path d="M135 1100 V1122 H2317 V212 H135 V230" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
+<path d="M319 710 V732 H2302 V202 H135 V230" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
+<text x="50" y="188" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">VEHICLE_LISTINGS</text>
+<rect x="50" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="135" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">listing_id</text>
+<rect x="220" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >vehicle_id</text>
+<text x="305" y="298" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="390" y="230" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="489" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >asking_price</text>
+<rect x="588" y="230" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="680" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >description</text>
+<rect x="772" y="230" width="226" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="885" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >listing_status</text>
+<rect x="998" y="230" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1090" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_type</text>
+<rect x="1182" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1267" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<rect x="1352" y="230" width="282" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1493" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_verified_at</text>
+<rect x="1634" y="230" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1733" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >published_at</text>
+<rect x="1832" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1917" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="2002" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="2087" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<text x="50" y="393" font-family="Times New Roman,serif" font-size="24" fill="black" >vehicle_listings.vehicle_id -&gt; vehicles.vehicle_id</text>
+<text x="50" y="578" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">LISTING_PRICE_ESTIMATES</text>
+<rect x="50" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="142" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">estimate_id</text>
+<rect x="234" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="319" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >listing_id</text>
+<text x="319" y="688" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="404" y="620" width="240" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="524" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >estimated_price</text>
+<rect x="644" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="736" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >lower_price</text>
+<rect x="828" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="920" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >upper_price</text>
+<rect x="1012" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1104" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >methodology</text>
+<rect x="1196" y="620" width="226" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1309" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_summary</text>
+<rect x="1422" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1507" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<rect x="1592" y="620" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="1684" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >assessed_at</text>
+<text x="50" y="783" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_price_estimates.listing_id -&gt; vehicle_listings.listing_id</text>
+<text x="50" y="968" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">LISTING_EMBEDDINGS</text>
+<rect x="50" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="135" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">listing_id</text>
+<text x="135" y="1078" font-family="Times New Roman,serif" font-size="20" fill="black" text-anchor="middle">FK</text>
+<rect x="220" y="1010" width="156" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="298" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >embedding</text>
+<rect x="376" y="1010" width="184" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="468" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >source_text</text>
+<rect x="560" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="645" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >model_name</text>
+<rect x="730" y="1010" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
+<text x="829" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >generated_at</text>
+<text x="50" y="1173" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_embeddings.listing_id -&gt; vehicle_listings.listing_id   UNIQUE FK for 1:1 mapping</text>
+<text x="50" y="1385" font-family="Times New Roman,serif" font-size="23" fill="black" >All columns are shown. Composite UNIQUE and CHECK rules remain in the data dictionary; PK underlining does not imply a composite key.</text>
+</svg>
