@@ -25,8 +25,8 @@ function text(x,y,value,size=24,extra=''){return `<text x="${x}" y="${y}" font-f
 function start(w,h,title,description){return [`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="title desc"><title id="title">${esc(title)}</title><desc id="desc">${esc(description)}</desc><rect width="${w}" height="${h}" fill="white"/>`,text(50,55,title,34,'font-weight="bold"')];}
 const line=(pts,double=false)=>`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="black" stroke-width="2"/>`+(double?`<polyline points="${pts.map(([x,y])=>`${x+5},${y+5}`).join(' ')}" fill="none" stroke="black" stroke-width="2"/>`:'');
 function chen(m){
- const s=start(1800,1640,`AutoHubIQ Chen ER diagram ${m.id.slice(0,2)}`,m.title);
- s.push(text(50,95,m.title,28),text(50,136,'Rectangle entity   Diamond relationship   Oval attribute   Underline primary key',23));
+ const s=start(1800,1640,`AutoHubIQ ER Diagram: ${m.title}`,m.title);
+
  const coords=Object.fromEntries(m.names.map((t,i)=>{const slot=m.slots?.[i]??i;return[t,{x:450+(slot%2)*900,y:450+Math.floor(slot/2)*650}];}));
  const rels=relationships.filter(r=>m.names.includes(r.parent)&&m.names.includes(r.child));
  const incoming={};
@@ -50,15 +50,15 @@ function chen(m){
   }));
   s.push(`<rect x="${c.x-120}" y="${c.y-30}" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>`,text(c.x,c.y+8,t,t.length>19?21:25,'font-weight="bold" text-anchor="middle"'));
  }
- s.push(text(50,1515,'(min,max) labels describe participation at the adjacent entity; N means many.',24),text(50,1554,'Double line marks total participation of the child. Non-key foreign keys appear only in the mapping.',23),text(50,1593,'Shared primary identifiers are underlined; they are not invented partial keys. Operational request_limits is independent.',22),'</svg>');
+ s.push('</svg>');
  return s.join('\n');
 }
 function mapping(m){
  const widths=Object.fromEntries(m.names.map(t=>[t,tables[t].map(c=>Math.max(120,c.column_name.length*14+30))]));
  const sums=m.names.map(t=>widths[t].reduce((a,b)=>a+b,0));
  const width=Math.max(1900,...sums)+260,height=260+m.names.length*390;
- const s=start(width,height,`AutoHubIQ ER to relational mapping ${m.id.slice(0,2)}`,m.title);
- s.push(text(50,100,m.title,28),text(50,145,'Underlined attribute primary key   FK label foreign key   Arrows child FK to referenced parent PK',24));
+ const s=start(width,height,`AutoHubIQ ER to Relational Mapping: ${m.title}`,m.title);
+
  s.push('<defs><marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="black"/></marker></defs>');
  const cells={};m.names.forEach((t,row)=>{let x=50;cells[t]={};tables[t].forEach((c,i)=>{cells[t][c.column_name]={x:x+widths[t][i]/2,y:230+row*390};x+=widths[t][i];});});
  const rels=relationships.filter(r=>m.names.includes(r.parent)&&m.names.includes(r.child));
@@ -67,10 +67,9 @@ function mapping(m){
  }
  m.names.forEach((t,row)=>{const y=230+row*390;let x=50;s.push(text(x,y-42,t.toUpperCase(),29,'font-weight="bold"'));
   tables[t].forEach((c,i)=>{const isFk=relationships.some(r=>r.child===t&&r.fk===c.column_name);s.push(`<rect x="${x}" y="${y}" width="${widths[t][i]}" height="90" fill="white" stroke="black" stroke-width="2"/>`,text(x+widths[t][i]/2,y+36,c.column_name,24,`text-anchor="middle" ${c.column_name===pk(t)?'text-decoration="underline" font-weight="bold"':''}`));if(isFk)s.push(text(x+widths[t][i]/2,y+68,'FK',20,'text-anchor="middle"'));x+=widths[t][i];});
-  const refs=relationships.filter(r=>r.child===t);refs.forEach((r,i)=>s.push(text(50,y+163+i*35,`${r.child}.${r.fk} -> ${r.parent}.${pk(r.parent)}${r.one?'   UNIQUE FK for 1:1 mapping':''}`,24)));
-  if(!refs.length)s.push(text(50,y+163,'No foreign key in this relation.',24));
+
  });
- s.push(text(50,height-45,'All columns are shown. Composite UNIQUE and CHECK rules remain in the data dictionary; PK underlining does not imply a composite key.',23),'</svg>');return s.join('\n');
+ s.push('</svg>');return s.join('\n');
 }
 const manifest=[];
 for(const m of modules){for(const kind of ['chen','mapping']){const name=`${kind}-${m.id}.svg`;const svg=kind==='chen'?chen(m):mapping(m);fs.writeFileSync(path.join(out,name),svg);const [,w,h]=svg.match(/width="(\d+)" height="(\d+)"/);manifest.push({module:m.id,title:m.title,kind,file:name,width:Number(w),height:Number(h),entities:m.names});}}
@@ -81,5 +80,5 @@ const PDFDocument=require('../../tmp/report-tools/node_modules/pdfkit/js/pdfkit.
 const pdf=new PDFDocument({autoFirstPage:false,info:{Title:'AutoHubIQ Chen ER Diagrams and Relational Mapping',Author:'Ronit Prasad and Sanjana Medarametla'}});
 pdf.registerFont('Times New Roman','C:/Windows/Fonts/times.ttf');pdf.registerFont('Times New Roman-Bold','C:/Windows/Fonts/timesbd.ttf');
 fs.mkdirSync(path.join(root,'output/pdf'),{recursive:true});pdf.pipe(fs.createWriteStream(path.join(root,'output/pdf/AutoHubIQ_ER_and_Relational_Mapping.pdf')));
-for(const [i,m] of manifest.entries()){pdf.addPage({size:'A3',layout:'landscape',margin:40});const scale=Math.min((pdf.page.width-80)/m.width,(pdf.page.height-100)/m.height);const w=m.width*scale,h=m.height*scale;pdf.save().translate((pdf.page.width-w)/2,35).scale(scale);svgToPdf(pdf,fs.readFileSync(path.join(out,m.file),'utf8'),0,0,{assumePt:true});pdf.restore();pdf.font('Times New Roman').fontSize(10).text(`AutoHubIQ  |  Course notation  |  ${m.kind==='chen'?'Chen ER diagram':'ER-to-relational schema mapping'}  |  ${i+1} of ${manifest.length}`,40,pdf.page.height-35,{lineBreak:false});}
+for(const [i,m] of manifest.entries()){pdf.addPage({size:'A3',layout:'landscape',margin:40});const scale=Math.min((pdf.page.width-80)/m.width,(pdf.page.height-100)/m.height);const w=m.width*scale,h=m.height*scale;pdf.save().translate((pdf.page.width-w)/2,35).scale(scale);svgToPdf(pdf,fs.readFileSync(path.join(out,m.file),'utf8'),0,0,{assumePt:true});pdf.restore();}
 pdf.end();console.log(`Generated ${manifest.length} course-style SVG sheets and the diagram PDF; all 14 entities and ${relationships.length} FK relationships covered.`);

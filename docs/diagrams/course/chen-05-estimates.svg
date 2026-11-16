@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ Chen ER diagram 05</title><desc id="desc">Price estimates and semantic embeddings</desc><rect width="1800" height="1640" fill="white"/>
-<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ Chen ER diagram 05</text>
-<text x="50" y="95" font-family="Times New Roman,serif" font-size="28" fill="black" >Price estimates and semantic embeddings</text>
-<text x="50" y="136" font-family="Times New Roman,serif" font-size="23" fill="black" >Rectangle entity   Diamond relationship   Oval attribute   Underline primary key</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER Diagram: Price estimates and semantic embeddings</title><desc id="desc">Price estimates and semantic embeddings</desc><rect width="1800" height="1640" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER Diagram: Price estimates and semantic embeddings</text>
 <polyline points="495,480 495,695 900,695 900,737" fill="none" stroke="black" stroke-width="2"/>
 <polyline points="1350,1070 1350,855 900,855 900,813" fill="none" stroke="black" stroke-width="2"/><polyline points="1355,1075 1355,860 905,860 905,818" fill="none" stroke="black" stroke-width="2"/>
 <polygon points="900,737 980,775 900,813 820,775" fill="white" stroke="black" stroke-width="2"/>
@@ -89,7 +87,4 @@
 <text x="1630" y="1142" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >generated_at</text>
 <rect x="1230" y="1070" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
 <text x="1350" y="1108" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">listing_embeddings</text>
-<text x="50" y="1515" font-family="Times New Roman,serif" font-size="24" fill="black" >(min,max) labels describe participation at the adjacent entity; N means many.</text>
-<text x="50" y="1554" font-family="Times New Roman,serif" font-size="23" fill="black" >Double line marks total participation of the child. Non-key foreign keys appear only in the mapping.</text>
-<text x="50" y="1593" font-family="Times New Roman,serif" font-size="22" fill="black" >Shared primary identifiers are underlined; they are not invented partial keys. Operational request_limits is independent.</text>
 </svg>

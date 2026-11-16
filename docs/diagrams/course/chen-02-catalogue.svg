@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ Chen ER diagram 02</title><desc id="desc">Vehicle catalogue</desc><rect width="1800" height="1640" fill="white"/>
-<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ Chen ER diagram 02</text>
-<text x="50" y="95" font-family="Times New Roman,serif" font-size="28" fill="black" >Vehicle catalogue</text>
-<text x="50" y="136" font-family="Times New Roman,serif" font-size="23" fill="black" >Rectangle entity   Diamond relationship   Oval attribute   Underline primary key</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1640" viewBox="0 0 1800 1640" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER Diagram: Vehicle catalogue</title><desc id="desc">Vehicle catalogue</desc><rect width="1800" height="1640" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER Diagram: Vehicle catalogue</text>
 <polyline points="450,420 450,205 820,205" fill="none" stroke="black" stroke-width="2"/>
 <polyline points="1350,420 1350,205 980,205" fill="none" stroke="black" stroke-width="2"/><polyline points="1355,425 1355,210 985,210" fill="none" stroke="black" stroke-width="2"/>
 <polygon points="900,167 980,205 900,243 820,205" fill="white" stroke="black" stroke-width="2"/>
@@ -71,7 +69,4 @@
 <text x="730" y="1212" font-family="Times New Roman,serif" font-size="22" fill="black" text-anchor="middle" >created_at</text>
 <rect x="330" y="1070" width="240" height="60" fill="white" stroke="black" stroke-width="2"/>
 <text x="450" y="1108" font-family="Times New Roman,serif" font-size="25" fill="black" font-weight="bold" text-anchor="middle">vehicle_variants</text>
-<text x="50" y="1515" font-family="Times New Roman,serif" font-size="24" fill="black" >(min,max) labels describe participation at the adjacent entity; N means many.</text>
-<text x="50" y="1554" font-family="Times New Roman,serif" font-size="23" fill="black" >Double line marks total participation of the child. Non-key foreign keys appear only in the mapping.</text>
-<text x="50" y="1593" font-family="Times New Roman,serif" font-size="22" fill="black" >Shared primary identifiers are underlined; they are not invented partial keys. Operational request_limits is independent.</text>
 </svg>

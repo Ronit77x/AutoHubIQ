@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2382" height="1430" viewBox="0 0 2382 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to relational mapping 04</title><desc id="desc">Listing images and uploaded content</desc><rect width="2382" height="1430" fill="white"/>
-<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to relational mapping 04</text>
-<text x="50" y="100" font-family="Times New Roman,serif" font-size="28" fill="black" >Listing images and uploaded content</text>
-<text x="50" y="145" font-family="Times New Roman,serif" font-size="24" fill="black" >Underlined attribute primary key   FK label foreign key   Arrows child FK to referenced parent PK</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="2382" height="1430" viewBox="0 0 2382 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to Relational Mapping: Listing images and uploaded content</title><desc id="desc">Listing images and uploaded content</desc><rect width="2382" height="1430" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to Relational Mapping: Listing images and uploaded content</text>
 <defs><marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="black"/></marker></defs>
 <path d="M121 1100 V1122 H2317 V602 H121 V620" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
 <path d="M277 710 V732 H2302 V202 H135 V230" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
@@ -29,7 +27,6 @@
 <text x="1917" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
 <rect x="2002" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="2087" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
-<text x="50" y="393" font-family="Times New Roman,serif" font-size="24" fill="black" >vehicle_listings.vehicle_id -&gt; vehicles.vehicle_id</text>
 <text x="50" y="578" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">LISTING_IMAGES</text>
 <rect x="50" y="620" width="142" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="121" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">image_id</text>
@@ -44,7 +41,6 @@
 <text x="815" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >is_primary</text>
 <rect x="900" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="985" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
-<text x="50" y="783" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_images.listing_id -&gt; vehicle_listings.listing_id</text>
 <text x="50" y="968" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">LISTING_IMAGE_DATA</text>
 <rect x="50" y="1010" width="142" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="121" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">image_id</text>
@@ -53,6 +49,4 @@
 <text x="256" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >content</text>
 <rect x="320" y="1010" width="198" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="419" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >content_type</text>
-<text x="50" y="1173" font-family="Times New Roman,serif" font-size="24" fill="black" >listing_image_data.image_id -&gt; listing_images.image_id   UNIQUE FK for 1:1 mapping</text>
-<text x="50" y="1385" font-family="Times New Roman,serif" font-size="23" fill="black" >All columns are shown. Composite UNIQUE and CHECK rules remain in the data dictionary; PK underlining does not imply a composite key.</text>
 </svg>

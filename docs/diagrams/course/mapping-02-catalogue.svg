@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2196" height="1430" viewBox="0 0 2196 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to relational mapping 02</title><desc id="desc">Vehicle catalogue</desc><rect width="2196" height="1430" fill="white"/>
-<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to relational mapping 02</text>
-<text x="50" y="100" font-family="Times New Roman,serif" font-size="28" fill="black" >Vehicle catalogue</text>
-<text x="50" y="145" font-family="Times New Roman,serif" font-size="24" fill="black" >Underlined attribute primary key   FK label foreign key   Arrows child FK to referenced parent PK</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="2196" height="1430" viewBox="0 0 2196 1430" role="img" aria-labelledby="title desc"><title id="title">AutoHubIQ ER to Relational Mapping: Vehicle catalogue</title><desc id="desc">Vehicle catalogue</desc><rect width="2196" height="1430" fill="white"/>
+<text x="50" y="55" font-family="Times New Roman,serif" font-size="34" fill="black" font-weight="bold">AutoHubIQ ER to Relational Mapping: Vehicle catalogue</text>
 <defs><marker id="fk-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="black"/></marker></defs>
 <path d="M312 710 V732 H2131 V212 H170 V230" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
 <path d="M291 1100 V1122 H2116 V592 H121 V620" fill="none" stroke="black" stroke-width="2" marker-end="url(#fk-arrow)"/>
@@ -14,7 +12,6 @@
 <text x="692" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >country_of_origin</text>
 <rect x="826" y="230" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="911" y="266" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
-<text x="50" y="393" font-family="Times New Roman,serif" font-size="24" fill="black" >No foreign key in this relation.</text>
 <text x="50" y="578" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">VEHICLE_MODELS</text>
 <rect x="50" y="620" width="142" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="121" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">model_id</text>
@@ -29,7 +26,6 @@
 <text x="850" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >description</text>
 <rect x="942" y="620" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="1027" y="656" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
-<text x="50" y="783" font-family="Times New Roman,serif" font-size="24" fill="black" >vehicle_models.manufacturer_id -&gt; manufacturers.manufacturer_id</text>
 <text x="50" y="968" font-family="Times New Roman,serif" font-size="29" fill="black" font-weight="bold">VEHICLE_VARIANTS</text>
 <rect x="50" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="135" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">variant_id</text>
@@ -50,6 +46,4 @@
 <text x="1689" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >seating_capacity</text>
 <rect x="1816" y="1010" width="170" height="90" fill="white" stroke="black" stroke-width="2"/>
 <text x="1901" y="1046" font-family="Times New Roman,serif" font-size="24" fill="black" text-anchor="middle" >created_at</text>
-<text x="50" y="1173" font-family="Times New Roman,serif" font-size="24" fill="black" >vehicle_variants.model_id -&gt; vehicle_models.model_id</text>
-<text x="50" y="1385" font-family="Times New Roman,serif" font-size="23" fill="black" >All columns are shown. Composite UNIQUE and CHECK rules remain in the data dictionary; PK underlining does not imply a composite key.</text>
 </svg>
