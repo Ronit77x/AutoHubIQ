@@ -214,12 +214,12 @@ npm.cmd run test:vector
 This executes `database/queries/28_vector_read_update_delete_demo.sql` and
 checks that rollback restores every original embedding and metadata value.
 
-The nine-section college submission draft and evidence checklist are in
-[`../docs/project-report-draft.md`](../docs/project-report-draft.md). Fill the
-student names/SRNs and contribution statements and capture current application
-screenshots before exporting the final report.
+The [final-deliverables index](../docs/final-deliverables.md) links the completed
+formal report, editable source, course ER/mapping diagrams and SQL evidence.
+Member details and the joint contribution statement are populated. Current
+application screenshots remain a separate student review task.
 
-This creates a randomly named temporary database using the configured database
+The workflow regression creates a randomly named temporary database using the configured database
 role, applies the schemas and seeds, starts an isolated server on port 3101,
 and tests registration, admin verification, publishing, image validation and
 limits, buyer enquiries, ownership checks, filters, pagination, semantic search,
@@ -238,7 +238,7 @@ generated demo administrator or local credential file.
 - [Dated rubric audit and remaining tasks](../docs/completion-audit.md)
 - [Architecture and complete/focused ER diagrams](../docs/architecture-and-demo.md)
 - [Relational schema and complete data dictionary](../docs/relational-schema.md)
-- [Submission report draft](../docs/project-report-draft.md)
+- [Final deliverables and formal report](../docs/final-deliverables.md)
 
 Buyers can view/edit their offers at /offers until the owning dealer marks them
 contacted or the listing becomes unavailable. Only the customer's own amount,
@@ -250,7 +250,8 @@ UI, or PostgreSQL end-user RLS/GRANT implementation is claimed.
 Validation on 15 November 2026: auth tests, lint, isolated production build,
 93 workflow HTTP checks, 22 GET-only city/detail checks, live/fresh schema
 comparison, trigger/function/view and vector RUD verification passed. Current
-application screenshots and final report export remain pending; see the audit
+application screenshots remain pending; the formal report PDF/source and course
+diagrams are complete and published. See the audit
 for coverage limits. The fresh build requires access to the existing Google
 Fonts dependencies. The main application and existing data were unchanged by
 the documentation audit.

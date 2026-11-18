@@ -12,7 +12,7 @@ Ronit Prasad | PES1UG24CS549
 Sanjana Medarametla | PES1UG24CS908
 
 Repository https://github.com/Ronit77x/AutoHubIQ
-Report revised 16 November 2026
+Report revised 18 November 2026
 
 ## Abstract
 
@@ -623,7 +623,7 @@ The following dictionary reflects the audited physical schema. Nullable columns 
 
 [1] PES University, Department of Computer Science and Engineering. Database Management System, Aug-Dec 2026, Experiential Learning Level 3 MiniProject Evaluation Criteria. User-supplied one-page rubric, DBMS Level 3 (2).pdf, visually inspected for this report.
 
-[2] Ronit Prasad and Sanjana Medarametla. AutoHubIQ project repository. https://github.com/Ronit77x/AutoHubIQ. Local implementation baseline e363f78; remote publication was not independently verified during the documentation audit.
+[2] Ronit Prasad and Sanjana Medarametla. AutoHubIQ project repository. https://github.com/Ronit77x/AutoHubIQ. Implementation validation baseline e363f78 (15 November 2026). Final ER/mapping deliverables were published to main in commits 3115c6b and 92c02d0; origin/main was fetched and matched the local baseline on 18 November 2026 before this documentation refresh. Validation results remain dated 15 November; no new application test run is implied.
 
 [3] AutoHubIQ database/schema SQL files 01-18 (existing numbered files), including core/catalogue/inventory DDL, price estimates, advanced objects, vector storage, interactions, offers and contact status.
 
