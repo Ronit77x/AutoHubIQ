@@ -1,3 +1,6 @@
+import { connection } from "next/server";
+import { getListing } from "../../../lib/server/listing";
+import { withImages } from "../../../lib/server/images";
 import { Suspense } from "react";
 import ListingDetails from "./listing-details";
 
@@ -24,6 +27,9 @@ async function ListingDetailsRoute({
 }: {
   params: Promise<{ listingId: string }>;
 }) {
+  await connection();
   const { listingId } = await params;
-  return <ListingDetails listingId={listingId} />;
+  const response = await getListing(listingId);
+  const data = await withImages(response.data);
+  return <ListingDetails initial={{ listing: data.listing ?? null, error: response.ok ? "" : data.message }} />;
 }

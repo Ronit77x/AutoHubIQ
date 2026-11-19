@@ -25,7 +25,7 @@ function Photo({ image, vehicle, thumbnail = false }: {
   return <Image fill src={image.image_url}
     alt={`${vehicle} — ${references.get(image.image_url)?.label ?? (image.is_primary ? "Exterior" : "Vehicle photo")}`}
     sizes={thumbnail ? "112px" : "(max-width: 1024px) 100vw, 900px"}
-    unoptimized={image.image_url.startsWith("/api/")}
+    unoptimized={image.image_url.startsWith("data:")}
     className={thumbnail ? "object-cover" : "object-contain"}
     onError={() => setFailed(true)} />;
 }

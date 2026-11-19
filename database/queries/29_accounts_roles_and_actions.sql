@@ -35,7 +35,9 @@ WITH action_catalog (
     (15, ARRAY['admin'], 'Verify or reject dealer applications',
      'Active admin account; rejection also withdraws that dealership''s active listings', true, false, false),
     (16, ARRAY['admin'], 'View protected database connection diagnostics',
-     'Active admin account; read-only diagnostics endpoint', true, false, false)
+     'Active admin account; read-only diagnostic function', true, false, false),
+    (17, ARRAY['dealer'], 'Permanently delete own vehicle and its dependent records',
+     'Active dealer account; own vehicle only; removes all listing history, photos, estimates, vectors and buyer requests', true, true, false)
 )
 SELECT
     u.user_id,

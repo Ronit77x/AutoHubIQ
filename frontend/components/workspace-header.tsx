@@ -1,4 +1,5 @@
 "use client";
+import { logoutAction } from "../app/actions";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,7 +18,7 @@ export default function WorkspaceHeader({
   async function signOut() {
     setError("");
     try {
-      const response = await fetch("/api/auth/logout", { method: "POST" });
+      const response = await logoutAction();
       if (!response.ok) throw new Error("Unable to sign out");
       router.push("/");
       router.refresh();

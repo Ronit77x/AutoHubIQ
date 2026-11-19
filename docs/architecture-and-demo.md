@@ -6,31 +6,30 @@
 flowchart LR
     Browser[Shopper, dealer, or administrator browser]
     UI[Next.js App Router UI]
-    API[Next.js route handlers]
+    Server[Server Components and Server Actions]
     Auth[Signed HttpOnly session and role checks]
     DB[(PostgreSQL app schema)]
     Vector[(pgvector listing embeddings)]
     Model[Local MiniLM ONNX model]
 
     Browser --> UI
-    UI --> API
-    API --> Auth
+    UI --> Server
+    Server --> Auth
     Auth --> DB
-    API --> DB
-    API --> Model
+    Server --> DB
+    Server --> Model
     Model --> Vector
-    API --> Vector
+    Server --> Vector
 ```
 
 The vector node above represents a table inside the same PostgreSQL database,
-not a separate service. Next.js Route Handlers implement the backend; the
-backend directory is not a separate running application.
+not a separate service. Server Components read data directly through server-only database functions; Server Actions perform mutations. There are no custom REST routes or browser fetch calls. Server Actions still use framework-managed POST requests. The backend directory is not a separate running application.
 
 Public marketplace requests read active listings from PostgreSQL. Semantic
 search embeds the user's query locally, then ranks listing embeddings in
 PostgreSQL with cosine distance and applies city, budget, fuel, and transmission
 filters in SQL. Dealer publishing creates the vehicle, listing, and embedding
-within one database transaction. Seller and admin APIs authenticate the
+within one database transaction. Seller and admin Server Actions authenticate the
 HttpOnly signed session and re-check the current account role and status from
 the database.
 
@@ -45,7 +44,7 @@ See [ER diagram and mapping rules](course-er-mapping.md), the [single-page ER di
 [typed relational schema and dictionary](relational-schema.md) remains the
 source for exact column types, nullability, uniqueness, CHECKs and indexes.
 
-Repeated entities join the modules using the same identifiers. Non-key foreign
+Each entity appears once in the complete diagram. Non-key foreign
 keys are shown in the relational mapping rather than duplicated as ER ovals.
 A mandatory child FK gives child participation (1,1); an optional parent may
 participate in (0,N) or, for unique child FKs, (0,1). No weak entity or M:N
@@ -56,7 +55,7 @@ request_limits is an independent operational entity.
 
 The complete [relational schema and column-level dictionary](relational-schema.md)
 lists types, defaults, nullability, every PK/FK/UNIQUE/CHECK and index, deletion
-rules, views/functions/triggers, and the distinction between DB and API rules.
+rules, views/functions/triggers, and the distinction between DB and server-side rules.
 The table below is a purpose summary.
 
 | Table | Purpose | Important rules |
@@ -73,7 +72,7 @@ The table below is a purpose summary.
 | `app.listing_price_estimates` | Market estimate and its methodology/source note | Estimate is separate from seller asking price; one listing can have multiple dated estimates. |
 | `app.listing_embeddings` | Semantic-search vector and embedding source | One 384-dimensional vector per listing; listing deletion cascades to its embedding. |
 | `app.listing_image_data` | Uploaded JPEG bytes | One payload per uploaded image; maximum 2 MB after normalization; image deletion cascades to its payload. |
-| `app.listing_enquiries` | Buyer enquiries, test drives and price offers | Includes offer_amount, contacted_at and updated_at; message/type/amount CHECKs. Edit ownership and eligibility are API-enforced. |
+| `app.listing_enquiries` | Buyer enquiries, test drives and price offers | Includes offer_amount, contacted_at and updated_at; message/type/amount CHECKs. Edit ownership and eligibility are server-enforced. |
 | `app.request_limits` | Shared request budgets | Hashed identifier key, time window, and request count; supports server-side throttling. |
 
 Two views expose active listing details and dealer inventory summaries. The
@@ -146,14 +145,7 @@ button; passwords start hidden.
 ## Buyer offer lifecycle
 
 Customers open **My offers** from the marketplace or the listing contact form.
-GET /api/offers returns only their offers, including amount, message, phone,
-creation/edit/contact timestamps and edit eligibility. PATCH /api/offers/:id
-updates the owner's amount/message/phone while the listing is active, its
-dealer is verified, and contacted_at is NULL. Transaction row locks serialize
-edits against dealer contact marking. Dealers use the same PATCH route with
-{ "action": "mark_contacted" } for their own inventory's offers. This sets
-contacted_at and closes buyer editing. External calls/emails are not detected;
-there is no automated auction, reservation, acceptance or payment.
+The offers Server Component reads only the signed-in customer's offers and edit eligibility. updateOfferAction updates the owner's amount/message/phone while the listing is active, its dealer is verified, and contacted_at is NULL. Transaction row locks serialize edits against dealer contact marking. The owning dealer calls the same action with { "action": "mark_contacted" } to close editing. Calls and emails happen outside the app.
 
 Inactive listing offers remain in buyer history. Editing a contacted/unavailable
 offer returns 409; unrelated users cannot read or change it. New offer columns
@@ -165,8 +157,14 @@ See the dated [completion audit](completion-audit.md) for rubric status,
 verification results and final submission tasks. Dealer analytics describe
 inventory and asking prices, not confirmed sales. Admin functionality is dealer
 verification, not general account management. Roles are stored in PostgreSQL
-and enforced in authenticated API queries and PostgreSQL RLS policies. Schema 20
+and enforced in authenticated server-side queries and PostgreSQL RLS policies. Schema 20
 adds explicit GRANT/REVOKE permissions and guarded service functions; the web
 application uses a non-owner restricted login. The server supplies transaction-local
 identity only after validating the signed session. See frontend/README.md for
 setup and database/queries/30_database_permissions.sql for the live privilege report.
+
+## Direct-access migration validation
+
+On 19 November 2026, production build, lint, nine unit tests, 106 Server Action/page/workflow checks and 41 database-permission checks passed. Workflow writes used a disposable database. All 19 former application API routes were removed. Entities and PK/FK relationships are unchanged.
+
+Dealer vehicle deletion and database timestamp demonstrations are documented in [database-ui-demo.md](database-ui-demo.md). Schema 21 enables vehicle-to-listing cascades and a guarded deletion function. Dealer inventory and customer detail pages display database-created and database-updated timestamps.

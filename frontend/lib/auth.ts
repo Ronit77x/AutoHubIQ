@@ -1,4 +1,5 @@
-import type { NextRequest, NextResponse } from "next/server";
+import "server-only";
+import { cookies } from "next/headers";
 import { pool, setDatabaseIdentity } from "./db";
 import {
   createSessionToken,
@@ -33,11 +34,8 @@ export function getAuthSecret(): string {
   return secret;
 }
 
-export function setSessionCookie(
-  response: NextResponse,
-  userId: string
-): void {
-  response.cookies.set(
+export async function setSessionCookie(userId: string): Promise<void> {
+  (await cookies()).set(
     SESSION_COOKIE_NAME,
     createSessionToken(userId, getAuthSecret()),
     {
@@ -50,8 +48,8 @@ export function setSessionCookie(
   );
 }
 
-export function clearSessionCookie(response: NextResponse): void {
-  response.cookies.set(SESSION_COOKIE_NAME, "", {
+export async function clearSessionCookie(): Promise<void> {
+  (await cookies()).set(SESSION_COOKIE_NAME, "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -60,23 +58,8 @@ export function clearSessionCookie(response: NextResponse): void {
   });
 }
 
-export function isSameOrigin(request: NextRequest): boolean {
-  const origin = request.headers.get("origin");
-  if (!origin) {
-    return true;
-  }
-
-  try {
-    return new URL(origin).origin === request.nextUrl.origin;
-  } catch {
-    return false;
-  }
-}
-
-export async function getAuthenticatedUser(
-  request: NextRequest
-): Promise<AuthenticatedUser | null> {
-  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+export async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> {
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   if (!token) {
     return null;
   }

@@ -33,7 +33,7 @@ The delivered application includes inventory analytics, dealer verification, buy
 
 | Technology | Purpose and justification |
 | --- | --- |
-| Next.js 16.4.3 and React 19.3 | App Router pages and Route Handlers provide one integrated web application and API. |
+| Next.js 16.4.3 and React 19.3 | Server Components and Server Actions provide one web application with direct server-side SQL access. |
 | TypeScript and Tailwind CSS | Typed application code and consistent responsive interface styling. |
 | PostgreSQL 18.6 | Relational storage, constraints, joins, aggregates, transactions, views, functions and triggers. |
 | pgvector 0.8.7 | Vector storage and cosine-distance retrieval beside relational data; satisfies the SQL plus Vector approach. |
@@ -42,7 +42,7 @@ The delivered application includes inventory analytics, dealer verification, buy
 | Git and GitHub | Version history and project source distribution. |
 
 pgvector is an extension within PostgreSQL, not a separate database server or a separate document database. The embedding model used in code is onnx-community/all-MiniLM-L6-v2-ONNX. [2, 3]`],
-['System architecture',`The browser communicates with Next.js pages and API routes. Route Handlers validate requests, authenticate protected operations and issue parameterized SQL through a PostgreSQL connection pool. PostgreSQL stores business records, image bytes, price estimates, request budgets and listing vectors in the app schema.
+['System architecture',`The browser opens Next.js pages and submits Server Actions. Server Components and server-only functions read PostgreSQL directly; Server Actions validate mutations, authenticate protected operations and issue parameterized SQL through a PostgreSQL connection pool. PostgreSQL stores business records, image bytes, price estimates, request budgets and listing vectors in the app schema.
 
 {{ARCHITECTURE}}
 
@@ -50,7 +50,7 @@ Public listing endpoints read active inventory. Semantic search generates a loca
 
 For publishing, the server checks dealer verification and validates vehicle/listing details. It generates an embedding, then inserts the physical vehicle, active listing and embedding in a single transaction. Photo uploads occur separately and are optional; uploaded content is decoded, normalized to JPEG and stored in PostgreSQL.
 
-Protected requests verify a signed HttpOnly session cookie, then re-read the current account role and active status from the database. The browser interface is not the authorization boundary. API ownership predicates restrict dealer inventory changes and buyer offer changes.`],
+Protected requests verify a signed HttpOnly session cookie, then re-read the current account role and active status from the database. The browser interface is not the authorization boundary. Server-side ownership predicates restrict dealer inventory changes and buyer offer changes.`],
 ['Database design and entity relationships',`The physical design contains fourteen base tables. Manufacturers, models and variants form the reusable vehicle catalogue. Vehicles represent physical inventory; listings hold asking prices, descriptions, publication state and provenance. Keeping vehicles separate from listings permits historical listing records while a partial unique index allows at most one active listing per vehicle.
 
 {{CATALOGUE}}
@@ -81,10 +81,10 @@ request_limits is an independent operational table with a hashed key, time windo
 | B-tree indexes | Support city, dealer, variant, year, mileage, listing price/status, enquiry and estimate lookups. |
 | HNSW index | Uses vector_cosine_ops on listing embeddings for cosine-distance search capability. |
 
-API rules are intentionally distinguished from database constraints. SQL year checks permit 1990-2030, whereas the create-listing API also rejects future years and registration before manufacture. Description length, dealer verification, photo-count limits and offer-edit eligibility are checked in the API. The schema does not independently enforce customer/dealer roles across foreign keys.
+Server-side rules are intentionally distinguished from database constraints. SQL year checks permit 1990-2030, whereas the listing-creation function also rejects future years and registration before manufacture. Description length, dealer verification, photo-count limits and offer-edit eligibility are checked in server functions. Schema 20 additionally enforces role, ownership and state rules through RLS policies, guarded functions, column permissions and triggers.
 
 Registration numbers have no unique constraint, and primary-image selection has no unique partial index. Estimate bounds must be positive and ordered, but the central estimate is not forced inside that range by a CHECK. These are implementation limits rather than guarantees claimed by this report.`],
-['SQL operations and query examples',`The application performs meaningful INSERT, SELECT and UPDATE operations. Customer/dealer registration inserts accounts and profiles; publishing inserts inventory, listing and vector rows; listing maintenance and offer revision update existing rows. Public APIs and SQL analytics read related data through joins. Vector DELETE is demonstrated within a rollback transaction so that the sample is restored.
+['SQL operations and query examples',`The application performs meaningful INSERT, SELECT and UPDATE operations. Customer/dealer registration inserts accounts and profiles; publishing inserts inventory, listing and vector rows; listing maintenance and offer revision update existing rows. Server Components and SQL analytics read related data through joins. Vector DELETE is demonstrated within a rollback transaction so that the sample is restored.
 
 ### Joined listing retrieval
 
@@ -177,7 +177,7 @@ SELECT * FROM app.search_active_listings(
 \`\`\`
 
 ### Triggers
-Three BEFORE UPDATE triggers call set_updated_at on dealer_profiles, vehicles and vehicle_listings. The audit attempted to assign an old timestamp in a disposable database and verified that each trigger replaced it with a current timestamp, then rolled back the test. listing_enquiries.updated_at is assigned by the offer API; no generic enquiry or users timestamp trigger is claimed.
+Three BEFORE UPDATE triggers call set_updated_at on dealer_profiles, vehicles and vehicle_listings. The audit attempted to assign an old timestamp in a disposable database and verified that each trigger replaced it with a current timestamp, then rolled back the test. listing_enquiries.updated_at is assigned by the offer function; no generic enquiry or users timestamp trigger is claimed.
 
 ### Common table expressions and ranking
 Query 27 first aggregates active listings and prices by city, then applies DENSE_RANK to the summary. This separates aggregation from ranking and avoids repeating the same aggregate query.
@@ -229,21 +229,24 @@ Query 28 demonstrates read/update/delete using stored sample vectors. The audit 
 
 The dealer workspace displays inventory totals, asking-price/status controls, uploads and the latest buyer requests. Existing listing edits cover price and status; full vehicle specification and description editing is not implemented. Customers use the listing contact form for enquiries, test-drive requests and price offers, then My offers for eligible revisions.
 
-| API group | Role and ownership boundary |
+| Server entry point | Role and ownership boundary |
 | --- | --- |
-| /api/cities, /api/listings, /api/search | Public reads/search with validation and applicable request budgets. |
-| /api/auth/* | Registration, password verification, signed session, account lookup and logout. |
-| /api/dealer/* | Dealer role; listing and image changes restricted to owned inventory; publishing/activation require verification. |
-| /api/admin/dealers | Administrator role; dealership review and decisions. |
-| GET /api/offers | Customer role; returns only the signed-in buyer's offers. |
-| PATCH /api/offers/:id | Owning customer edits before contact; owning dealer may mark contacted. |
+| Marketplace/listing Server Components | Public reads and semantic search. |
+| Account page and authentication actions | Registration, password verification, session and logout. |
+| Dealer workspace and listing/photo actions | Dealer role; owned inventory; publishing/activation require verification. |
+| Administrator page and reviewDealerAction | Administrator-only dealership review. |
+| Offers page and updateOfferAction | Own customer offers; owning dealer may mark contacted. |
+
+No custom application API routes or browser fetch calls remain. Server Components read through server-only functions using pg; Server Actions invoke mutations directly. Actions still use framework-managed HTTP POST requests. PostgreSQL credentials stay on the server. Uploaded photos are read during server rendering and supplied as data URLs.
 
 Passwords use salted scrypt hashes. Session payloads are signed using HMAC-SHA256 and placed in HttpOnly, SameSite=Lax cookies, with Secure enabled in production and a seven-day expiry. The server re-reads active account status and role on protected requests. Logout clears the browser cookie; this is not a server-side session revocation list.
 
 Parameterized SQL, same-origin mutation checks, validation and database-backed request budgets protect the demonstrated workflows. Password visibility is optional and defaults to hidden. Demo login credentials and database configuration remain outside report screenshots and version control.
 
-End-user roles are stored in PostgreSQL and enforced by API queries. The project does not implement PostgreSQL login roles per customer, GRANT-based end-user separation or row-level-security policies. This accurately describes database-backed application authorization under the team's interpretation of the rubric; no database-native role policy is claimed.`],
-['Testing and results',`The implementation was audited on 15 November 2026. The configured database was inspected through read-only queries. Schema/seed application, advanced SQL behavior, trigger tests and vector RUD were exercised in disposable databases. Application build and regression checks used an isolated copy of the committed source. [5]
+Server-side checks are reinforced by schema 20: a restricted runtime login, explicit GRANT/REVOKE permissions, RLS policies, column permissions and guarded functions/triggers. Signed-session verification supplies transaction-local identity; individual customers do not have separate database logins.`],
+['Testing and results',`Migration verification on 19 November 2026: production build, lint, nine unit tests, 79 Server Action/page/workflow checks and 33 database-permission checks passed. Workflow mutations used a disposable database. The evidence below describes the earlier audit.
+
+The implementation was audited on 15 November 2026. The configured database was inspected through read-only queries. Schema/seed application, advanced SQL behavior, trigger tests and vector RUD were exercised in disposable databases. Application build and regression checks used an isolated copy of the committed source. [5]
 
 | Verification | Observed result |
 | --- | --- |
@@ -272,7 +275,7 @@ Figure 4 shows historical pgAdmin output for the four orphan checks. The same ch
 | Ronit Prasad | PES1UG24CS549 | Relational design and constraints; SQL queries and inventory analytics; dealer/admin workflows; authentication and role/ownership explanations. |
 | Sanjana Medarametla | PES1UG24CS908 | Marketplace and listing interfaces; semantic/vector search; customer enquiries and offers; image handling and workflow-test explanations. |
 
-Both members share responsibility for application/database integration, testing and fixes, documentation review, project decisions and final demonstration. Each member should be able to explain the overall architecture and the boundaries between database constraints and API authorization.
+Both members share responsibility for application/database integration, testing and fixes, documentation review, project decisions and final demonstration. Each member should be able to explain the overall architecture and the boundaries between database constraints and server-side authorization.
 
 Git history records project changes but is not treated as a precise measure of individual effort. No unsupported percentages, separate implementation claims or fictitious commit ownership are assigned. The repository for review is https://github.com/Ronit77x/AutoHubIQ.`],
 ['Evaluation rubric alignment',`The attached PES University rubric allocates fifty marks across seven criteria. The table maps the delivered project to those criteria; it does not award marks or imply evaluator approval. [1]
@@ -283,12 +286,12 @@ Git history records project changes but is not treated as a precise measure of i
 | Database creation | 9 | PostgreSQL DDL/constraints; pgvector table/index; SQL plus Vector technology justification. |
 | SQL operations and queries | 8 | Application DML; vector DELETE demonstration; several nested/correlated queries; joins, aggregates, HAVING and ordering. |
 | Advanced database concepts | 13 | Functions, triggers, CTEs, views, transactions and indexes; vector retrieval and read/update/delete evidence. |
-| Web application and database integration | 5 | Next.js interface, Route Handlers, parameterized PostgreSQL access and isolated workflow verification. |
-| Authentication and authorization | 4 | Frontend authentication, password hashing and three database-stored roles enforced by protected APIs and ownership checks. |
+| Web application and database integration | 5 | Next.js interface, Server Components and Server Actions, parameterized PostgreSQL access and isolated workflow verification. |
+| Authentication and authorization | 4 | Frontend authentication, password hashing and three database-stored roles enforced by protected server functions and ownership checks. |
 | Documentation and individual contribution | 6 | Formal report, source repository, query/test evidence, truthful joint contribution statement and student demonstration. |
 | Total available | 50 | Final assessment belongs to the evaluator. |
 
-The project uses multiple nested/correlated queries rather than adding a recursive query without a domain need. Role-based access is database-backed API enforcement rather than PostgreSQL end-user RLS. The team considers the vector DELETE demonstration sufficient for the DELETE requirement. These are stated implementation choices and team interpretations, not instructor confirmations.
+The project uses multiple nested/correlated queries rather than adding a recursive query without a domain need. Role-based access uses server-side checks and PostgreSQL RLS under a restricted shared runtime login. The team considers the vector DELETE demonstration sufficient for the DELETE requirement. These are stated implementation choices and team interpretations, not instructor confirmations.
 
 The source rubric has an internal inconsistency: authentication is allocated four marks in its maximum/distribution but three in the detailed Correct Execution cell. This report retains the stated four-mark maximum without resolving the grading discrepancy.`],
 ['Conclusion and future work',`AutoHubIQ demonstrates an integrated relational and vector database application rather than an isolated collection of CRUD pages. Structured vehicle catalogue and inventory data support city-based browsing, detailed listing information and indicative price comparisons. Semantic retrieval combines MiniLM embeddings and cosine distance with relational filters. Three account roles support customer interactions, verified dealer inventory and administrator dealership review.
@@ -328,7 +331,7 @@ Source artifacts describe implementation behavior and reproducible evidence. No 
 const cover=`# AutoHubIQ Project Report\n\nAn Intelligent Used Car Marketplace and Dealership Analytics Platform\n\nPES University\nDepartment of Computer Science and Engineering\nDatabase Management System\nExperiential Learning Level 3 MiniProject\nSemester 5 | Section I | August-December 2026\n\nRonit Prasad | PES1UG24CS549\nSanjana Medarametla | PES1UG24CS908\n\nRepository https://github.com/Ronit77x/AutoHubIQ\nReport revised 18 November 2026\n`;
 const abstract='AutoHubIQ combines a used-car marketplace with dealership inventory analytics using Next.js, TypeScript, PostgreSQL and pgvector. A fourteen-table relational schema separates users, dealers, the vehicle catalogue, physical inventory, listings, images, indicative estimates and buyer interactions. Normalized 384-dimensional MiniLM embeddings support natural-language retrieval alongside structured SQL filters. Customer, dealer and administrator roles provide enquiries, test-drive requests, offers, pre-contact offer revision, verified inventory publishing and dealership approval. Database features include constraints, joins, nested/correlated queries, views, functions, triggers, CTEs, indexes and transactions. The audited dataset contains twelve active illustrative listings across three cities. Verification includes ninety-three workflow HTTP checks, twenty-two public GET checks, schema reconciliation and vector read/update/delete restoration. The system provides inventory indicators rather than confirmed-sales analytics; indicative estimates and demo images are explicitly illustrative.';
 fs.mkdirSync(path.join(root,'output/pdf'),{recursive:true});fs.mkdirSync(path.join(root,'output/source'),{recursive:true});
-let source=cover+'\n## Abstract\n\n'+abstract+'\n\n'+sections.map(([title,body])=>'## '+title+'\n\n'+body).join('\n\n'); source=source.replace('{{ARCHITECTURE}}','Browser -> Next.js pages and Route Handlers -> PostgreSQL app schema (including pgvector); local MiniLM generates query and listing embeddings.').replace('{{CATALOGUE}}','[Complete ER diagram](../../docs/diagrams/AutoHubIQ_Complete_ER.svg)').replace('{{OFFERS}}','[Relational diagram](../../docs/diagrams/AutoHubIQ_Relational.svg)').replace('{{COMPLETE}}','[ER diagram](../pdf/AutoHubIQ_Complete_ER.pdf) and [relational diagram](../pdf/AutoHubIQ_ER_to_Relational.pdf)').replace('{{INTEGRITY_EVIDENCE}}','![Historical integrity checks](../../screenshots/21_database_integrity_checks.png)'); fs.writeFileSync(path.join(root,'output/source/AutoHubIQ_Project_Report.md'),source);
+let source=cover+'\n## Abstract\n\n'+abstract+'\n\n'+sections.map(([title,body])=>'## '+title+'\n\n'+body).join('\n\n'); source=source.replace('{{ARCHITECTURE}}','Browser -> Next.js Server Components and Actions -> PostgreSQL app schema (including pgvector); local MiniLM generates query and listing embeddings.').replace('{{CATALOGUE}}','[Complete ER diagram](../../docs/diagrams/AutoHubIQ_Complete_ER.svg)').replace('{{OFFERS}}','[Relational diagram](../../docs/diagrams/AutoHubIQ_Relational.svg)').replace('{{COMPLETE}}','[ER diagram](../pdf/AutoHubIQ_Complete_ER.pdf) and [relational diagram](../pdf/AutoHubIQ_ER_to_Relational.pdf)').replace('{{INTEGRITY_EVIDENCE}}','![Historical integrity checks](../../screenshots/21_database_integrity_checks.png)'); fs.writeFileSync(path.join(root,'output/source/AutoHubIQ_Project_Report.md'),source);
 
 const doc=new PDFDocument({size:'A4',margins:{top:54,bottom:54,left:54,right:54},bufferPages:true,info:{Title:'AutoHubIQ Project Report',Author:'Ronit Prasad and Sanjana Medarametla',Subject:'Database Management System Experiential Learning Level 3'}});
 doc.registerFont('Body','C:/Windows/Fonts/times.ttf');doc.registerFont('Bold','C:/Windows/Fonts/timesbd.ttf');doc.registerFont('Italic','C:/Windows/Fonts/timesi.ttf');doc.registerFont('Code','C:/Windows/Fonts/consola.ttf');
@@ -345,7 +348,7 @@ function table(rows){const n=rows[0].length;let widths=n===3&&rows[0][1]==='Card
 function code(text){doc.font('Code').fontSize(8.5);const lines=text.split('\n');for(const l of lines){room(12);doc.text(l,54,doc.y,{width:W,lineGap:1});}doc.moveDown(.8);body();}
 function box(x,y,w,h,title,sub){doc.roundedRect(x,y,w,h,4).lineWidth(.7).fillAndStroke('#ffffff','#444444');doc.font('Bold').fontSize(10.3).fillColor('#111111').text(title,x+8,y+8,{width:w-16,align:'center'});doc.font('Body').fontSize(9.2).text(sub,x+8,y+28,{width:w-16,align:'center'});}
 function edge(x1,y1,x2,y2){doc.lineWidth(.7).strokeColor('#555555').moveTo(x1,y1).lineTo(x2,y2).stroke();const angle=Math.atan2(y2-y1,x2-x1),sz=5;doc.moveTo(x2,y2).lineTo(x2-sz*Math.cos(angle-.5),y2-sz*Math.sin(angle-.5)).lineTo(x2-sz*Math.cos(angle+.5),y2-sz*Math.sin(angle+.5)).closePath().fill('#555555');}
-function architecture(){room(230);const y=doc.y;box(155,y,285,48,'Browser','Customer  |  Dealer  |  Administrator');edge(298,y+48,298,y+70);box(155,y+70,285,48,'Next.js pages and Route Handlers','Validation, signed sessions and role checks');edge(298,y+118,180,y+145);edge(298,y+118,420,y+145);box(54,y+145,247,57,'PostgreSQL app schema','Relational data, uploads and pgvector');box(320,y+145,220,57,'Local embedding model','MiniLM ONNX via Transformers.js');edge(320,y+177,301,y+177);doc.y=y+214;doc.font('Italic').fontSize(9.5).text('Figure 1  Application architecture and database integration',54,doc.y,{width:W,align:'center'});doc.moveDown();body();}
+function architecture(){room(230);const y=doc.y;box(155,y,285,48,'Browser','Customer  |  Dealer  |  Administrator');edge(298,y+48,298,y+70);box(155,y+70,285,48,'Next.js Server Components and Actions','Validation, signed sessions and role checks');edge(298,y+118,180,y+145);edge(298,y+118,420,y+145);box(54,y+145,247,57,'PostgreSQL app schema','Relational data, uploads and pgvector');box(320,y+145,220,57,'Local embedding model','MiniLM ONNX via Transformers.js');edge(320,y+177,301,y+177);doc.y=y+214;doc.font('Italic').fontSize(9.5).text('Figure 1  Application architecture and database integration',54,doc.y,{width:W,align:'center'});doc.moveDown();body();}
 function entities(kind){
  const y=doc.y;room(380);const top=doc.y;
  function entity(x,dy,name,key){const cy=top+dy;doc.rect(x-68,cy-18,136,36).fillAndStroke('white','black');doc.font('Bold').fontSize(10).fillColor('black').text(name,x-64,cy-4,{width:128,align:'center'});const kd=['vehicle_variants','listing_enquiries'].includes(name)?43:-43;doc.ellipse(x,cy+kd,64,11).stroke();doc.font('Body').fontSize(9).text(key,x-59,cy+kd-4,{width:118,align:'center',underline:true});doc.moveTo(x,cy+(kd>0?18:-18)).lineTo(x,cy+(kd>0?32:-32)).stroke();}

@@ -50,7 +50,7 @@ The system separates public browsing from authenticated customer, dealer and adm
 
 | Technology | Purpose and justification |
 | --- | --- |
-| Next.js 16.4.3 and React 19.3 | App Router pages and Route Handlers provide one integrated web application and API. |
+| Next.js 16.4.3 and React 19.3 | Server Components and Server Actions provide one web application with direct server-side SQL access. |
 | TypeScript and Tailwind CSS | Typed application code and consistent responsive interface styling. |
 | PostgreSQL 18.6 | Relational storage, constraints, joins, aggregates, transactions, views, functions and triggers. |
 | pgvector 0.8.7 | Vector storage and cosine-distance retrieval beside relational data; satisfies the SQL plus Vector approach. |
@@ -62,15 +62,15 @@ pgvector is an extension within PostgreSQL, not a separate database server or a 
 
 ## System architecture
 
-The browser communicates with Next.js pages and API routes. Route Handlers validate requests, authenticate protected operations and issue parameterized SQL through a PostgreSQL connection pool. PostgreSQL stores business records, image bytes, price estimates, request budgets and listing vectors in the app schema.
+The browser opens Next.js pages and submits Server Actions. Server Components and server-only functions read PostgreSQL directly; Server Actions validate mutations, authenticate protected operations and issue parameterized SQL through a PostgreSQL connection pool. PostgreSQL stores business records, image bytes, price estimates, request budgets and listing vectors in the app schema.
 
-Browser -> Next.js pages and Route Handlers -> PostgreSQL app schema (including pgvector); local MiniLM generates query and listing embeddings.
+Browser -> Next.js Server Components and Actions -> PostgreSQL app schema (including pgvector); local MiniLM generates query and listing embeddings.
 
 Public listing endpoints read active inventory. Semantic search generates a local embedding for the customer query, combines similarity ranking with structured SQL filters and returns a page of results. The vector table is part of the same PostgreSQL database shown in the architecture.
 
 For publishing, the server checks dealer verification and validates vehicle/listing details. It generates an embedding, then inserts the physical vehicle, active listing and embedding in a single transaction. Photo uploads occur separately and are optional; uploaded content is decoded, normalized to JPEG and stored in PostgreSQL.
 
-Protected requests verify a signed HttpOnly session cookie, then re-read the current account role and active status from the database. The browser interface is not the authorization boundary. API ownership predicates restrict dealer inventory changes and buyer offer changes.
+Protected requests verify a signed HttpOnly session cookie, then re-read the current account role and active status from the database. The browser interface is not the authorization boundary. Server-side ownership predicates restrict dealer inventory changes and buyer offer changes.
 
 ## Database design and entity relationships
 
@@ -110,13 +110,13 @@ Primary keys identify records. Foreign keys connect catalogue, ownership, invent
 | B-tree indexes | Support city, dealer, variant, year, mileage, listing price/status, enquiry and estimate lookups. |
 | HNSW index | Uses vector_cosine_ops on listing embeddings for cosine-distance search capability. |
 
-API rules are intentionally distinguished from database constraints. SQL year checks permit 1990-2030, whereas the create-listing API also rejects future years and registration before manufacture. Description length, dealer verification, photo-count limits and offer-edit eligibility are checked in the API. The schema does not independently enforce customer/dealer roles across foreign keys.
+Server-side rules are intentionally distinguished from database constraints. SQL year checks permit 1990-2030, whereas the listing-creation function also rejects future years and registration before manufacture. Description length, dealer verification, photo-count limits and offer-edit eligibility are checked in server functions. Schema 20 additionally enforces role, ownership and state rules through RLS policies, guarded functions, column permissions and triggers.
 
 Registration numbers have no unique constraint, and primary-image selection has no unique partial index. Estimate bounds must be positive and ordered, but the central estimate is not forced inside that range by a CHECK. These are implementation limits rather than guarantees claimed by this report.
 
 ## SQL operations and query examples
 
-The application performs meaningful INSERT, SELECT and UPDATE operations. Customer/dealer registration inserts accounts and profiles; publishing inserts inventory, listing and vector rows; listing maintenance and offer revision update existing rows. Public APIs and SQL analytics read related data through joins. Vector DELETE is demonstrated within a rollback transaction so that the sample is restored.
+The application performs meaningful INSERT, SELECT and UPDATE operations. Customer/dealer registration inserts accounts and profiles; publishing inserts inventory, listing and vector rows; listing maintenance and offer revision update existing rows. Server Components and SQL analytics read related data through joins. Vector DELETE is demonstrated within a rollback transaction so that the sample is restored.
 
 ### Joined listing retrieval
 
@@ -212,7 +212,7 @@ SELECT * FROM app.search_active_listings(
 ```
 
 ### Triggers
-Three BEFORE UPDATE triggers call set_updated_at on dealer_profiles, vehicles and vehicle_listings. The audit attempted to assign an old timestamp in a disposable database and verified that each trigger replaced it with a current timestamp, then rolled back the test. listing_enquiries.updated_at is assigned by the offer API; no generic enquiry or users timestamp trigger is claimed.
+Three BEFORE UPDATE triggers call set_updated_at on dealer_profiles, vehicles and vehicle_listings. The audit attempted to assign an old timestamp in a disposable database and verified that each trigger replaced it with a current timestamp, then rolled back the test. listing_enquiries.updated_at is assigned by the offer function; no generic enquiry or users timestamp trigger is claimed.
 
 ### Common table expressions and ranking
 Query 27 first aggregates active listings and prices by city, then applies DENSE_RANK to the summary. This separates aggregation from ranking and avoids repeating the same aggregate query.
@@ -270,22 +270,25 @@ Registration accepts customer and dealer accounts; public registration cannot cr
 
 The dealer workspace displays inventory totals, asking-price/status controls, uploads and the latest buyer requests. Existing listing edits cover price and status; full vehicle specification and description editing is not implemented. Customers use the listing contact form for enquiries, test-drive requests and price offers, then My offers for eligible revisions.
 
-| API group | Role and ownership boundary |
+| Server entry point | Role and ownership boundary |
 | --- | --- |
-| /api/cities, /api/listings, /api/search | Public reads/search with validation and applicable request budgets. |
-| /api/auth/* | Registration, password verification, signed session, account lookup and logout. |
-| /api/dealer/* | Dealer role; listing and image changes restricted to owned inventory; publishing/activation require verification. |
-| /api/admin/dealers | Administrator role; dealership review and decisions. |
-| GET /api/offers | Customer role; returns only the signed-in buyer's offers. |
-| PATCH /api/offers/:id | Owning customer edits before contact; owning dealer may mark contacted. |
+| Marketplace/listing Server Components | Public reads and semantic search. |
+| Account page and authentication actions | Registration, password verification, session and logout. |
+| Dealer workspace and listing/photo actions | Dealer role; owned inventory; publishing/activation require verification. |
+| Administrator page and reviewDealerAction | Administrator-only dealership review. |
+| Offers page and updateOfferAction | Own customer offers; owning dealer may mark contacted. |
+
+No custom application API routes or browser fetch calls remain. Server Components read through server-only functions using pg; Server Actions invoke mutations directly. Actions still use framework-managed HTTP POST requests. PostgreSQL credentials stay on the server. Uploaded photos are read during server rendering and supplied as data URLs.
 
 Passwords use salted scrypt hashes. Session payloads are signed using HMAC-SHA256 and placed in HttpOnly, SameSite=Lax cookies, with Secure enabled in production and a seven-day expiry. The server re-reads active account status and role on protected requests. Logout clears the browser cookie; this is not a server-side session revocation list.
 
 Parameterized SQL, same-origin mutation checks, validation and database-backed request budgets protect the demonstrated workflows. Password visibility is optional and defaults to hidden. Demo login credentials and database configuration remain outside report screenshots and version control.
 
-End-user roles are stored in PostgreSQL and enforced by API queries. The project does not implement PostgreSQL login roles per customer, GRANT-based end-user separation or row-level-security policies. This accurately describes database-backed application authorization under the team's interpretation of the rubric; no database-native role policy is claimed.
+Server-side checks are reinforced by schema 20: a restricted runtime login, explicit GRANT/REVOKE permissions, RLS policies, column permissions and guarded functions/triggers. Signed-session verification supplies transaction-local identity; individual customers do not have separate database logins.
 
 ## Testing and results
+
+Migration verification on 19 November 2026: production build, lint, nine unit tests, 79 Server Action/page/workflow checks and 33 database-permission checks passed. Workflow mutations used a disposable database. The evidence below describes the earlier audit.
 
 The implementation was audited on 15 November 2026. The configured database was inspected through read-only queries. Schema/seed application, advanced SQL behavior, trigger tests and vector RUD were exercised in disposable databases. Application build and regression checks used an isolated copy of the committed source. [5]
 
@@ -319,7 +322,7 @@ The project was developed jointly. Both members participated in requirements, de
 | Ronit Prasad | PES1UG24CS549 | Relational design and constraints; SQL queries and inventory analytics; dealer/admin workflows; authentication and role/ownership explanations. |
 | Sanjana Medarametla | PES1UG24CS908 | Marketplace and listing interfaces; semantic/vector search; customer enquiries and offers; image handling and workflow-test explanations. |
 
-Both members share responsibility for application/database integration, testing and fixes, documentation review, project decisions and final demonstration. Each member should be able to explain the overall architecture and the boundaries between database constraints and API authorization.
+Both members share responsibility for application/database integration, testing and fixes, documentation review, project decisions and final demonstration. Each member should be able to explain the overall architecture and the boundaries between database constraints and server-side authorization.
 
 Git history records project changes but is not treated as a precise measure of individual effort. No unsupported percentages, separate implementation claims or fictitious commit ownership are assigned. The repository for review is https://github.com/Ronit77x/AutoHubIQ.
 
@@ -333,12 +336,12 @@ The attached PES University rubric allocates fifty marks across seven criteria. 
 | Database creation | 9 | PostgreSQL DDL/constraints; pgvector table/index; SQL plus Vector technology justification. |
 | SQL operations and queries | 8 | Application DML; vector DELETE demonstration; several nested/correlated queries; joins, aggregates, HAVING and ordering. |
 | Advanced database concepts | 13 | Functions, triggers, CTEs, views, transactions and indexes; vector retrieval and read/update/delete evidence. |
-| Web application and database integration | 5 | Next.js interface, Route Handlers, parameterized PostgreSQL access and isolated workflow verification. |
-| Authentication and authorization | 4 | Frontend authentication, password hashing and three database-stored roles enforced by protected APIs and ownership checks. |
+| Web application and database integration | 5 | Next.js interface, Server Components and Server Actions, parameterized PostgreSQL access and isolated workflow verification. |
+| Authentication and authorization | 4 | Frontend authentication, password hashing and three database-stored roles enforced by protected server functions and ownership checks. |
 | Documentation and individual contribution | 6 | Formal report, source repository, query/test evidence, truthful joint contribution statement and student demonstration. |
 | Total available | 50 | Final assessment belongs to the evaluator. |
 
-The project uses multiple nested/correlated queries rather than adding a recursive query without a domain need. Role-based access is database-backed API enforcement rather than PostgreSQL end-user RLS. The team considers the vector DELETE demonstration sufficient for the DELETE requirement. These are stated implementation choices and team interpretations, not instructor confirmations.
+The project uses multiple nested/correlated queries rather than adding a recursive query without a domain need. Role-based access uses server-side checks and PostgreSQL RLS under a restricted shared runtime login. The team considers the vector DELETE demonstration sufficient for the DELETE requirement. These are stated implementation choices and team interpretations, not instructor confirmations.
 
 The source rubric has an internal inconsistency: authentication is allocated four marks in its maximum/distribution but three in the detailed Correct Execution cell. This report retains the stated four-mark maximum without resolving the grading discrepancy.
 

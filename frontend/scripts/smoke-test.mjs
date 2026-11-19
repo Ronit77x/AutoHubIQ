@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { randomBytes } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
 import { spawn } from "node:child_process";
+import { createRequire } from "node:module";
 import { once } from "node:events";
 import nextEnv from "@next/env";
 import pg from "pg";
@@ -22,19 +23,33 @@ let serverLog = "";
 const port = Number(process.env.SMOKE_PORT ?? 3101);
 const base = `http://127.0.0.1:${port}`;
 let checks = 0;
-async function request(path, { cookie, body, method, status = 200, headers = {} } = {}) {
-  const isForm = body instanceof FormData;
-  const response = await fetch(`${base}${path}`, {
-    method: method ?? (body ? "POST" : "GET"),
-    headers: { ...(cookie ? { Cookie: cookie } : {}), ...(body && !isForm ? { "Content-Type": "application/json" } : {}), ...headers },
-    body: body ? (isForm ? body : JSON.stringify(body)) : undefined,
-  });
-  const data = response.headers.get("content-type")?.includes("application/json") ? await response.json() : null;
-  assert.equal(response.status, status, `${method ?? "request"} ${path}: ${data?.message ?? response.status}`);
-  checks++;
-  return { data, response, cookie: response.headers.get("set-cookie")?.split(";")[0] };
-}
 
+// Exercise the framework's Server Action transport. Application code has no
+// fetch/API calls; these HTTP requests exist only in the integration test.
+const require = createRequire(import.meta.url);
+const { encodeReply } = require("next/dist/compiled/react-server-dom-turbopack/client.node.js");
+const manifest = JSON.parse(await readFile(new URL("../.next/server/server-reference-manifest.json", import.meta.url), "utf8"));
+async function action(name, args = [], { cookie, status = 200, origin = base } = {}) {
+  const [id, definition] = Object.entries(manifest.node).find(([, entry]) => entry.exportedName === name) ?? [];
+  assert(id, "Action present in production build: " + name);
+  const worker = Object.keys(definition.workers)[0];
+  const route = worker.replace(/^app/, "").replace(/\/page$/, "") || "/";
+  const response = await fetch(base + route.replace("[listingId]", "1"), {
+    method: "POST", headers: { "Next-Action": id, Origin: origin, ...(cookie ? { Cookie: cookie } : {}) }, body: await encodeReply(args),
+  });
+  const payload = await response.text();
+  const result = payload.split("\n").map(line => { try { return JSON.parse(line.slice(line.indexOf(":") + 1)); } catch { return null; } }).find(value => value && typeof value === "object" && typeof value.ok === "boolean" && "data" in value);
+  assert(result, "Server Action returned a result: " + name + " (HTTP " + response.status + ") " + payload.slice(0,500));
+  assert.equal(result.status, status, name + ": " + (result.data.message ?? result.status));
+  checks++;
+  return { ...result, cookie: response.headers.get("set-cookie")?.split(";")[0] };
+}
+async function page(route, cookie) {
+  const response = await fetch(base + route, { headers: cookie ? { Cookie: cookie } : {} });
+  const html = await response.text();
+  assert.equal(response.status, 200, "Page " + route); assert(!html.includes('id="__next_error__"'), "No render error " + route); checks++;
+  return html;
+}
 try {
   await admin.connect();
   await admin.query(`CREATE DATABASE "${database}"`);
@@ -67,132 +82,122 @@ try {
     if (attempt > 120) throw new Error("Test server readiness timed out");
     await new Promise(resolve => setTimeout(resolve, 250));
   }
-  await request("/");
-  const cities = (await request("/api/cities")).data.cities;
-  const cityId = Number(cities[0].city_id);
-  await request("/api/db-check", { status: 401 });
-  await request("/api/listings?city_id=1&sort=invalid", { status: 400 });
-  await request("/api/listings?city_id=1&page=0", { status: 400 });
-  const first = (await request(`/api/listings?city_id=${cityId}&page_size=2&sort=price_asc`)).data;
-  const second = (await request(`/api/listings?city_id=${cityId}&page_size=2&sort=price_asc&page=2`)).data;
-  assert.equal(first.has_more, true);
-  assert.equal(first.listings.length, 2);
-  assert(!second.listings.some(row => first.listings.some(previous => previous.listing_id === row.listing_id)));
-  assert(Number(first.listings[0].asking_price) <= Number(first.listings[1].asking_price));
-  const filtered = (await request(`/api/listings?city_id=${cityId}&fuel_type=Petrol&max_price=600000`)).data;
-  assert(filtered.listings.every(row => row.fuel_type === "Petrol" && Number(row.asking_price) <= 600000));
+  await page("/");
+  const cityId = Number((await test.query("SELECT city_id FROM app.cities WHERE is_active ORDER BY city_name LIMIT 1")).rows[0].city_id);
   const password = randomBytes(18).toString("base64url");
-  async function register(email, type) {
-    return request("/api/auth/register", { status: 201, body: { full_name: "Workflow Test", email, password, account_type: type,
-      dealership_name: "Workflow Test Motors", city_id: cityId, street_address: "123 Test Street" } });
+  async function register(email, account_type) {
+    return action("registerAction", [{ full_name: "Workflow Test", email, password, account_type,
+      dealership_name: "Workflow Test Motors", city_id: cityId, street_address: "123 Test Street" }], { status: 201 });
   }
-  await request("/api/auth/register", { status: 400, body: { full_name: "Blocked Admin", email: "blocked@example.test", password, account_type: "admin" } });
-  const customer = await register("buyer@example.test", "customer");
+  await action("registerAction", [{ full_name: "Blocked Admin", email: "blocked@example.test", password, account_type: "admin" }], { status: 400 });
+  const buyer = await register("buyer@example.test", "customer");
   const dealer = await register("dealer@example.test", "dealer");
   const other = await register("other@example.test", "dealer");
   const administrator = await register("admin@example.test", "customer");
   await test.query("UPDATE app.users SET user_role='admin' WHERE email='admin@example.test'");
-  await request("/api/admin/dealers", { cookie: customer.cookie, status: 403 });
-  await request("/api/db-check", { cookie: customer.cookie, status: 403 });
-  await request("/api/db-check", { cookie: administrator.cookie });
-  const login = await request("/api/auth/login", { body: { email: "buyer@example.test", password } });
-  assert(login.cookie);
-  const catalog = (await request("/api/dealer/catalog", { cookie: dealer.cookie })).data.variants;
-  const listing = { variant_id: Number(catalog[0].variant_id), manufacturing_year: 2022, kms_driven: 24000,
-    asking_price: 550000, condition: "good", description: "Well maintained family vehicle for workflow testing." };
-  await request("/api/dealer/listings", { cookie: dealer.cookie, body: listing, status: 403 });
+  const login = await action("loginAction", [{ email: "buyer@example.test", password }]);
+  assert(login.cookie); checks++;
+  await action("loginAction", [{ email: "buyer@example.test", password: "wrong" }], { status: 401 });
   const dealerId = (await test.query("SELECT dealer_id FROM app.dealer_profiles dp JOIN app.users u USING(user_id) WHERE u.email='dealer@example.test'")).rows[0].dealer_id;
-  await request("/api/admin/dealers", { cookie: administrator.cookie, method: "PATCH", body: { dealer_id: dealerId, verification_status: "verified" } });
-  const published = (await request("/api/dealer/listings", { cookie: dealer.cookie, body: listing, status: 201 })).data.listing_id;
-  await request(`/api/listings/${published}`);
+  const review = { dealer_id: dealerId, verification_status: "verified" };
+  await action("reviewDealerAction", [review], { status: 401 });
+  await action("reviewDealerAction", [review], { cookie: buyer.cookie, status: 403 });
+  const variant = (await test.query("SELECT variant_id FROM app.vehicle_variants ORDER BY variant_id LIMIT 1")).rows[0].variant_id;
+  const listing = { variant_id: Number(variant), manufacturing_year: 2022, kms_driven: 24000,
+    asking_price: 550000, condition: "good", description: "Well maintained family vehicle for workflow testing." };
+  await action("createListingAction", [listing], { cookie: dealer.cookie, status: 403 });
+  await action("reviewDealerAction", [review], { cookie: administrator.cookie });
+  const published = String((await action("createListingAction", [listing], { cookie: dealer.cookie, status: 201 })).data.listing_id);
+  const publishedPage = await page(`/listings/${published}`);
+  assert(publishedPage.includes("550,000") || publishedPage.includes("5,50,000")); checks++;
+  await page("/dealer", dealer.cookie); await page("/admin", administrator.cookie);
+  // Anonymous, customer, and foreign dealers cannot change this inventory.
+  await action("updateListingAction", [published, { asking_price: 1 }], { status: 401 });
+  await action("updateListingAction", [published, { asking_price: 1 }], { cookie: buyer.cookie, status: 403 });
+  await action("updateListingAction", [published, { asking_price: 1 }], { cookie: other.cookie, status: 404 });
+  const beforeTimes = (await test.query("SELECT created_at::text, updated_at::text FROM app.vehicle_listings WHERE listing_id=$1", [published])).rows[0];
+  await action("updateListingAction", [published, { asking_price: 525000 }], { cookie: dealer.cookie });
+  const timestamps = (await test.query("SELECT created_at::text, updated_at::text FROM app.vehicle_listings WHERE listing_id=$1", [published])).rows[0];
+  assert(new Date(timestamps.updated_at) > new Date(beforeTimes.updated_at));
+  assert.equal(timestamps.created_at,beforeTimes.created_at); checks++;
+  const updatedDetail = await page('/listings/'+published);
+  const updatedDealer = await page('/dealer', dealer.cookie);
+  assert(updatedDetail.includes('Last updated:') && updatedDealer.includes('Last updated:') && updatedDealer.includes('Delete vehicle'));
+  assert(updatedDetail.includes(new Date(timestamps.updated_at).toISOString()) && updatedDealer.includes(new Date(timestamps.updated_at).toISOString())); checks++;
+  // UPDATE in server code does not assign updated_at: the trigger supplied it.
+  assert.equal(Number((await test.query("SELECT asking_price FROM app.vehicle_listings WHERE listing_id=$1", [published])).rows[0].asking_price), 525000); checks++;
+  // Photo validation, ownership, byte storage, and server-rendered delivery.
   const photo = await sharp({ create: { width: 80, height: 60, channels: 3, background: "#2463eb" } }).png().toBuffer();
   function photoForm(bytes = photo) { const form = new FormData(); form.set("photo", new Blob([bytes], { type: "image/png" }), "vehicle.png"); return form; }
-  await request(`/api/dealer/listings/${published}/images`, { body: photoForm(), status: 401 });
-  await request(`/api/dealer/listings/${published}/images`, { cookie: other.cookie, body: photoForm(), status: 403 });
-  await request(`/api/dealer/listings/${published}/images`, { cookie: dealer.cookie, body: photoForm(Buffer.from("not an image")), status: 400 });
-  const upload = await request(`/api/dealer/listings/${published}/images`, { cookie: dealer.cookie, body: photoForm(), status: 201 });
-  const image = (await request(upload.data.image_url)).response;
-  assert.equal(image.headers.get("content-type"), "image/jpeg");
-  assert((await image.arrayBuffer()).byteLength > 0);
-  for (let i = 1; i < 6; i++) await request(`/api/dealer/listings/${published}/images`, { cookie: dealer.cookie, body: photoForm(), status: 201 });
-  await request(`/api/dealer/listings/${published}/images`, { cookie: dealer.cookie, body: photoForm(), status: 400 });
-  const enquiry = { message: "Can I arrange a test drive this weekend?", phone: "+91 9999999999", request_type: "test_drive" };
-  await request(`/api/listings/${published}/enquiries`, { body: enquiry, status: 401 });
-  await request(`/api/listings/${published}/enquiries`, { cookie: dealer.cookie, body: enquiry, status: 409 });
-  await request(`/api/listings/${published}/enquiries`, { cookie: customer.cookie, body: enquiry, status: 201 });
-  await request(`/api/listings/${first.listings[0].listing_id}/enquiries`, { cookie: customer.cookie, body: enquiry, status: 201 });
-  const offer = { message: "I would like to offer this amount for the car.", request_type: "offer", offer_amount: "500000.50" };
-  await request(`/api/listings/${published}/enquiries`, { body: offer, status: 401 });
-  await request(`/api/listings/${published}/enquiries`, { cookie: other.cookie, body: offer, status: 403 });
-  for (const amount of ["0", "-1", "1.001", "NaN", "10000000000"]) {
-    await test.query("DELETE FROM app.request_limits");
-    await request(`/api/listings/${published}/enquiries`, { cookie: customer.cookie, body: { ...offer, offer_amount: amount }, status: 400 });
+  await action("uploadImageAction", [published, photoForm()], { status: 401 });
+  await action("uploadImageAction", [published, photoForm(Buffer.from("invalid"))], { cookie: dealer.cookie, status: 400 });
+  await action("uploadImageAction", [published, photoForm()], { cookie: dealer.cookie, status: 201 });
+  assert((await page(`/listings/${published}`)).includes("data:image/jpeg;base64,")); checks++;
+  const request = { request_type: "enquiry", message: "Please arrange a viewing of this vehicle." };
+  await action("submitEnquiryAction", [published, request], { status: 401 });
+  await action("submitEnquiryAction", [published, request], { cookie: buyer.cookie, status: 201 });
+  await action("submitEnquiryAction", [published, { ...request, request_type: "test_drive" }], { cookie: buyer.cookie, status: 201 });
+  const offer = { ...request, request_type: "offer", offer_amount: "510000.00" };
+  await action("submitEnquiryAction", [published, offer], { cookie: buyer.cookie, status: 201 });
+  const offerId = String((await test.query("SELECT enquiry_id FROM app.listing_enquiries WHERE listing_id=$1 AND request_type='offer'", [published])).rows[0].enquiry_id);
+  const revision = { offer_amount: "515000.50", message: "My revised offer for this vehicle.", phone: "+91 9000000000" };
+  await action("updateOfferAction", [offerId, revision], { status: 401 });
+  await action("updateOfferAction", [offerId, revision], { cookie: dealer.cookie, status: 403 });
+  await action("updateOfferAction", [offerId, revision], { cookie: buyer.cookie });
+  assert((await page("/offers", buyer.cookie)).includes("515000.50")); checks++;
+  await action("updateOfferAction", [offerId, { action: "mark_contacted" }], { cookie: other.cookie, status: 404 });
+  await action("updateOfferAction", [offerId, { action: "mark_contacted" }], { cookie: dealer.cookie });
+  await action("updateOfferAction", [offerId, revision], { cookie: buyer.cookie, status: 409 });
+  assert((await page("/offers", buyer.cookie)).includes("Dealer marked contacted")); checks++;
+  // Reads happen through server-rendered pages; no JSON data endpoints remain.
+  await page(`/?city=${cityId}&sort=price_asc`);
+  const semantic = await page(`/?city=${cityId}&query=family%20vehicle&max_price=600000`);
+  assert(semantic.includes("semantic matches") || semantic.includes("No matching")); checks++;
+  await action("updateListingAction", [published, { listing_status: "sold" }], { cookie: dealer.cookie });
+  assert(!(await page(`/listings/${published}`)).includes("data:image/jpeg;base64,")); checks++;
+  // Identity stays isolated across concurrent server renders.
+  const concurrent = await Promise.all(Array.from({ length: 12 }, (_, i) => page(i % 2 ? "/offers" : "/dealer", i % 2 ? buyer.cookie : dealer.cookie)));
+  assert(concurrent.every((html,i)=>i%2 ? html.includes("Dealer marked contacted") && !html.includes("Publish a vehicle") : html.includes("Buyer requests") && html.includes("Workflow Test Motors"))); checks++;
+  await action("updateListingAction", [published, { listing_status: "active" }], {cookie:dealer.cookie});
+  assert((await page("/listings/"+published)).includes("data:image/jpeg;base64,")); checks++;
+  // Create multiple listing histories and each dependent type for the cascade.
+  const vehicleId = String((await test.query("SELECT vehicle_id FROM app.vehicle_listings WHERE listing_id=$1", [published])).rows[0].vehicle_id);
+  const historyId = String((await test.query("INSERT INTO app.vehicle_listings(vehicle_id,asking_price,description,listing_status) VALUES($1,500000,'Earlier listing history for cascade test','withdrawn') RETURNING listing_id",[vehicleId])).rows[0].listing_id);
+  await test.query("INSERT INTO app.listing_price_estimates(listing_id,estimated_price,methodology) VALUES($1,520000,'Cascade test estimate')",[published]);
+  const imageIds = (await test.query("SELECT image_id FROM app.listing_images WHERE listing_id=$1",[published])).rows.map(row=>row.image_id);
+  const enquiryIds = (await test.query("SELECT enquiry_id FROM app.listing_enquiries WHERE listing_id=$1",[published])).rows.map(row=>row.enquiry_id);
+  assert(imageIds.length && enquiryIds.length); checks++;
+  const seedVehicle = (await test.query("SELECT vehicle_id FROM app.vehicles WHERE vehicle_id<>$1 ORDER BY vehicle_id LIMIT 1",[vehicleId])).rows[0].vehicle_id;
+  const catalogueBefore = (await test.query("SELECT (SELECT count(*) FROM app.vehicle_variants)::int AS variants, (SELECT count(*) FROM app.fuel_economy_references)::int AS economy")).rows[0];
+  await action("deleteVehicleAction", [vehicleId], {status:401});
+  await action("deleteVehicleAction", [vehicleId], {cookie:buyer.cookie,status:403});
+  await action("deleteVehicleAction", [vehicleId], {cookie:other.cookie,status:404});
+  await action("deleteVehicleAction", ["invalid"], {cookie:dealer.cookie,status:400});
+  await action("deleteVehicleAction", [vehicleId], {cookie:dealer.cookie});
+  assert.equal((await test.query("SELECT 1 FROM app.vehicles WHERE vehicle_id=$1",[vehicleId])).rowCount,0); checks++;
+  for(const table of ['vehicle_listings','listing_images','listing_price_estimates','listing_embeddings','listing_enquiries']) {
+    assert.equal((await test.query('SELECT 1 FROM app.'+table+' WHERE listing_id=ANY($1::bigint[])',[[published,historyId]])).rowCount,0,table+' cascaded'); checks++;
   }
-  await request(`/api/listings/${published}/enquiries`, { cookie: customer.cookie, body: offer, status: 201 });
-  await request(`/api/listings/${first.listings[0].listing_id}/enquiries`, { cookie: customer.cookie, body: offer, status: 201 });
-  const inbox = (await request("/api/dealer/dashboard", { cookie: dealer.cookie })).data.enquiries;
-  assert.equal(inbox.length, 2); assert.equal(inbox.find(row => row.request_type === "test_drive").message, enquiry.message);
-  assert.equal(inbox.find(row => row.request_type === "offer").offer_amount, offer.offer_amount);
-  assert.equal((await request("/api/dealer/dashboard", { cookie: other.cookie })).data.enquiries.length, 0);
-  await request("/offers");
-  await request("/api/offers", { status: 401 });
-  await request("/api/offers", { cookie: dealer.cookie, status: 403 });
-  const otherBuyer = await register("other-buyer@example.test", "customer");
-  assert.equal((await request("/api/offers", { cookie: otherBuyer.cookie })).data.offers.length, 0);
-  // Concurrent requests share a pool, never an actor identity.
-  await Promise.all(Array.from({ length: 24 }, async (_, index) => {
-    const own = index % 2 === 0;
-    const response = await request("/api/offers", { cookie: own ? customer.cookie : otherBuyer.cookie });
-    assert.equal(response.data.offers.length, own ? 2 : 0);
-  }));
-  const buyerOffers = (await request("/api/offers", { cookie: customer.cookie })).data.offers;
-  assert.equal(buyerOffers.length, 2);
-  const offerId = inbox.find(row => row.request_type === "offer").enquiry_id;
-  const revision = { ...offer, offer_amount: "510000.25", message: "My revised offer includes a prompt inspection.", phone: "+91 9888888888" };
-  await request(`/api/offers/${offerId}`, { method: "PATCH", body: revision, status: 401 });
-  await request(`/api/offers/${offerId}`, { cookie: otherBuyer.cookie, method: "PATCH", body: revision, status: 404 });
-  await request(`/api/offers/${offerId}`, { cookie: customer.cookie, method: "PATCH", body: { ...revision, offer_amount: "1.001" }, status: 400 });
-  await request(`/api/offers/${offerId}`, { cookie: customer.cookie, method: "PATCH", body: revision, headers: { Origin: "https://untrusted.example" }, status: 403 });
-  await request(`/api/offers/${offerId}`, { cookie: customer.cookie, method: "PATCH", body: revision });
-  const revised = (await request("/api/dealer/dashboard", { cookie: dealer.cookie })).data.enquiries.find(row => row.enquiry_id === offerId);
-  assert.equal(revised.offer_amount, revision.offer_amount); assert.equal(revised.message, revision.message); assert.equal(revised.phone, revision.phone);
-  const contact = { action: "mark_contacted" };
-  await request(`/api/offers/${offerId}`, { cookie: customer.cookie, method: "PATCH", body: contact, status: 403 });
-  await request(`/api/offers/${offerId}`, { cookie: other.cookie, method: "PATCH", body: contact, status: 404 });
-  await request(`/api/offers/${offerId}`, { cookie: dealer.cookie, method: "PATCH", body: contact });
-  await request(`/api/offers/${offerId}`, { cookie: dealer.cookie, method: "PATCH", body: contact });
-  await request(`/api/offers/${offerId}`, { cookie: customer.cookie, method: "PATCH", body: revision, status: 409 });
-  const contacted = (await request("/api/offers", { cookie: customer.cookie })).data.offers.find(row => row.enquiry_id === offerId);
-  assert(contacted.contacted_at); assert.equal(contacted.editable, false);
-  const enquiryId = inbox.find(row => row.request_type === "test_drive").enquiry_id;
-  await request(`/api/offers/${enquiryId}`, { cookie: customer.cookie, method: "PATCH", body: revision, status: 404 });
-  // A listing closing also locks pending offers while retaining them in buyer history.
-  const demoOffer = buyerOffers.find(row => row.enquiry_id !== offerId);
-  await test.query("UPDATE app.vehicle_listings SET listing_status='sold' WHERE listing_id=$1", [demoOffer.listing_id]);
-  await request(`/api/offers/${demoOffer.enquiry_id}`, { cookie: customer.cookie, method: "PATCH", body: revision, status: 409 });
-  assert.equal((await request("/api/offers", { cookie: customer.cookie })).data.offers.find(row => row.enquiry_id === demoOffer.enquiry_id).editable, false);
-  await test.query("UPDATE app.vehicle_listings SET listing_status='active' WHERE listing_id=$1", [demoOffer.listing_id]);
-  await request(`/api/dealer/listings/${published}`, { cookie: other.cookie, method: "PATCH", body: { asking_price: 1 }, status: 404 });
-  await request(`/api/dealer/listings/${published}`, { cookie: dealer.cookie, method: "PATCH", body: { asking_price: 525000 } });
-  assert.equal(Number((await request(`/api/listings/${published}`)).data.listing.asking_price), 525000);
-  const search = (await request("/api/search", { body: { query: "family vehicle", city_id: cityId, max_price: 600000, page_size: 1 } })).data;
-  assert.equal(search.listings.length, 1); assert.equal(search.has_more, true);
-  const nextSearch = (await request("/api/search", { body: { query: "family vehicle", city_id: cityId, max_price: 600000, page_size: 1, page: 2 } })).data;
-  assert.notEqual(search.listings[0].listing_id, nextSearch.listings[0].listing_id);
-  await request(`/api/dealer/listings/${published}`, { cookie: dealer.cookie, method: "PATCH", body: { listing_status: "sold" } });
-  await request(`/api/listings/${published}`, { status: 404 });
-  await test.query("DELETE FROM app.request_limits");
-  await request(`/api/listings/${published}/enquiries`, { cookie: customer.cookie, body: offer, status: 409 });
-  await request(`/api/dealer/listings/${published}`, { cookie: dealer.cookie, method: "PATCH", body: { listing_status: "active" } });
-  await request("/api/admin/dealers", { cookie: administrator.cookie, method: "PATCH", body: { dealer_id: dealerId, verification_status: "rejected" } });
-  await request(`/api/listings/${published}`, { status: 404 });
-  await request("/api/auth/logout", { cookie: customer.cookie, method: "POST" });
-  await request("/api/auth/register", { headers: { Origin: "https://untrusted.example" }, body: {}, status: 403 });
-  for (let i = 0; i < 10; i++) await request("/api/auth/login", { body: { email: "missing@example.test", password }, status: 401 });
-  await request("/api/auth/login", { body: { email: "missing@example.test", password }, status: 429 });
-  console.log(`PASS: ${checks} HTTP checks plus database and workflow assertions in an isolated temporary database.`);
+  assert.equal((await test.query("SELECT 1 FROM app.listing_image_data WHERE image_id=ANY($1::bigint[])",[imageIds])).rowCount,0); checks++;
+  assert.equal((await test.query("SELECT 1 FROM app.vehicles WHERE vehicle_id=$1",[seedVehicle])).rowCount,1); checks++;
+  assert.deepEqual((await test.query("SELECT (SELECT count(*) FROM app.vehicle_variants)::int AS variants, (SELECT count(*) FROM app.fuel_economy_references)::int AS economy")).rows[0],catalogueBefore); checks++;
+  assert((await page('/listings/'+published)).includes('Active listing not found')); checks++;
+  assert(!(await page('/offers',buyer.cookie)).includes('My revised offer for this vehicle.')); checks++;
+  await action("deleteVehicleAction", [vehicleId], {cookie:dealer.cookie,status:404});
+  const loggedOut = await action("logoutAction", [], { cookie: buyer.cookie });
+  assert(loggedOut.cookie?.startsWith("autohubiq_session=")); checks++;
+  for (const oldPath of ["/api/cities", "/api/auth/me", "/api/search", "/api/listings"]) {
+    const removed = await fetch(base + oldPath); assert.equal(removed.status, 404); checks++;
+  }
+  // Framework rejects cross-origin Action invocations before running a mutation.
+  const [registerId] = Object.entries(manifest.node).find(([,entry]) => entry.exportedName === "registerAction");
+  const blocked = await fetch(base + "/account", { method: "POST", headers: { "Next-Action": registerId, Origin: "https://untrusted.example" }, body: await encodeReply([{}]) });
+  assert(blocked.status >= 400); checks++;
+  for (let i=0;i<10;i++) await action("loginAction", [{ email: "missing@example.test", password }], { status: 401 });
+  await action("loginAction", [{ email: "missing@example.test", password }], { status: 429 });
+  console.log(`PASS: ${checks} Server Action, server-rendered page, permission, photo and workflow checks in an isolated database.`);
 } catch (error) {
-  console.error("Workflow smoke test failed:", error.message);
+  console.error("Workflow smoke test failed:", error.stack ?? error.message);
   if (serverLog) console.error(serverLog);
   process.exitCode = 1;
 } finally {

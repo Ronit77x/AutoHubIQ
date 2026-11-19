@@ -1,4 +1,5 @@
 "use client";
+import { submitEnquiryAction } from "../app/actions";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
@@ -14,9 +15,8 @@ export default function EnquiryForm({ listingId }: { listingId: string }) {
     const values = new FormData(form);
     setBusy(true); setError(""); setNotice(""); setNeedsLogin(false);
     try {
-      const response = await fetch(`/api/listings/${listingId}/enquiries`, { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(values)) });
-      const data = await response.json();
+      const response = await submitEnquiryAction(listingId, Object.fromEntries(values));
+      const data = response.data;
       if (response.status === 401) setNeedsLogin(true);
       if (!response.ok) throw new Error(data.message ?? "Unable to submit enquiry");
       setNotice(data.message); form.reset(); setRequestType("enquiry");

@@ -113,7 +113,7 @@ the schema and seed data are installed. It applies
 Restart `npm.cmd run dev` after configuration changes. On another checkout,
 configure `DATABASE_ADMIN_URL` with the owner connection before running
 `db:security`. Existing runtime passwords are not silently reset on reruns.
-The API refuses a superuser, BYPASSRLS, schema-owning or administrative connection.
+The database layer refuses a superuser, BYPASSRLS, schema-owning or administrative connection.
 
 The `autohubiq_runtime` NOLOGIN role receives explicit schema/table/column
 `GRANT` permissions. It has no direct password-hash reads, account-role updates,
@@ -122,13 +122,13 @@ application roles from `app.users` and record ownership to the permitted SQL:
 customers read their own interactions and edit eligible own offers; dealers
 publish only for their verified dealership and manage their own inventory;
 admins review/verify dealerships and can withdraw listings. A dealer may update
-an existing own price or non-active status without verification, matching the API.
+an existing own price or non-active status without verification, matching the server-side rules.
 Field-sensitive triggers restrict dealer offer updates to marking contacted and
 customer updates to offer amount/message/phone. Public catalogue and active
 listing reads stay available. Both views use `security_invoker` so they cannot
 bypass base-table policies using their owner's privileges.
 
-Every API handler has a separate AsyncLocalStorage identity. Only a verified
+Every server-side operation has a separate AsyncLocalStorage identity. Only a verified
 signed session supplies `app.user_id`; PostgreSQL looks up its current role and
 account status. Each query/transaction uses `SET LOCAL` via `set_config`, so
 commit/rollback clears identity before connection reuse. The backend and its
@@ -139,7 +139,7 @@ website users or accept an identity from an unverified request field.
 Narrow SECURITY DEFINER functions support account registration, login lookup,
 rate limiting and safe offer row locking. They have fixed trusted search paths
 and explicit EXECUTE grants with PUBLIC access revoked. Registration cannot
-create admins. Public API responses never contain password hashes.
+create admins. Client-visible data never contain password hashes.
 
 To inspect the actual grants and policies in pgAdmin, run
 `database/queries/30_database_permissions.sql`. The account/action query is a
@@ -216,45 +216,17 @@ npm run db:embed
 
 The backfill updates an embedding only when its source text or model changes.
 
-## API overview
+## Direct server-side database access
 
-- `GET /api/cities` — active cities
-- `GET /api/listings?city_id=<id>` — public active listings in a city
-- `GET /api/listings/<listingId>` — public active listing details
-- `POST /api/search` — semantic search with structured filters
-- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`,
-  `GET /api/auth/me` — account and session operations
-- `GET /api/dealer/dashboard`, `GET /api/dealer/catalog`,
-  `POST /api/dealer/listings`, `PATCH /api/dealer/listings/<listingId>` —
-  authenticated dealer operations
-- `GET /api/admin/dealers`, `PATCH /api/admin/dealers` — administrator-only
-  dealership review
+There are no application REST routes under app/api and no fetch calls in the UI. Next.js Server Components read PostgreSQL through the server-only modules in lib/server. Client components receive prepared page data. Filters, pagination and semantic queries navigate the marketplace URL and are resolved during the server render.
 
-Additional endpoints:
+Forms call explicit Server Actions in app/actions.ts for authentication, listing creation/updates, photo uploads, dealer review, enquiries and offer updates. These invoke server-only validation and parameterized SQL directly. Authentication, ownership checks, transactions and RLS remain enforced on every operation. Database credentials never reach the browser.
 
-- `POST /api/dealer/listings/<listingId>/images` — owner-only multipart photo
-  upload with a `photo` field; maximum six photos per listing
-- `GET /api/images/<imageId>` — uploaded JPEG content
-- `POST /api/listings/<listingId>/enquiries` — authenticated buyer request with
-  `message`, optional `phone`, and `request_type` (`enquiry`, `test_drive` or
-  `offer`); offers require a positive `offer_amount` and a customer account
-- `GET /api/dealer/dashboard` also returns the latest 100 buyer requests for
-  the authenticated dealer's inventory
-- `GET /api/offers` — customer-only offer history
-- `PATCH /api/offers/<offerId>` — customer edits owned offers before contact;
-  owning dealer sends `{ "action": "mark_contacted" }` to close editing
-- `GET /api/db-check` requires administrator access
+Server Actions use framework-managed HTTP POST requests to the page behind the scenes. This removes the separate REST/API layer; it does not mean the browser connects directly to PostgreSQL or that a web app makes no network requests.
 
-Listings accept `page`, `page_size` (1–48), `max_price`, `fuel_type`,
-`transmission`, and `sort` (`newest`, `price_asc`, `price_desc`, `mileage_asc`).
-Search accepts `page` and `page_size` in its JSON body. Both endpoints return
-`has_more` and `page`. Login, registration, search, uploads and enquiries have
-database-backed request budgets. Anonymous search/registration budgets are
-shared across the demo; public hosting should also enforce trusted edge limits.
+Uploaded photos stay in app.listing_image_data. Authorized server code reads their bytes during page rendering and supplies data URLs. Old stored image URLs are recognized as identifiers without calling an image endpoint. Uploads are limited to 5 MB each, normalized to JPEG and capped at 2 MB stored bytes, with up to six photos per listing. The Server Action body limit is 6 MB for multipart overhead.
 
-Database writes use parameterized queries. Role and account status are checked
-on the server for protected operations; the UI is not an authorization
-boundary.
+Read entry points: app/page.tsx (marketplace/search), app/account/page.tsx (account/cities), app/dealer/page.tsx (dealer workspace), app/admin/page.tsx (dealer applications), app/offers/page.tsx (own offers), and app/listings/[listingId]/page.tsx (listing details). Mutations enter through app/actions.ts. SQL functions live in lib/server; connections and sessions use lib/db.ts and lib/auth.ts.
 
 ## Validation
 
@@ -278,7 +250,7 @@ npm run build
 
 `npm test` covers password hashing and signed-session validation without
 connecting to or changing the configured database. Exercise account
-registration, dealer verification, and marketplace APIs only against a
+registration, dealer verification, and marketplace workflows only against a
 dedicated test database before deployment.
 
 After a successful production build, run the full workflow regression:
@@ -301,7 +273,7 @@ formal report, editable source, course ER/mapping diagrams and SQL evidence.
 Member details and the joint contribution statement are populated. Current
 application screenshots remain a separate student review task.
 
-The workflow regression creates a randomly named temporary database using DATABASE_ADMIN_URL, applies the schemas and seeds,
+The workflow regression passes 106 Server Action/page/workflow checks. It creates a randomly named temporary database using DATABASE_ADMIN_URL, applies the schemas and seeds,
 creates a restricted test login, starts an isolated server on port 3101,
 and tests registration, admin verification, publishing, image validation and
 limits, buyer enquiries, ownership checks, filters, pagination, semantic search,
@@ -337,3 +309,5 @@ diagrams are complete and published. See the audit
 for coverage limits. The fresh build requires access to the existing Google
 Fonts dependencies. The main application and existing data were unchanged by
 the documentation audit.
+
+Dealer vehicle deletion and database timestamp demonstrations are documented in [database-ui-demo.md](../docs/database-ui-demo.md). Schema 21 enables vehicle-to-listing cascades and a guarded deletion function. Dealer inventory and customer detail pages display database-created and database-updated timestamps.

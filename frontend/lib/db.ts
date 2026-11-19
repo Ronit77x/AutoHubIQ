@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== "production") {
 const requestIdentity = new AsyncLocalStorage<{ userId: string | null }>();
 const checkedClients = new WeakSet<PoolClient>();
 
-// Each API handler starts anonymous. Identity is set only after a signed
+// Each server-side operation starts anonymous. Identity is set only after a signed
 // session has been verified, never from a request body/header/user-supplied role.
 export function withDatabaseContext<A extends unknown[], R>(handler: (...args: A) => Promise<R>) {
   return (...args: A): Promise<R> => requestIdentity.run({ userId: null }, () => handler(...args));

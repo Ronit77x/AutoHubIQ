@@ -99,6 +99,17 @@ try {
     const l=await c.query("INSERT INTO app.vehicle_listings(vehicle_id,asking_price,description,listing_status) VALUES($1,500000,'Valid publication via restricted role','active') RETURNING listing_id",[v]);
     assert.equal(l.rowCount,1);checks++;
   });
+  // The guarded deletion function cannot be used to bypass ownership/roles.
+  await denied(null,"SELECT app.delete_own_vehicle($1)",[own.v]);
+  await denied(people.buyer.id,"SELECT app.delete_own_vehicle($1)",[own.v]);
+  await denied(people.admin.id,"SELECT app.delete_own_vehicle($1)",[own.v]);
+  await denied(people.suspended.id,"SELECT app.delete_own_vehicle($1)",[own.v]);
+  await denied(people.dealer.id,"DELETE FROM app.vehicles WHERE vehicle_id=$1",[own.v]);
+  assert.equal((await asUser(people.otherDealer.id,c=>c.query("SELECT app.delete_own_vehicle($1) AS deleted",[own.v]))).rows[0].deleted,false);checks++;
+  await asUser(people.dealer.id,async c=>{
+    assert.equal((await c.query("SELECT app.delete_own_vehicle($1) AS deleted",[own.v])).rows[0].deleted,true);checks++;
+    assert.equal((await c.query("SELECT 1 FROM app.vehicle_listings WHERE listing_id=$1",[own.l])).rowCount,0);checks++;
+  });
   // View invoker security must preserve base-table visibility.
   await zero(null,"SELECT * FROM app.active_listing_details WHERE listing_id=$1",[hidden.l]);
 } catch (error) {

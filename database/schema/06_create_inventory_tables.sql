@@ -110,7 +110,8 @@ CREATE TABLE IF NOT EXISTS app.vehicle_listings (
 
     CONSTRAINT fk_vehicle_listings_vehicle
         FOREIGN KEY (vehicle_id)
-        REFERENCES app.vehicles(vehicle_id),
+        REFERENCES app.vehicles(vehicle_id)
+        ON DELETE CASCADE,
 
     CONSTRAINT chk_listing_price
         CHECK (asking_price > 0),

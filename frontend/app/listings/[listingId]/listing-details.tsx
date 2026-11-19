@@ -4,8 +4,8 @@ import Link from "next/link";
 import VehicleGallery from "../../../components/vehicle-gallery";
 import EnquiryForm from "../../../components/enquiry-form";
 import FuelEconomy from "../../../components/fuel-economy";
+import ListingTimestamps from "../../../components/listing-timestamps";
 import type { FuelEconomyReference } from "../../../lib/fuel-economy";
-import { useEffect, useState } from "react";
 import { ArrowLeft, CarFront, Fuel, Gauge, MapPin, Settings2 } from "lucide-react";
 
 interface CarImage {
@@ -16,6 +16,8 @@ interface CarImage {
 
 interface Listing {
   listing_id: number;
+  created_at: string;
+  updated_at: string;
   asking_price: string;
   description: string;
   source_type: string;
@@ -45,31 +47,10 @@ interface Listing {
   source_summary: string | null;
 }
 
-export default function ListingDetails({ listingId }: { listingId: string }) {
-  const [listing, setListing] = useState<Listing | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function fetchListing() {
-      try {
-        const response = await fetch(`/api/listings/${listingId}`);
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(data.message ?? "Could not load this listing");
-        }
-
-        setListing(data.listing);
-      } catch {
-        setError("Unable to load this vehicle. It may no longer be available.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchListing();
-  }, [listingId]);
+export default function ListingDetails({ initial }: { initial: { listing: Listing | null; error: string } }) {
+  const listing = initial.listing;
+  const error = initial.error;
+  const loading = false;
 
   const formatPrice = (price: string) =>
     new Intl.NumberFormat("en-IN", {
@@ -121,7 +102,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
         )}
 
         <div className="grid gap-8 lg:grid-cols-[1.45fr_1fr] lg:items-start">
-          <VehicleGallery key={listingId} images={listing.images}
+          <VehicleGallery key={listing.listing_id} images={listing.images}
             vehicle={`${listing.manufacturer_name} ${listing.model_name}`} isDemo={isDemo} />
 
           <section className="rounded-xl border border-neutral-200 bg-white p-6 lg:p-8">
@@ -219,6 +200,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
           </p>
         </section>
 
+        <ListingTimestamps createdAt={listing.created_at} updatedAt={listing.updated_at} />
         <EnquiryForm listingId={String(listing.listing_id)} />
 
         {listing.estimated_price && (listing.methodology || listing.source_summary) && (
