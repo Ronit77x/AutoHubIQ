@@ -4,7 +4,7 @@ import nextEnv from "@next/env";
 import pg from "pg";
 
 nextEnv.loadEnvConfig(process.cwd());
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const client = new pg.Client({ connectionString: process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
 const fingerprintSql = `SELECT COUNT(*)::int AS count,
   md5(COALESCE(string_agg(row_to_json(e)::text, '|' ORDER BY listing_id), '')) AS fingerprint
   FROM app.listing_embeddings e`;

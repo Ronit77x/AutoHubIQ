@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import {
   AuthConfigurationError,
@@ -21,7 +22,7 @@ interface ListingBody {
   description?: unknown;
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withDatabaseContext(async function POST(request: NextRequest) {
   if (!isSameOrigin(request)) {
     return NextResponse.json(
       { success: false, message: "Cross-origin requests are not allowed" },
@@ -343,4 +344,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

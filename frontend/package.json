@@ -11,11 +11,13 @@
     "db:embed": "node scripts/seed-listing-embeddings.mjs",
     "db:gallery": "node scripts/seed-demo-gallery.mjs --apply",
     "db:check": "node scripts/check-database.mjs",
+    "db:security": "node scripts/setup-database-security.mjs",
     "db:economy": "node scripts/seed-fuel-economy.mjs",
     "setup:local": "node scripts/setup-local.mjs",
     "demo:admin": "node --experimental-default-type=module --experimental-strip-types scripts/create-demo-admin.mjs",
     "demo:dealers": "node --experimental-default-type=module --experimental-strip-types scripts/provision-demo-dealers.mjs",
     "test:workflow": "node scripts/smoke-test.mjs",
+    "test:security": "node scripts/test-database-security.mjs",
     "test:vector": "node scripts/verify-vector-rud.mjs"
   },
   "dependencies": {

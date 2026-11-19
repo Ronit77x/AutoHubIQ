@@ -1,0 +1,426 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5200" height="5050" viewBox="0 0 5200 5050"><title>AutoHubIQ ER diagram</title><rect width="5200" height="5050" fill="white"/>
+<text x="120" y="70" font-family="Times New Roman" font-size="48" fill="black" font-weight="bold">AutoHubIQ ER diagram</text>
+<polyline points="650,1464 650,1030 1180,1030" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="1370,1030 1820,1030 1820,1464" fill="none" stroke="black" stroke-width="2.5"/><polyline points="1376,1036 1826,1036 1826,1470" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="1275,983 1370,1030 1275,1077 1180,1030" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="1275" y="1038" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">located in</text>
+<text x="668" y="1446" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="1838" y="1446" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1980,486 1980,928" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="1980,1022 1980,1464" fill="none" stroke="black" stroke-width="2.5"/><polyline points="1986,1028 1986,1470" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="1980,928 2075,975 1980,1022 1885,975" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="1980" y="983" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">owns profile</text>
+<text x="1998" y="528" font-family="Times New Roman" font-size="25" fill="black" >(0,1)</text>
+<text x="1998" y="1446" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1820,414 1820,180 2455,180" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="2645,180 3200,180 3200,414" fill="none" stroke="black" stroke-width="2.5"/><polyline points="2651,186 3206,186 3206,420" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="2550,133 2645,180 2550,227 2455,180" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="2550" y="188" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">submits</text>
+<text x="1838" y="396" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="3218" y="396" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="4500,486 4500,928" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="4500,1022 4500,1464" fill="none" stroke="black" stroke-width="2.5"/><polyline points="4506,1028 4506,1470" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="4500,928 4595,975 4500,1022 4405,975" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="4500" y="983" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">makes</text>
+<text x="4518" y="528" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="4518" y="1446" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="4500,1536 4500,2003" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="4500,2097 4500,2564" fill="none" stroke="black" stroke-width="2.5"/><polyline points="4506,2103 4506,2570" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="4500,2003 4595,2050 4500,2097 4405,2050" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="4500" y="2058" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">offers variant</text>
+<text x="4518" y="1578" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="4518" y="2546" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1980,1536 1980,2003" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="1980,2097 1980,2564" fill="none" stroke="black" stroke-width="2.5"/><polyline points="1986,2103 1986,2570" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="1980,2003 2075,2050 1980,2097 1885,2050" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="1980" y="2058" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">owns inventory</text>
+<text x="1998" y="1578" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="1998" y="2546" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="4420,2564 4420,2200 3795,2200" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="3605,2200 1820,2200 1820,2564" fill="none" stroke="black" stroke-width="2.5"/><polyline points="3611,2206 1826,2206 1826,2570" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="3700,2153 3795,2200 3700,2247 3605,2200" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="3700" y="2208" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">describes</text>
+<text x="4438" y="2546" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="1838" y="2546" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1900,2636 1900,3000 2455,3000" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="2645,3000 3100,3000 3100,2636" fill="none" stroke="black" stroke-width="2.5"/><polyline points="2651,3006 3106,3006 3106,2642" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="2550,2953 2645,3000 2550,3047 2455,3000" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="2550" y="3008" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">listed as</text>
+<text x="1918" y="2678" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="3118" y="2678" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="3120,2564 3120,1697" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="3120,1603 3120,486" fill="none" stroke="black" stroke-width="2.5"/><polyline points="3126,1609 3126,492" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="3120,1603 3215,1650 3120,1697 3025,1650" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="3120" y="1658" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">receives</text>
+<text x="3138" y="2546" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="3138" y="528" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="3200,2636 3200,3250 2645,3250" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="2455,3250 1980,3250 1980,3664" fill="none" stroke="black" stroke-width="2.5"/><polyline points="2461,3256 1986,3256 1986,3670" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="2550,3203 2645,3250 2550,3297 2455,3250" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="2550" y="3258" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">has image</text>
+<text x="3218" y="2678" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="1998" y="3646" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="1820,3736 1820,4200 1370,4200" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="1180,4200 650,4200 650,3736" fill="none" stroke="black" stroke-width="2.5"/><polyline points="1186,4206 656,4206 656,3742" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="1275,4153 1370,4200 1275,4247 1180,4200" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="1275" y="4208" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">stores upload</text>
+<text x="1838" y="3778" font-family="Times New Roman" font-size="25" fill="black" >(0,1)</text>
+<text x="668" y="3778" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="3300,2636 3300,3178" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="3300,3272 3300,3664" fill="none" stroke="black" stroke-width="2.5"/><polyline points="3306,3278 3306,3670" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="3300,3178 3395,3225 3300,3272 3205,3225" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="3300" y="3233" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">has estimate</text>
+<text x="3318" y="2678" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="3318" y="3646" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="3330,2636 3330,2900 3850,2900 3850,4153" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="3850,4247 3850,4400 3280,4400 3280,4764" fill="none" stroke="black" stroke-width="2.5"/><polyline points="3856,4253 3856,4406 3286,4406 3286,4770" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="3850,4153 3945,4200 3850,4247 3755,4200" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="3850" y="4208" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">has embedding</text>
+<text x="3400" y="2880" font-family="Times New Roman" font-size="25" fill="black" >(0,1)</text>
+<text x="3298" y="4746" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="4500,2636 4500,3103" fill="none" stroke="black" stroke-width="2.5"/>
+<polyline points="4500,3197 4500,3664" fill="none" stroke="black" stroke-width="2.5"/><polyline points="4506,3203 4506,3670" fill="none" stroke="black" stroke-width="2.5"/>
+<polygon points="4500,3103 4595,3150 4500,3197 4405,3150" fill="white" stroke="black" stroke-width="2.5"/>
+<text x="4500" y="3158" font-family="Times New Roman" font-size="23" fill="black" text-anchor="middle">has reference</text>
+<text x="4518" y="2678" font-family="Times New Roman" font-size="25" fill="black" >(0,N)</text>
+<text x="4518" y="3646" font-family="Times New Roman" font-size="25" fill="black" >(1,1)</text>
+<polyline points="805,1500 929.5500270928223,1454.1131479131707" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="1430" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="1438" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">city_id</text>
+<polyline points="805,1500 820,1500" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="1500" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="1508" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >city_name</text>
+<polyline points="805,1500 929.5500270928223,1545.8868520868293" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="1570" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="1578" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >state_name</text>
+<polyline points="495,1500 414.86319924473213,1485.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="305" cy="1465" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="1473" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >is_active</text>
+<polyline points="495,1500 414.86319924473213,1514.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="305" cy="1535" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="1543" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="495" y="1464" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="650" y="1509" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">cities</text>
+<polyline points="2055,1500 2210.410413205177,1385.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="1360" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="1368" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">dealer_id</text>
+<polyline points="2055,1500 2179.5500270928223,1454.1131479131707" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="1430" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="1438" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >dealership_name</text>
+<polyline points="2055,1500 2070,1500" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="1500" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="1508" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >business_phone</text>
+<polyline points="2055,1500 2179.5500270928223,1545.8868520868293" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="1570" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="1578" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >business_email</text>
+<polyline points="2055,1500 2210.410413205177,1614.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="1640" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="1648" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >street_address</text>
+<polyline points="1745,1500 1600.4343359968614,1420.1084488403708" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="1395" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="1403" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >description</text>
+<polyline points="1745,1500 1664.8631992447322,1485.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="1465" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="1473" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >verification_status</text>
+<polyline points="1745,1500 1664.8631992447322,1514.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="1535" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="1543" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="1745,1500 1600.4343359968614,1579.8915511596292" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="1605" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="1613" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="1745" y="1464" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="1900" y="1509" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">dealer_profiles</text>
+<polyline points="4655,3700 4817.131662728087,3550.668205382026" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3525" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3533" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">variant_id</text>
+<polyline points="4655,3700 4799.565664003138,3620.108448840371" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3595" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3603" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">model_year</text>
+<polyline points="4655,3700 4735.136800755268,3685.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3665" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3673" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >value_low</text>
+<polyline points="4655,3700 4735.136800755268,3714.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3735" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3743" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >value_high</text>
+<polyline points="4655,3700 4799.565664003138,3779.891551159629" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3805" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3813" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >unit</text>
+<polyline points="4655,3700 4817.131662728087,3849.331794617974" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="3875" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="3883" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >basis</text>
+<polyline points="4345,3700 4189.589586794823,3585.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="3560" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="3568" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<polyline points="4345,3700 4220.449972907178,3654.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="3630" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="3638" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >secondary_source_url</text>
+<polyline points="4345,3700 4330,3700" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="3700" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="3708" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >reference_trim</text>
+<polyline points="4345,3700 4220.449972907178,3745.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="3770" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="3778" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >notes</text>
+<polyline points="4345,3700 4189.589586794823,3814.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="3840" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="3848" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >checked_on</text>
+<rect x="4345" y="3664" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="4500" y="3709" font-family="Times New Roman" font-size="25" fill="black" text-anchor="middle" font-weight="bold">fuel_economy_references</text>
+<polyline points="3355,4800 3479.5500270928223,4754.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="4730" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="4738" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">listing_id</text>
+<polyline points="3355,4800 3370,4800" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="4800" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="4808" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >embedding</text>
+<polyline points="3355,4800 3479.5500270928223,4845.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="4870" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="4878" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_text</text>
+<polyline points="3045,4800 2964.863199244732,4785.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="4765" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="4773" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >model_name</text>
+<polyline points="3045,4800 2964.863199244732,4814.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="4835" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="4843" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >generated_at</text>
+<rect x="3045" y="4764" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="3200" y="4809" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">listing_embeddings</text>
+<polyline points="3355,450 3499.5656640031384,370.1084488403708" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="345" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="353" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">enquiry_id</text>
+<polyline points="3355,450 3435.136800755268,435.23795775560853" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="415" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="423" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >message</text>
+<polyline points="3355,450 3435.136800755268,464.76204224439147" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="485" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="493" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >phone</text>
+<polyline points="3355,450 3499.5656640031384,529.8915511596292" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="555" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="563" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >request_type</text>
+<polyline points="3045,450 2900.4343359968616,370.1084488403708" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="345" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="353" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="3045,450 2964.863199244732,435.23795775560853" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="415" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="423" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >offer_amount</text>
+<polyline points="3045,450 2964.863199244732,464.76204224439147" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="485" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="493" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >contacted_at</text>
+<polyline points="3045,450 2900.4343359968616,529.8915511596292" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="555" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="563" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="3045" y="414" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="3200" y="459" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">listing_enquiries</text>
+<polyline points="805,3700 885.1368007552678,3685.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="3665" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="3673" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">image_id</text>
+<polyline points="805,3700 885.1368007552678,3714.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="3735" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="3743" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >content</text>
+<polyline points="495,3700 480,3700" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="305" cy="3700" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="3708" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >content_type</text>
+<rect x="495" y="3664" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="650" y="3709" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">listing_image_data</text>
+<polyline points="2055,3700 2179.5500270928223,3654.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="3630" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="3638" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">image_id</text>
+<polyline points="2055,3700 2070,3700" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="3700" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="3708" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >image_url</text>
+<polyline points="2055,3700 2179.5500270928223,3745.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="3770" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="3778" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >display_order</text>
+<polyline points="1745,3700 1664.8631992447322,3685.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="3665" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="3673" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >is_primary</text>
+<polyline points="1745,3700 1664.8631992447322,3714.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="3735" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="3743" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="1745" y="3664" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="1900" y="3709" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">listing_images</text>
+<polyline points="3355,3700 3499.5656640031384,3620.108448840371" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="3595" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="3603" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">estimate_id</text>
+<polyline points="3355,3700 3435.136800755268,3685.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="3665" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="3673" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >estimated_price</text>
+<polyline points="3355,3700 3435.136800755268,3714.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="3735" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="3743" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >lower_price</text>
+<polyline points="3355,3700 3499.5656640031384,3779.891551159629" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="3805" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="3813" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >upper_price</text>
+<polyline points="3045,3700 2900.4343359968616,3620.108448840371" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="3595" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="3603" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >methodology</text>
+<polyline points="3045,3700 2964.863199244732,3685.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="3665" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="3673" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_summary</text>
+<polyline points="3045,3700 2964.863199244732,3714.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="3735" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="3743" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<polyline points="3045,3700 2900.4343359968616,3779.891551159629" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="3805" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="3813" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >assessed_at</text>
+<rect x="3045" y="3664" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="3200" y="3709" font-family="Times New Roman" font-size="25" fill="black" text-anchor="middle" font-weight="bold">listing_price_estimates</text>
+<polyline points="4655,450 4735.136800755268,435.23795775560853" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="415" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="423" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">manufacturer_id</text>
+<polyline points="4655,450 4735.136800755268,464.76204224439147" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="485" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="493" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >manufacturer_name</text>
+<polyline points="4345,450 4264.863199244732,435.23795775560853" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="415" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="423" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >country_of_origin</text>
+<polyline points="4345,450 4264.863199244732,464.76204224439147" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="485" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="493" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="4345" y="414" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="4500" y="459" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">manufacturers</text>
+<polyline points="805,4800 885.1368007552678,4785.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="4765" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="4773" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">key_hash</text>
+<polyline points="805,4800 885.1368007552678,4814.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="995" cy="4835" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="995" y="4843" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >window_start</text>
+<polyline points="495,4800 480,4800" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="305" cy="4800" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="305" y="4808" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >request_count</text>
+<rect x="495" y="4764" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="650" y="4809" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">request_limits</text>
+<polyline points="2055,450 2210.410413205177,335.4870639540801" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="310" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="318" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">user_id</text>
+<polyline points="2055,450 2179.5500270928223,404.11314791317074" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="380" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="388" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >full_name</text>
+<polyline points="2055,450 2070,450" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="450" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="458" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >email</text>
+<polyline points="2055,450 2179.5500270928223,495.88685208682926" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="520" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="528" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >phone</text>
+<polyline points="2055,450 2210.410413205177,564.5129360459199" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="590" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="598" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >password_hash</text>
+<polyline points="1745,450 1600.4343359968614,370.1084488403708" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="345" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="353" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >user_role</text>
+<polyline points="1745,450 1664.8631992447322,435.23795775560853" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="415" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="423" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >account_status</text>
+<polyline points="1745,450 1664.8631992447322,464.76204224439147" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="485" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="493" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="1745,450 1600.4343359968614,529.8915511596292" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="555" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="563" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="1745" y="414" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="1900" y="459" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">users</text>
+<polyline points="3355,2600 3510.410413205177,2485.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="2460" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="2468" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">listing_id</text>
+<polyline points="3355,2600 3479.5500270928223,2554.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="2530" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="2538" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >asking_price</text>
+<polyline points="3355,2600 3370,2600" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="2600" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="2608" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >description</text>
+<polyline points="3355,2600 3479.5500270928223,2645.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="2670" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="2678" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >listing_status</text>
+<polyline points="3355,2600 3510.410413205177,2714.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="3545" cy="2740" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="3545" y="2748" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_type</text>
+<polyline points="3045,2600 2889.589586794823,2485.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="2460" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="2468" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_url</text>
+<polyline points="3045,2600 2920.4499729071777,2554.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="2530" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="2538" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >source_verified_at</text>
+<polyline points="3045,2600 3030,2600" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="2600" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="2608" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >published_at</text>
+<polyline points="3045,2600 2920.4499729071777,2645.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="2670" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="2678" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="3045,2600 2889.589586794823,2714.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2855" cy="2740" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2855" y="2748" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="3045" y="2564" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="3200" y="2609" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">vehicle_listings</text>
+<polyline points="4655,1500 4779.550027092822,1454.1131479131707" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="1430" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="1438" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">model_id</text>
+<polyline points="4655,1500 4670,1500" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="1500" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="1508" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >model_name</text>
+<polyline points="4655,1500 4779.550027092822,1545.8868520868293" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="1570" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="1578" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >body_type</text>
+<polyline points="4345,1500 4264.863199244732,1485.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="1465" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="1473" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >description</text>
+<polyline points="4345,1500 4264.863199244732,1514.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="1535" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="1543" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="4345" y="1464" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="4500" y="1509" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">vehicle_models</text>
+<polyline points="4655,2600 4799.565664003138,2520.108448840371" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="2495" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="2503" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">variant_id</text>
+<polyline points="4655,2600 4735.136800755268,2585.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="2565" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="2573" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >variant_name</text>
+<polyline points="4655,2600 4735.136800755268,2614.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="2635" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="2643" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >fuel_type</text>
+<polyline points="4655,2600 4799.565664003138,2679.891551159629" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4845" cy="2705" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4845" y="2713" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >transmission</text>
+<polyline points="4345,2600 4200.434335996862,2520.108448840371" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="2495" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="2503" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >engine_displacement_cc</text>
+<polyline points="4345,2600 4264.863199244732,2585.2379577556085" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="2565" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="2573" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >battery_capacity_kwh</text>
+<polyline points="4345,2600 4264.863199244732,2614.7620422443915" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="2635" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="2643" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >seating_capacity</text>
+<polyline points="4345,2600 4200.434335996862,2679.891551159629" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="4155" cy="2705" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="4155" y="2713" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<rect x="4345" y="2564" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="4500" y="2609" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">vehicle_variants</text>
+<polyline points="2055,2600 2210.410413205177,2485.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="2460" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="2468" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" text-decoration="underline" font-weight="bold">vehicle_id</text>
+<polyline points="2055,2600 2179.5500270928223,2554.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="2530" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="2538" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >manufacturing_year</text>
+<polyline points="2055,2600 2070,2600" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="2600" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="2608" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >registration_year</text>
+<polyline points="2055,2600 2179.5500270928223,2645.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="2670" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="2678" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >kms_driven</text>
+<polyline points="2055,2600 2210.410413205177,2714.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="2245" cy="2740" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="2245" y="2748" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >colour</text>
+<polyline points="1745,2600 1589.589586794823,2485.48706395408" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="2460" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="2468" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >ownership_count</text>
+<polyline points="1745,2600 1620.4499729071777,2554.113147913171" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="2530" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="2538" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >condition</text>
+<polyline points="1745,2600 1730,2600" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="2600" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="2608" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >registration_number</text>
+<polyline points="1745,2600 1620.4499729071777,2645.886852086829" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="2670" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="2678" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >created_at</text>
+<polyline points="1745,2600 1589.589586794823,2714.51293604592" fill="none" stroke="black" stroke-width="2.5"/>
+<ellipse cx="1555" cy="2740" rx="175" ry="26" fill="white" stroke="black" stroke-width="2"/>
+<text x="1555" y="2748" font-family="Times New Roman" font-size="24" fill="black" text-anchor="middle" >updated_at</text>
+<rect x="1745" y="2564" width="310" height="72" fill="white" stroke="black" stroke-width="3"/>
+<text x="1900" y="2609" font-family="Times New Roman" font-size="28" fill="black" text-anchor="middle" font-weight="bold">vehicles</text>
+</svg>

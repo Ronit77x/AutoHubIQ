@@ -4,7 +4,7 @@ import pg from "pg";
 
 nextEnv.loadEnvConfig(process.cwd());
 if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required");
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const client = new pg.Client({ connectionString: process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
 try {
   await client.connect();
   for (const path of ["schema/19_create_fuel_economy_references.sql", "seed/20_seed_fuel_economy_references.sql"]) {

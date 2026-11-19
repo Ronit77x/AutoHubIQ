@@ -1,10 +1,11 @@
+import { withDatabaseContext } from "../../../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 import { getAuthenticatedUser, isSameOrigin } from "../../../../../../lib/auth";
 import { pool } from "../../../../../../lib/db";
 import { rateLimit } from "../../../../../../lib/rate-limit";
 
-export async function POST(request: NextRequest, { params }: { params: Promise<{ listingId: string }> }) {
+export const POST = withDatabaseContext(async function POST(request: NextRequest, { params }: { params: Promise<{ listingId: string }> }) {
   if (!isSameOrigin(request)) return NextResponse.json({ success: false, message: "Cross-origin requests are not allowed" }, { status: 403 });
   const { listingId } = await params;
   if (!/^[1-9]\d{0,14}$/.test(listingId)) return NextResponse.json({ success: false, message: "Invalid listing ID" }, { status: 400 });
@@ -59,4 +60,4 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     console.error("Photo upload failed:", error);
     return NextResponse.json({ success: false, message: "Unable to upload photo" }, { status: 500 });
   }
-}
+});

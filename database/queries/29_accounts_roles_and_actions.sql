@@ -1,22 +1,4 @@
--- READ ONLY presentation report of existing application permissions.
--- This VALUES CTE documents backend rules; it does not create PostgreSQL roles,
--- GRANT privileges, enable RLS, or enforce authorization in the database.
--- No schema changes: existing ER diagrams and relational mappings stay unchanged.
--- Role-specific operations require an active account and a valid signed session.
--- Ownership, target listing/offer state, input validation and rate limits are
--- still checked at request time; the reports do not grant unconditional access.
--- Verified against frontend/app/api and frontend/lib/auth.ts, 19 November 2026.
--- Note: enquiry/test_drive currently permit all authenticated roles, while offers
--- are customer-only. Admin does not inherit dealer publishing permissions.
 
--- Run this entire file to inspect current accounts, roles and possible actions.
--- Password hashes are deliberately omitted.
--- Account status and dealership verification are applied to the action list:
--- inactive accounts retain only publicly accessible browsing/search actions;
--- unverified dealers cannot publish, activate listings or upload photos.
--- Other conditions (e.g. offer ownership) remain alongside the action text.
--- Both reports use the same action_catalog. Keep their VALUES blocks in sync
--- when application authorization rules change.
 WITH action_catalog (
     action_order, user_roles, action, conditions,
     requires_sign_in, requires_dealer_profile, requires_verified_dealer

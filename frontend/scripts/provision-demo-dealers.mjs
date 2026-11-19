@@ -5,7 +5,7 @@ import pg from "pg";
 import { hashPassword } from "../lib/auth-crypto.ts";
 
 nextEnv.loadEnvConfig(process.cwd());
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const client = new pg.Client({ connectionString: process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
 try {
   await client.connect();
   await client.query(await readFile(new URL('../../database/seed/09_seed_demo_dealers.sql', import.meta.url), 'utf8'));

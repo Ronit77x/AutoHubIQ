@@ -46,7 +46,7 @@ COMMIT;
 await writeFile(new URL("../../database/seed/15_seed_demo_galleries.sql", import.meta.url), sql);
 if (process.argv.includes("--apply")) {
   nextEnv.loadEnvConfig(process.cwd());
-  const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
+  const client = new pg.Client({ connectionString: process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL });
   try {
     await client.connect();
     await client.query(sql);

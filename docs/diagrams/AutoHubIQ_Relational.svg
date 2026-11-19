@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3300" height="4240" viewBox="0 0 3300 4240"><rect width="3300" height="4240" fill="white"/>
+<text x="200" y="80" font-family="Times New Roman" font-size="49" font-weight="bold">AutoHubIQ ER to relational diagram</text>
+<text x="200" y="135" font-family="Times New Roman" font-size="28" >PK = primary key (underlined)     FK = foreign key     Lines connect FK rows to their referenced PK rows.</text>
+<path d="M200 1129 L130 1129 L130 286 L200 286" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M200 1129 L130 1129 L130 286 L200 286" fill="none" stroke="#245a81" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M185 277 L200 286 L185 295" fill="none" stroke="#245a81" stroke-width="3.5"/><circle cx="200" cy="1129" r="5" fill="#245a81"/>
+<path d="M850 1172 L1100 1172 L1100 1086 L1300 1086" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M850 1172 L1100 1172 L1100 1086 L1300 1086" fill="none" stroke="#97622b" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M1285 1077 L1300 1086 L1285 1095" fill="none" stroke="#97622b" stroke-width="3.5"/><circle cx="850" cy="1172" r="5" fill="#97622b"/>
+<path d="M3050 1129 L3140 1129 L3140 286 L3050 286" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M3050 1129 L3140 1129 L3140 286 L3050 286" fill="none" stroke="#426c4f" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M3065 277 L3050 286 L3065 295" fill="none" stroke="#426c4f" stroke-width="3.5"/><circle cx="3050" cy="1129" r="5" fill="#426c4f"/>
+<path d="M3050 1929 L3180 1929 L3180 1086 L3050 1086" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M3050 1929 L3180 1929 L3180 1086 L3050 1086" fill="none" stroke="#72558a" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M3065 1077 L3050 1086 L3065 1095" fill="none" stroke="#72558a" stroke-width="3.5"/><circle cx="3050" cy="1929" r="5" fill="#72558a"/>
+<path d="M200 1929 L100 1929 L100 1086 L200 1086" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M200 1929 L100 1929 L100 1086 L200 1086" fill="none" stroke="#245a81" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M185 1077 L200 1086 L185 1095" fill="none" stroke="#245a81" stroke-width="3.5"/><circle cx="200" cy="1929" r="5" fill="#245a81"/>
+<path d="M850 1972 L1000 1972 L1000 1680 L2300 1680 L2300 1886 L2400 1886" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M850 1972 L1000 1972 L1000 1680 L2300 1680 L2300 1886 L2400 1886" fill="none" stroke="#97622b" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M2385 1877 L2400 1886 L2385 1895" fill="none" stroke="#97622b" stroke-width="3.5"/><circle cx="850" cy="1972" r="5" fill="#97622b"/>
+<path d="M200 2829 L70 2829 L70 1886 L200 1886" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M200 2829 L70 2829 L70 1886 L200 1886" fill="none" stroke="#426c4f" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M185 1877 L200 1886 L185 1895" fill="none" stroke="#426c4f" stroke-width="3.5"/><circle cx="200" cy="2829" r="5" fill="#426c4f"/>
+<path d="M1300 2829 L1150 2829 L1150 2786 L850 2786" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M1300 2829 L1150 2829 L1150 2786 L850 2786" fill="none" stroke="#72558a" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M865 2777 L850 2786 L865 2795" fill="none" stroke="#72558a" stroke-width="3.5"/><circle cx="1300" cy="2829" r="5" fill="#72558a"/>
+<path d="M1300 3686 L1210 3686 L1210 2786 L1300 2786" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M1300 3686 L1210 3686 L1210 2786 L1300 2786" fill="none" stroke="#245a81" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M1285 2777 L1300 2786 L1285 2795" fill="none" stroke="#245a81" stroke-width="3.5"/><circle cx="1300" cy="3686" r="5" fill="#245a81"/>
+<path d="M200 3729 L40 3729 L40 2786 L200 2786" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M200 3729 L40 3729 L40 2786 L200 2786" fill="none" stroke="#97622b" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M185 2777 L200 2786 L185 2795" fill="none" stroke="#97622b" stroke-width="3.5"/><circle cx="200" cy="3729" r="5" fill="#97622b"/>
+<path d="M1300 372 L1060 372 L1060 286 L850 286" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M1300 372 L1060 372 L1060 286 L850 286" fill="none" stroke="#426c4f" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M865 277 L850 286 L865 295" fill="none" stroke="#426c4f" stroke-width="3.5"/><circle cx="1300" cy="372" r="5" fill="#426c4f"/>
+<path d="M1300 329 L1180 329 L1180 2520 L1000 2520 L1000 2786 L850 2786" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M1300 329 L1180 329 L1180 2520 L1000 2520 L1000 2786 L850 2786" fill="none" stroke="#72558a" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M865 2777 L850 2786 L865 2795" fill="none" stroke="#72558a" stroke-width="3.5"/><circle cx="1300" cy="329" r="5" fill="#72558a"/>
+<path d="M2400 3686 L2250 3686 L2250 3500 L940 3500 L940 2786 L850 2786" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M2400 3686 L2250 3686 L2250 3500 L940 3500 L940 2786 L850 2786" fill="none" stroke="#245a81" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M865 2777 L850 2786 L865 2795" fill="none" stroke="#245a81" stroke-width="3.5"/><circle cx="2400" cy="3686" r="5" fill="#245a81"/>
+<path d="M3050 2786 L3140 2786 L3140 1886 L3050 1886" fill="none" stroke="white" stroke-width="11" stroke-linejoin="round"/><path d="M3050 2786 L3140 2786 L3140 1886 L3050 1886" fill="none" stroke="#97622b" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M3065 1877 L3050 1886 L3065 1895" fill="none" stroke="#97622b" stroke-width="3.5"/><circle cx="3050" cy="2786" r="5" fill="#97622b"/>
+<rect x="200" y="200" width="650" height="534" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="200" y="200" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="223" y="243" font-family="Times New Roman" font-size="34" font-weight="bold">users</text>
+<text x="223" y="295" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">user_id</text>
+<text x="748" y="295" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="202" y="309" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="338" font-family="Times New Roman" font-size="29" >full_name</text>
+<text x="748" y="338" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="381" font-family="Times New Roman" font-size="29" >email</text>
+<text x="748" y="381" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="395" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="424" font-family="Times New Roman" font-size="29" >phone</text>
+<text x="748" y="424" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="467" font-family="Times New Roman" font-size="29" >password_hash</text>
+<text x="748" y="467" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="481" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="510" font-family="Times New Roman" font-size="29" >user_role</text>
+<text x="748" y="510" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="553" font-family="Times New Roman" font-size="29" >account_status</text>
+<text x="748" y="553" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="567" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="596" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="748" y="596" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="639" font-family="Times New Roman" font-size="29" >updated_at</text>
+<text x="748" y="639" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="200" y1="669" x2="850" y2="669" stroke="#b3bac5"/>
+<text x="223" y="709" font-family="Times New Roman" font-size="24" >UQ (email)</text>
+<rect x="1300" y="200" width="650" height="512" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="1300" y="200" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="1323" y="243" font-family="Times New Roman" font-size="34" font-weight="bold">listing_enquiries</text>
+<text x="1323" y="295" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">enquiry_id</text>
+<text x="1848" y="295" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="1302" y="309" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="338" font-family="Times New Roman" font-size="29" >listing_id</text>
+<text x="1848" y="338" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="1323" y="381" font-family="Times New Roman" font-size="29" >user_id</text>
+<text x="1848" y="381" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<rect x="1302" y="395" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="424" font-family="Times New Roman" font-size="29" >message</text>
+<text x="1848" y="424" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="467" font-family="Times New Roman" font-size="29" >phone</text>
+<text x="1848" y="467" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="481" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="510" font-family="Times New Roman" font-size="29" >request_type</text>
+<text x="1848" y="510" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="553" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="1848" y="553" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="567" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="596" font-family="Times New Roman" font-size="29" >offer_amount</text>
+<text x="1848" y="596" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="639" font-family="Times New Roman" font-size="29" >contacted_at</text>
+<text x="1848" y="639" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="653" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="682" font-family="Times New Roman" font-size="29" >updated_at</text>
+<text x="1848" y="682" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2400" y="200" width="650" height="319" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="2400" y="200" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="2423" y="243" font-family="Times New Roman" font-size="34" font-weight="bold">manufacturers</text>
+<text x="2423" y="295" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">manufacturer_id</text>
+<text x="2948" y="295" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="2402" y="309" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="338" font-family="Times New Roman" font-size="29" >manufacturer_name</text>
+<text x="2948" y="338" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="381" font-family="Times New Roman" font-size="29" >country_of_origin</text>
+<text x="2948" y="381" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="395" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="424" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="2948" y="424" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="2400" y1="454" x2="3050" y2="454" stroke="#b3bac5"/>
+<text x="2423" y="494" font-family="Times New Roman" font-size="24" >UQ (manufacturer_name)</text>
+<rect x="200" y="1000" width="650" height="620" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="200" y="1000" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="223" y="1043" font-family="Times New Roman" font-size="34" font-weight="bold">dealer_profiles</text>
+<text x="223" y="1095" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">dealer_id</text>
+<text x="748" y="1095" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="202" y="1109" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1138" font-family="Times New Roman" font-size="29" >user_id</text>
+<text x="748" y="1138" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="223" y="1181" font-family="Times New Roman" font-size="29" >city_id</text>
+<text x="748" y="1181" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<rect x="202" y="1195" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1224" font-family="Times New Roman" font-size="29" >dealership_name</text>
+<text x="748" y="1224" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="1267" font-family="Times New Roman" font-size="29" >business_phone</text>
+<text x="748" y="1267" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="1281" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1310" font-family="Times New Roman" font-size="29" >business_email</text>
+<text x="748" y="1310" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="1353" font-family="Times New Roman" font-size="29" >street_address</text>
+<text x="748" y="1353" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="1367" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1396" font-family="Times New Roman" font-size="29" >description</text>
+<text x="748" y="1396" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="1439" font-family="Times New Roman" font-size="29" >verification_status</text>
+<text x="748" y="1439" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="1453" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1482" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="748" y="1482" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="1525" font-family="Times New Roman" font-size="29" >updated_at</text>
+<text x="748" y="1525" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="200" y1="1555" x2="850" y2="1555" stroke="#b3bac5"/>
+<text x="223" y="1595" font-family="Times New Roman" font-size="24" >UQ (user_id)</text>
+<rect x="1300" y="1000" width="650" height="362" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="1300" y="1000" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="1323" y="1043" font-family="Times New Roman" font-size="34" font-weight="bold">cities</text>
+<text x="1323" y="1095" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">city_id</text>
+<text x="1848" y="1095" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="1302" y="1109" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="1138" font-family="Times New Roman" font-size="29" >city_name</text>
+<text x="1848" y="1138" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="1181" font-family="Times New Roman" font-size="29" >state_name</text>
+<text x="1848" y="1181" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="1195" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="1224" font-family="Times New Roman" font-size="29" >is_active</text>
+<text x="1848" y="1224" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="1267" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="1848" y="1267" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="1300" y1="1297" x2="1950" y2="1297" stroke="#b3bac5"/>
+<text x="1323" y="1337" font-family="Times New Roman" font-size="24" >UQ (city_name, state_name)</text>
+<rect x="2400" y="1000" width="650" height="405" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="2400" y="1000" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="2423" y="1043" font-family="Times New Roman" font-size="34" font-weight="bold">vehicle_models</text>
+<text x="2423" y="1095" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">model_id</text>
+<text x="2948" y="1095" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="2402" y="1109" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="1138" font-family="Times New Roman" font-size="29" >manufacturer_id</text>
+<text x="2948" y="1138" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="2423" y="1181" font-family="Times New Roman" font-size="29" >model_name</text>
+<text x="2948" y="1181" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="1195" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="1224" font-family="Times New Roman" font-size="29" >body_type</text>
+<text x="2948" y="1224" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="1267" font-family="Times New Roman" font-size="29" >description</text>
+<text x="2948" y="1267" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="1281" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="1310" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="2948" y="1310" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="2400" y1="1340" x2="3050" y2="1340" stroke="#b3bac5"/>
+<text x="2423" y="1380" font-family="Times New Roman" font-size="24" >UQ (manufacturer_id, model_name)</text>
+<rect x="200" y="1800" width="650" height="598" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="200" y="1800" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="223" y="1843" font-family="Times New Roman" font-size="34" font-weight="bold">vehicles</text>
+<text x="223" y="1895" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">vehicle_id</text>
+<text x="748" y="1895" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="202" y="1909" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="1938" font-family="Times New Roman" font-size="29" >dealer_id</text>
+<text x="748" y="1938" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="223" y="1981" font-family="Times New Roman" font-size="29" >variant_id</text>
+<text x="748" y="1981" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<rect x="202" y="1995" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2024" font-family="Times New Roman" font-size="29" >manufacturing_year</text>
+<text x="748" y="2024" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="2067" font-family="Times New Roman" font-size="29" >registration_year</text>
+<text x="748" y="2067" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2081" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2110" font-family="Times New Roman" font-size="29" >kms_driven</text>
+<text x="748" y="2110" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="2153" font-family="Times New Roman" font-size="29" >colour</text>
+<text x="748" y="2153" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2167" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2196" font-family="Times New Roman" font-size="29" >ownership_count</text>
+<text x="748" y="2196" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="2239" font-family="Times New Roman" font-size="29" >condition</text>
+<text x="748" y="2239" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2253" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2282" font-family="Times New Roman" font-size="29" >registration_number</text>
+<text x="748" y="2282" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="2325" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="748" y="2325" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2339" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2368" font-family="Times New Roman" font-size="29" >updated_at</text>
+<text x="748" y="2368" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1300" y="1800" width="650" height="211" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="1300" y="1800" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="1323" y="1843" font-family="Times New Roman" font-size="34" font-weight="bold">request_limits</text>
+<text x="1323" y="1895" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">key_hash</text>
+<text x="1848" y="1895" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="1302" y="1909" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="1938" font-family="Times New Roman" font-size="29" >window_start</text>
+<text x="1848" y="1938" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="1981" font-family="Times New Roman" font-size="29" >request_count</text>
+<text x="1848" y="1981" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2400" y="1800" width="650" height="534" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="2400" y="1800" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="2423" y="1843" font-family="Times New Roman" font-size="34" font-weight="bold">vehicle_variants</text>
+<text x="2423" y="1895" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">variant_id</text>
+<text x="2948" y="1895" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="2402" y="1909" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="1938" font-family="Times New Roman" font-size="29" >model_id</text>
+<text x="2948" y="1938" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="2423" y="1981" font-family="Times New Roman" font-size="29" >variant_name</text>
+<text x="2948" y="1981" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="1995" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="2024" font-family="Times New Roman" font-size="29" >fuel_type</text>
+<text x="2948" y="2024" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="2067" font-family="Times New Roman" font-size="29" >transmission</text>
+<text x="2948" y="2067" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="2081" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="2110" font-family="Times New Roman" font-size="29" >engine_displacement_cc</text>
+<text x="2948" y="2110" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="2153" font-family="Times New Roman" font-size="29" >battery_capacity_kwh</text>
+<text x="2948" y="2153" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="2167" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="2196" font-family="Times New Roman" font-size="29" >seating_capacity</text>
+<text x="2948" y="2196" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="2239" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="2948" y="2239" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="2400" y1="2269" x2="3050" y2="2269" stroke="#b3bac5"/>
+<text x="2423" y="2309" font-family="Times New Roman" font-size="24" >UQ (model_id, variant_name)</text>
+<rect x="200" y="2700" width="650" height="620" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="200" y="2700" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="223" y="2743" font-family="Times New Roman" font-size="34" font-weight="bold">vehicle_listings</text>
+<text x="223" y="2795" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">listing_id</text>
+<text x="748" y="2795" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="202" y="2809" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2838" font-family="Times New Roman" font-size="29" >vehicle_id</text>
+<text x="748" y="2838" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="223" y="2881" font-family="Times New Roman" font-size="29" >asking_price</text>
+<text x="748" y="2881" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2895" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="2924" font-family="Times New Roman" font-size="29" >description</text>
+<text x="748" y="2924" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="2967" font-family="Times New Roman" font-size="29" >listing_status</text>
+<text x="748" y="2967" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="2981" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3010" font-family="Times New Roman" font-size="29" >source_type</text>
+<text x="748" y="3010" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="3053" font-family="Times New Roman" font-size="29" >source_url</text>
+<text x="748" y="3053" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="3067" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3096" font-family="Times New Roman" font-size="29" >source_verified_at</text>
+<text x="748" y="3096" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="3139" font-family="Times New Roman" font-size="29" >published_at</text>
+<text x="748" y="3139" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="3153" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3182" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="748" y="3182" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="3225" font-family="Times New Roman" font-size="29" >updated_at</text>
+<text x="748" y="3225" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<line x1="200" y1="3255" x2="850" y2="3255" stroke="#b3bac5"/>
+<text x="223" y="3295" font-family="Times New Roman" font-size="24" >UQ (vehicle_id) when listing_status = 'active'</text>
+<rect x="1300" y="2700" width="650" height="340" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="1300" y="2700" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="1323" y="2743" font-family="Times New Roman" font-size="34" font-weight="bold">listing_images</text>
+<text x="1323" y="2795" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">image_id</text>
+<text x="1848" y="2795" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="1302" y="2809" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="2838" font-family="Times New Roman" font-size="29" >listing_id</text>
+<text x="1848" y="2838" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="1323" y="2881" font-family="Times New Roman" font-size="29" >image_url</text>
+<text x="1848" y="2881" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="2895" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="2924" font-family="Times New Roman" font-size="29" >display_order</text>
+<text x="1848" y="2924" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="2967" font-family="Times New Roman" font-size="29" >is_primary</text>
+<text x="1848" y="2967" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1302" y="2981" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="3010" font-family="Times New Roman" font-size="29" >created_at</text>
+<text x="1848" y="3010" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2400" y="2700" width="650" height="555" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="2400" y="2700" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="2423" y="2743" font-family="Times New Roman" font-size="34" font-weight="bold">fuel_economy_references</text>
+<text x="2423" y="2795" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">variant_id</text>
+<text x="2948" y="2795" font-family="Times New Roman" font-size="25" fill="#34435c">PK/FK</text>
+<rect x="2402" y="2809" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="2838" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">model_year</text>
+<text x="2948" y="2838" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<text x="2423" y="2881" font-family="Times New Roman" font-size="29" >value_low</text>
+<text x="2948" y="2881" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="2895" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="2924" font-family="Times New Roman" font-size="29" >value_high</text>
+<text x="2948" y="2924" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="2967" font-family="Times New Roman" font-size="29" >unit</text>
+<text x="2948" y="2967" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="2981" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="3010" font-family="Times New Roman" font-size="29" >basis</text>
+<text x="2948" y="3010" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="3053" font-family="Times New Roman" font-size="29" >source_url</text>
+<text x="2948" y="3053" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="3067" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="3096" font-family="Times New Roman" font-size="29" >secondary_source_url</text>
+<text x="2948" y="3096" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="3139" font-family="Times New Roman" font-size="29" >reference_trim</text>
+<text x="2948" y="3139" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="3153" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="3182" font-family="Times New Roman" font-size="29" >notes</text>
+<text x="2948" y="3182" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="3225" font-family="Times New Roman" font-size="29" >checked_on</text>
+<text x="2948" y="3225" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="200" y="3600" width="650" height="469" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="200" y="3600" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="223" y="3643" font-family="Times New Roman" font-size="34" font-weight="bold">listing_price_estimates</text>
+<text x="223" y="3695" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">estimate_id</text>
+<text x="748" y="3695" font-family="Times New Roman" font-size="25" fill="#34435c">PK</text>
+<rect x="202" y="3709" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3738" font-family="Times New Roman" font-size="29" >listing_id</text>
+<text x="748" y="3738" font-family="Times New Roman" font-size="25" fill="#34435c">FK</text>
+<text x="223" y="3781" font-family="Times New Roman" font-size="29" >estimated_price</text>
+<text x="748" y="3781" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="3795" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3824" font-family="Times New Roman" font-size="29" >lower_price</text>
+<text x="748" y="3824" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="3867" font-family="Times New Roman" font-size="29" >upper_price</text>
+<text x="748" y="3867" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="3881" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3910" font-family="Times New Roman" font-size="29" >methodology</text>
+<text x="748" y="3910" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="3953" font-family="Times New Roman" font-size="29" >source_summary</text>
+<text x="748" y="3953" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="202" y="3967" width="646" height="43" fill="#f7f8fa"/>
+<text x="223" y="3996" font-family="Times New Roman" font-size="29" >source_url</text>
+<text x="748" y="3996" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="223" y="4039" font-family="Times New Roman" font-size="29" >assessed_at</text>
+<text x="748" y="4039" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="1300" y="3600" width="650" height="211" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="1300" y="3600" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="1323" y="3643" font-family="Times New Roman" font-size="34" font-weight="bold">listing_image_data</text>
+<text x="1323" y="3695" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">image_id</text>
+<text x="1848" y="3695" font-family="Times New Roman" font-size="25" fill="#34435c">PK/FK</text>
+<rect x="1302" y="3709" width="646" height="43" fill="#f7f8fa"/>
+<text x="1323" y="3738" font-family="Times New Roman" font-size="29" >content</text>
+<text x="1848" y="3738" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="1323" y="3781" font-family="Times New Roman" font-size="29" >content_type</text>
+<text x="1848" y="3781" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2400" y="3600" width="650" height="297" fill="white" stroke="#253044" stroke-width="2.5"/><rect x="2400" y="3600" width="650" height="65" fill="#eef1f5" stroke="#253044" stroke-width="2.5"/>
+<text x="2423" y="3643" font-family="Times New Roman" font-size="34" font-weight="bold">listing_embeddings</text>
+<text x="2423" y="3695" font-family="Times New Roman" font-size="29" font-weight="bold" text-decoration="underline">listing_id</text>
+<text x="2948" y="3695" font-family="Times New Roman" font-size="25" fill="#34435c">PK/FK</text>
+<rect x="2402" y="3709" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="3738" font-family="Times New Roman" font-size="29" >embedding</text>
+<text x="2948" y="3738" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="3781" font-family="Times New Roman" font-size="29" >source_text</text>
+<text x="2948" y="3781" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<rect x="2402" y="3795" width="646" height="43" fill="#f7f8fa"/>
+<text x="2423" y="3824" font-family="Times New Roman" font-size="29" >model_name</text>
+<text x="2948" y="3824" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+<text x="2423" y="3867" font-family="Times New Roman" font-size="29" >generated_at</text>
+<text x="2948" y="3867" font-family="Times New Roman" font-size="25" fill="#34435c"></text>
+</svg>

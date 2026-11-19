@@ -6,13 +6,17 @@ import { once } from "node:events";
 import nextEnv from "@next/env";
 import pg from "pg";
 import sharp from "sharp";
+import { createRuntimeLogin } from "./database-security.mjs";
 
 nextEnv.loadEnvConfig(process.cwd());
 // Always create a fresh database. Never run workflow writes against DATABASE_URL.
 const database = `autohubiq_test_${randomBytes(8).toString("hex")}`;
-const testUrl = new URL(process.env.DATABASE_URL);
+const maintenanceUrl = process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL;
+const testUrl = new URL(maintenanceUrl);
+const runtimeRole = "autohubiq_app_test_" + randomBytes(8).toString("hex");
+let runtimeRoleCreated = false;
 testUrl.pathname = `/${database}`;
-const admin = new pg.Client({ connectionString: process.env.DATABASE_URL });
+const admin = new pg.Client({ connectionString: maintenanceUrl });
 let test, server, created = false;
 let serverLog = "";
 const port = Number(process.env.SMOKE_PORT ?? 3101);
@@ -49,8 +53,10 @@ try {
     await test.query(`INSERT INTO app.listing_embeddings (listing_id, embedding, source_text, model_name)
       SELECT listing_id,$2::vector,$3,$4 FROM app.vehicle_listings WHERE listing_id=$1`, [row.listing_id, row.embedding, row.source_text, row.model_name]);
   }
+  const runtimeUrl = await createRuntimeLogin(test, testUrl.href, runtimeRole);
+  runtimeRoleCreated = true;
   server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "--port", String(port)], {
-    cwd: process.cwd(), windowsHide: true, env: { ...process.env, NODE_ENV: "production", DATABASE_URL: testUrl.href, AUTH_SECRET: randomBytes(32).toString("hex") },
+    cwd: process.cwd(), windowsHide: true, env: { ...process.env, NODE_ENV: "production", DATABASE_URL: runtimeUrl, AUTH_SECRET: randomBytes(32).toString("hex") },
     stdio: ["ignore", "pipe", "pipe"],
   });
   server.stdout.on("data", chunk => { serverLog = (serverLog + chunk).slice(-6000); });
@@ -133,6 +139,12 @@ try {
   await request("/api/offers", { cookie: dealer.cookie, status: 403 });
   const otherBuyer = await register("other-buyer@example.test", "customer");
   assert.equal((await request("/api/offers", { cookie: otherBuyer.cookie })).data.offers.length, 0);
+  // Concurrent requests share a pool, never an actor identity.
+  await Promise.all(Array.from({ length: 24 }, async (_, index) => {
+    const own = index % 2 === 0;
+    const response = await request("/api/offers", { cookie: own ? customer.cookie : otherBuyer.cookie });
+    assert.equal(response.data.offers.length, own ? 2 : 0);
+  }));
   const buyerOffers = (await request("/api/offers", { cookie: customer.cookie })).data.offers;
   assert.equal(buyerOffers.length, 2);
   const offerId = inbox.find(row => row.request_type === "offer").enquiry_id;
@@ -192,5 +204,6 @@ try {
     await admin.query(`DROP DATABASE "${database}" WITH (FORCE)`);
     console.log("Removed the isolated test database; original demo inventory was not changed by workflow tests.");
   }
+  if (runtimeRoleCreated) await admin.query(`DROP ROLE "${runtimeRole}"`);
   await admin.end();
 }

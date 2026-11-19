@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { connection, NextRequest, NextResponse } from "next/server";
 import {
   AuthConfigurationError,
@@ -6,7 +7,7 @@ import {
 } from "../../../../lib/auth";
 import { pool } from "../../../../lib/db";
 
-export async function GET(request: NextRequest) {
+export const GET = withDatabaseContext(async function GET(request: NextRequest) {
   await connection();
 
   try {
@@ -75,9 +76,9 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function PATCH(request: NextRequest) {
+export const PATCH = withDatabaseContext(async function PATCH(request: NextRequest) {
   if (!isSameOrigin(request)) {
     return NextResponse.json(
       { success: false, message: "Cross-origin requests are not allowed" },
@@ -192,4 +193,4 @@ export async function PATCH(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

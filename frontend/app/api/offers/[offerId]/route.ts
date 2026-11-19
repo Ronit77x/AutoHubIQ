@@ -1,9 +1,10 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUser, isSameOrigin } from "../../../../lib/auth";
 import { pool } from "../../../../lib/db";
 import { rateLimit } from "../../../../lib/rate-limit";
 
-export async function PATCH(request: NextRequest, { params }: { params: Promise<{ offerId: string }> }) {
+export const PATCH = withDatabaseContext(async function PATCH(request: NextRequest, { params }: { params: Promise<{ offerId: string }> }) {
   if (!isSameOrigin(request)) return NextResponse.json({ message: "Cross-origin requests are not allowed" }, { status: 403 });
   const { offerId } = await params;
   if (!/^[1-9]\d{0,14}$/.test(offerId)) return NextResponse.json({ message: "Invalid offer ID" }, { status: 400 });
@@ -27,12 +28,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     try {
       await client.query("BEGIN");
       // Serialize buyer edits against dealer contact and listing/profile changes.
-      const result = await client.query(`SELECT e.contacted_at, vl.listing_status, dp.verification_status
-        FROM app.listing_enquiries e JOIN app.vehicle_listings vl USING(listing_id)
-        JOIN app.vehicles v USING(vehicle_id) JOIN app.dealer_profiles dp USING(dealer_id)
-        WHERE e.enquiry_id=$1 AND e.request_type='offer'
-          AND (($3::boolean AND dp.user_id=$2) OR (NOT $3::boolean AND e.user_id=$2))
-        FOR UPDATE OF e, vl, v, dp`, [offerId, user.user_id, contacting]);
+      const result = await client.query("SELECT * FROM app.lock_offer_context($1,$2)", [offerId, contacting]);
       if (!result.rowCount) {
         await client.query("ROLLBACK");
         return NextResponse.json({ message: "Offer not found" }, { status: 404 });
@@ -57,4 +53,4 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     console.error("Offer update failed:", error);
     return NextResponse.json({ message: "Unable to update offer" }, { status: 500 });
   }
-}
+});

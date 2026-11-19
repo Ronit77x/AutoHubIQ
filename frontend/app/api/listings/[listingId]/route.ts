@@ -1,7 +1,8 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "../../../../lib/db";
 
-export async function GET(
+export const GET = withDatabaseContext(async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ listingId: string }> }
 ) {
@@ -117,4 +118,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

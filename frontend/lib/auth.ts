@@ -1,5 +1,5 @@
 import type { NextRequest, NextResponse } from "next/server";
-import { pool } from "./db";
+import { pool, setDatabaseIdentity } from "./db";
 import {
   createSessionToken,
   SESSION_MAX_AGE_SECONDS,
@@ -86,6 +86,8 @@ export async function getAuthenticatedUser(
     return null;
   }
 
+  setDatabaseIdentity(session.userId);
+
   const result = await pool.query<AuthenticatedUser>(
     `
     SELECT
@@ -105,5 +107,6 @@ export async function getAuthenticatedUser(
     [session.userId]
   );
 
+  if (!result.rows[0]) setDatabaseIdentity(null);
   return result.rows[0] ?? null;
 }

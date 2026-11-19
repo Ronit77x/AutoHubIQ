@@ -8,7 +8,7 @@ Sources: [catalog snapshot](evidence/schema-catalog.json), [database verificatio
 
 PK = primary key; FK = foreign key; UK = unique-constraint membership. Every FK is NOT NULL on the child. A parent may have zero children. dealer_profiles.user_id, listing_embeddings.listing_id, and listing_image_data.image_id permit at most one corresponding child. Composite unique keys are listed separately; their members are not individually unique.
 
-Default — means no explicit default. Identity columns are generated ALWAYS. PostgreSQL CHECK expressions permit NULL unless NOT NULL is also specified. FK deletion uses NO ACTION unless CASCADE is explicitly listed. End-user roles and ownership are enforced by API queries; the tables have no RLS policies.
+Default — means no explicit default. Identity columns are generated ALWAYS. PostgreSQL CHECK expressions permit NULL unless NOT NULL is also specified. FK deletion uses NO ACTION unless CASCADE is explicitly listed. Security update 19 November 2026: schema 20 now enforces end-user roles and ownership using RLS, column grants and guarded functions in addition to the API checks. The dated dictionary below is the earlier metadata snapshot; its 14-table audit predates the mileage-reference addition. Security policies do not add entities or change PK/FK relationships.
 
 ## Relational schemas
 
@@ -473,12 +473,12 @@ Default — means no explicit default. Identity columns are generated ALWAYS. Po
 - `trg_vehicle_listings_set_updated_at` on `app.vehicle_listings`: `EXECUTE FUNCTION app.set_updated_at()` before each update.
 - `trg_vehicles_set_updated_at` on `app.vehicles`: `EXECUTE FUNCTION app.set_updated_at()` before each update.
 
-## API rules that are not database constraints
+## Additional validation and workflow rules
 
 - Only verified dealer accounts may publish. FKs do not independently check user role or verification state.
 - Vehicle-year CHECKs are fixed at 1990–2030. The create-listing API additionally rejects future years and registration before manufacture.
 - Description length 20–5000 and a maximum of six photos are API rules. Stored image payloads have a database 2 MB CHECK; the API also validates and normalizes uploads.
-- A buyer may edit an owned offer only while the listing is active, the dealer is verified, and contacted_at is NULL. The API uses transaction row locks; this is not a database CHECK or RLS policy.
+- A buyer may edit an owned offer only while the listing is active, the dealer is verified, and contacted_at is NULL. The API uses transaction row locks through a guarded database function. Schema 20 also enforces offer ownership and editable state with RLS and an update trigger.
 - Offer positivity and conditional NULL rules are database-enforced. The API additionally validates decimal input before PostgreSQL numeric conversion.
 - listing_enquiries.updated_at is set by the offer API, not the generic timestamp trigger. users.updated_at has a default but no update trigger.
 - Mark contacted is entered by the dealer, not detection of an external call/email. Sold listing status does not record a sale transaction or confirmed sale price.

@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyPassword } from "../../../../lib/auth-crypto";
 import {
@@ -9,7 +10,7 @@ import {
 import { pool } from "../../../../lib/db";
 import { rateLimit } from "../../../../lib/rate-limit";
 
-export async function POST(request: NextRequest) {
+export const POST = withDatabaseContext(async function POST(request: NextRequest) {
   if (!isSameOrigin(request)) {
     return NextResponse.json(
       { success: false, message: "Cross-origin requests are not allowed" },
@@ -67,9 +68,7 @@ export async function POST(request: NextRequest) {
       account_status: string;
     }>(
       `
-      SELECT user_id, full_name, email, password_hash, user_role, account_status
-      FROM app.users
-      WHERE LOWER(email) = $1
+      SELECT * FROM app.login_account($1)
       `,
       [email]
     );
@@ -110,4 +109,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

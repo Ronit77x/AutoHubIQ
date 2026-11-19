@@ -56,7 +56,7 @@ The application is substantially ahead of the pasted progress report. Semantic s
 | `npm.cmd run test:workflow` | 93 HTTP checks plus assertions passed | Existing regression creates/removes its own temporary database. |
 | `node docs/tools/audit-schema.mjs` | Passed | Configured database inspected in a repeatable-read READ ONLY transaction; schema/seed, trigger, function/view, correlated-query and vector RUD tests ran in a separate disposable database, subsequently removed. |
 | `node docs/tools/check-public-cities.mjs` | 22 HTTP GET checks passed | Isolated production server; all cities, sorted petrol/budget results, empty results, and 12 details with images/estimates. Configured DB was only read. |
-| Diagram/schema generation | Complete | `node docs/tools/render-schema.mjs` for the dictionary; `node docs/tools/render-course-diagrams.cjs` for the revised Chen and mapping sheets; PDF output visually inspected. |
+| Diagram/schema generation | Complete | `node docs/tools/render-schema.mjs` for the dictionary; `node docs/tools/render-complete-er.cjs` and `node docs/tools/render-complete-relational.cjs` for the current single-page diagrams; PDF output visually inspected. |
 
 Database evidence: [database validation](evidence/database-validation.json), [schema catalog](evidence/schema-catalog.json), [city validation](evidence/city-validation.json). Versions: PostgreSQL 18.6, pgvector 0.8.7. Observed data: 3 cities, 12 active listings, 12 estimates and 12 embeddings. Six seeded dealers own two demo cars each; the live database additionally has a Bangalore dealership (3 Bangalore / 2 Mumbai / 2 Kolkata profiles). No accounts were removed.
 

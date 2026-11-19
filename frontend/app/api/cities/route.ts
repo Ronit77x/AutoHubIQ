@@ -1,8 +1,9 @@
+import { withDatabaseContext } from "../../../lib/db";
 
 import { connection, NextResponse } from "next/server";
 import { pool } from "../../../lib/db";
 
-export async function GET() {
+export const GET = withDatabaseContext(async function GET() {
   await connection();
 
   try {
@@ -31,4 +32,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import {
   AuthConfigurationError,
@@ -14,7 +15,7 @@ const LISTING_STATUSES = [
   "draft",
 ];
 
-export async function PATCH(
+export const PATCH = withDatabaseContext(async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ listingId: string }> }
 ) {
@@ -187,4 +188,4 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+});

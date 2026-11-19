@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from "../../../../lib/auth-crypto";
 import {
@@ -20,7 +21,7 @@ interface RegistrationBody {
   street_address?: unknown;
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withDatabaseContext(async function POST(request: NextRequest) {
   if (!isSameOrigin(request)) {
     return NextResponse.json(
       { success: false, message: "Cross-origin requests are not allowed" },
@@ -103,87 +104,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let client;
   try {
     getAuthSecret();
     const limited = await rateLimit("registration", 30, 600);
     if (limited) return limited;
     const passwordHash = await hashPassword(password);
-    client = await pool.connect();
-    await client.query("BEGIN");
-
-    if (accountType === "dealer") {
-      const city = await client.query(
-        "SELECT 1 FROM app.cities WHERE city_id = $1 AND is_active = TRUE",
-        [cityId]
-      );
-      if (city.rowCount === 0) {
-        await client.query("ROLLBACK");
-        return NextResponse.json(
-          { success: false, message: "Choose an active city" },
-          { status: 400 }
-        );
-      }
-    }
-
-    const created = await client.query<{ user_id: string }>(
-      `
-      INSERT INTO app.users (
-        full_name,
-        email,
-        phone,
-        password_hash,
-        user_role,
-        account_status
-      )
-      VALUES ($1, $2, $3, $4, $5, 'active')
-      ON CONFLICT DO NOTHING
-      RETURNING user_id
-      `,
-      [
-        fullName,
-        email,
-        phone || null,
-        passwordHash,
-        accountType,
-      ]
+    const created = await pool.query<{ user_id: string | null }>(
+      "SELECT app.register_account($1,$2,$3,$4,$5,$6,$7,$8) AS user_id",
+      [fullName, email, phone || null, passwordHash, accountType,
+       dealershipName || null, accountType === "dealer" ? cityId : null, streetAddress || null]
     );
-
-    if (created.rowCount !== 1) {
-      await client.query("ROLLBACK");
-      return NextResponse.json(
-        { success: false, message: "An account with that email already exists" },
-        { status: 409 }
-      );
-    }
-
     const userId = created.rows[0].user_id;
-    if (accountType === "dealer") {
-      await client.query(
-        `
-        INSERT INTO app.dealer_profiles (
-          user_id,
-          city_id,
-          dealership_name,
-          business_phone,
-          business_email,
-          street_address,
-          verification_status
-        )
-        VALUES ($1, $2, $3, $4, $5, $6, 'pending')
-        `,
-        [
-          userId,
-          cityId,
-          dealershipName,
-          phone || null,
-          email,
-          streetAddress,
-        ]
-      );
+    if (!userId) {
+      return NextResponse.json({ success: false, message: "An account with that email already exists" }, { status: 409 });
     }
-
-    await client.query("COMMIT");
     const response = NextResponse.json(
       {
         success: true,
@@ -200,10 +134,8 @@ export async function POST(request: NextRequest) {
     setSessionCookie(response, userId);
     return response;
   } catch (error) {
-    if (client) {
-      await client.query("ROLLBACK").catch((rollbackError: unknown) => {
-        console.error("Registration rollback error:", rollbackError);
-      });
+    if (error && typeof error === "object" && "code" in error && error.code === "22023") {
+      return NextResponse.json({ success: false, message: "Choose an active city and valid registration details" }, { status: 400 });
     }
 
     if (error instanceof AuthConfigurationError) {
@@ -218,7 +150,5 @@ export async function POST(request: NextRequest) {
       { success: false, message: "Unable to create the account" },
       { status: 500 }
     );
-  } finally {
-    client?.release();
   }
-}
+});

@@ -1,10 +1,11 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { connection, NextRequest, NextResponse } from "next/server";
 import {
   AuthConfigurationError,
   getAuthenticatedUser,
 } from "../../../../lib/auth";
 
-export async function GET(request: NextRequest) {
+export const GET = withDatabaseContext(async function GET(request: NextRequest) {
   await connection();
 
   try {
@@ -24,4 +25,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

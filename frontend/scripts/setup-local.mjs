@@ -18,11 +18,11 @@ if ((process.env.AUTH_SECRET ?? "").length < 32) {
   console.log("Configured a local authentication secret; database settings preserved.");
 }
 
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const client = new pg.Client({ connectionString: process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
 try {
   await client.connect();
   // These additive scripts preserve existing inventory and accounts.
-  for (const file of ["14_advanced_database_features.sql", "15_create_listing_embeddings.sql", "16_create_marketplace_interactions.sql", "17_add_customer_offers.sql", "18_add_offer_contact_status.sql", "19_create_fuel_economy_references.sql"]) {
+  for (const file of ["14_advanced_database_features.sql", "15_create_listing_embeddings.sql", "16_create_marketplace_interactions.sql", "17_add_customer_offers.sql", "18_add_offer_contact_status.sql", "19_create_fuel_economy_references.sql", "20_database_access_control.sql"]) {
     await client.query(await readFile(new URL(`../../database/schema/${file}`, import.meta.url), "utf8"));
     console.log(`Applied ${file}`);
   }

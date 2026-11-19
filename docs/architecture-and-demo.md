@@ -41,9 +41,7 @@ Chen ER diagrams with rectangles, relationship diamonds, attribute ovals,
 underlined primary keys and (min,max) participation, followed by separate
 relational schemas with attribute compartments and child-FK to parent-PK arrows.
 
-See [Course ER diagrams and mapping rules](course-er-mapping.md) for all six
-modules and the [printable diagram PDF](../output/pdf/AutoHubIQ_ER_and_Relational_Mapping.pdf).
-The modules cover all fourteen tables and thirteen FK relationships. The
+See [ER diagram and mapping rules](course-er-mapping.md), the [single-page ER diagram](../output/pdf/AutoHubIQ_Complete_ER.pdf) and the [single-page relational diagram](../output/pdf/AutoHubIQ_ER_to_Relational.pdf). Together they cover all 15 tables and 14 foreign-key relationships. The
 [typed relational schema and dictionary](relational-schema.md) remains the
 source for exact column types, nullability, uniqueness, CHECKs and indexes.
 
@@ -167,5 +165,8 @@ See the dated [completion audit](completion-audit.md) for rubric status,
 verification results and final submission tasks. Dealer analytics describe
 inventory and asking prices, not confirmed sales. Admin functionality is dealer
 verification, not general account management. Roles are stored in PostgreSQL
-and enforced in authenticated API queries; no end-user PostgreSQL RLS/GRANT
-implementation is claimed.
+and enforced in authenticated API queries and PostgreSQL RLS policies. Schema 20
+adds explicit GRANT/REVOKE permissions and guarded service functions; the web
+application uses a non-owner restricted login. The server supplies transaction-local
+identity only after validating the signed session. See frontend/README.md for
+setup and database/queries/30_database_permissions.sql for the live privilege report.

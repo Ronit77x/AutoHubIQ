@@ -8,11 +8,11 @@ const nextEnv = require('@next/env');
 const pg = require('pg');
 const root = new URL('../../', import.meta.url);
 nextEnv.loadEnvConfig(new URL('frontend/', root).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
-const source = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const source = new pg.Client({ connectionString: (process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL), connectionTimeoutMillis: 5000 });
 const database = `autohubiq_audit_${randomBytes(8).toString('hex')}`;
-const targetUrl = new URL(process.env.DATABASE_URL);
+const targetUrl = new URL((process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL));
 targetUrl.pathname = `/${database}`;
-const admin = new pg.Client({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 5000 });
+const admin = new pg.Client({ connectionString: (process.env.DATABASE_ADMIN_URL ?? process.env.DATABASE_URL), connectionTimeoutMillis: 5000 });
 let target, created = false;
 const catalog = async client => ({
   columns: (await client.query(`SELECT c.relname AS table_name, a.attname AS column_name,

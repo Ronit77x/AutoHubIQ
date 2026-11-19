@@ -1,7 +1,8 @@
+import { withDatabaseContext } from "../../../../lib/db";
 import { NextRequest } from "next/server";
 import { pool } from "../../../../lib/db";
 
-export async function GET(_request: NextRequest, { params }: { params: Promise<{ imageId: string }> }) {
+export const GET = withDatabaseContext(async function GET(_request: NextRequest, { params }: { params: Promise<{ imageId: string }> }) {
   const { imageId } = await params;
   if (!/^[1-9]\d{0,14}$/.test(imageId)) return new Response(null, { status: 404 });
   try {
@@ -14,4 +15,4 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
   } catch {
     return new Response(null, { status: 503 });
   }
-}
+});

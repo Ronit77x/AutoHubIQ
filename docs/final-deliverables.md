@@ -6,7 +6,8 @@ Reviewed 18 November 2026. Semester 5, Section I. Ronit Prasad (PES1UG24CS549) a
 
 - [Formal project report](../output/pdf/AutoHubIQ_Project_Report.pdf): the canonical report, with rubric alignment, joint contributions, implementation evidence and full diagram/data-dictionary appendices.
 - [Editable report source](../output/source/AutoHubIQ_Project_Report.md): the same report in Markdown; replaces the redundant draft copy.
-- [ER diagrams and ER-to-relational mapping](../output/pdf/AutoHubIQ_ER_and_Relational_Mapping.pdf): twelve title-and-diagram sheets, grouped into six paired modules. These also appear in the formal report.
+- [ER diagram](../output/pdf/AutoHubIQ_Complete_ER.pdf): one complete Chen diagram.
+- [ER-to-relational diagram](../output/pdf/AutoHubIQ_ER_to_Relational.pdf): one sheet with all tables and connected foreign keys.
 
 ## Implementation and supporting evidence
 

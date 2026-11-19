@@ -1,8 +1,9 @@
+import { withDatabaseContext } from "../../../lib/db";
 import { connection, NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUser } from "../../../lib/auth";
 import { pool } from "../../../lib/db";
 
-export async function GET(request: NextRequest) {
+export const GET = withDatabaseContext(async function GET(request: NextRequest) {
   await connection();
   try {
     const user = await getAuthenticatedUser(request);
@@ -26,4 +27,4 @@ export async function GET(request: NextRequest) {
     console.error("Buyer offers failed:", error);
     return NextResponse.json({ message: "Unable to load your offers" }, { status: 500 });
   }
-}
+});

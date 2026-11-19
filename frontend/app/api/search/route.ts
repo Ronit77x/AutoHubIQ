@@ -1,3 +1,4 @@
+import { withDatabaseContext } from "../../../lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { embedText } from "../../../lib/embeddings";
 import { pool } from "../../../lib/db";
@@ -21,7 +22,7 @@ const TRANSMISSIONS = [
   "Single-speed",
 ];
 
-export async function POST(request: NextRequest) {
+export const POST = withDatabaseContext(async function POST(request: NextRequest) {
   let parsedBody: unknown;
 
   try {
@@ -222,4 +223,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

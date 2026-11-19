@@ -99,6 +99,62 @@ service. This storage choice is intended for the small college demo.
 
 ## Account and role workflows
 
+### Database enforced permissions
+
+Run `npm.cmd run db:security` once against the existing local database after
+the schema and seed data are installed. It applies
+`database/schema/20_database_access_control.sql`, creates a restricted
+`autohubiq_app` PostgreSQL login, and updates the ignored `.env.local`:
+
+- `DATABASE_URL` is the restricted login used by all website requests.
+- `DATABASE_ADMIN_URL` retains the original maintenance connection for migrations,
+  seeds, demo provisioning and isolated tests. Never expose it to the browser.
+
+Restart `npm.cmd run dev` after configuration changes. On another checkout,
+configure `DATABASE_ADMIN_URL` with the owner connection before running
+`db:security`. Existing runtime passwords are not silently reset on reruns.
+The API refuses a superuser, BYPASSRLS, schema-owning or administrative connection.
+
+The `autohubiq_runtime` NOLOGIN role receives explicit schema/table/column
+`GRANT` permissions. It has no direct password-hash reads, account-role updates,
+listing deletion, DDL or rate-limit-table access. Row-level security applies
+application roles from `app.users` and record ownership to the permitted SQL:
+customers read their own interactions and edit eligible own offers; dealers
+publish only for their verified dealership and manage their own inventory;
+admins review/verify dealerships and can withdraw listings. A dealer may update
+an existing own price or non-active status without verification, matching the API.
+Field-sensitive triggers restrict dealer offer updates to marking contacted and
+customer updates to offer amount/message/phone. Public catalogue and active
+listing reads stay available. Both views use `security_invoker` so they cannot
+bypass base-table policies using their owner's privileges.
+
+Every API handler has a separate AsyncLocalStorage identity. Only a verified
+signed session supplies `app.user_id`; PostgreSQL looks up its current role and
+account status. Each query/transaction uses `SET LOCAL` via `set_config`, so
+commit/rollback clears identity before connection reuse. The backend and its
+database credential are a trusted boundary: possession of the runtime password
+allows setting that context. Never provide direct SQL/database credentials to
+website users or accept an identity from an unverified request field.
+
+Narrow SECURITY DEFINER functions support account registration, login lookup,
+rate limiting and safe offer row locking. They have fixed trusted search paths
+and explicit EXECUTE grants with PUBLIC access revoked. Registration cannot
+create admins. Public API responses never contain password hashes.
+
+To inspect the actual grants and policies in pgAdmin, run
+`database/queries/30_database_permissions.sql`. The account/action query is a
+descriptive report; PostgreSQL enforcement is implemented in schema 20.
+
+```powershell
+npm.cmd run test:security
+npm.cmd run test:workflow
+npm.cmd run db:check
+```
+
+The first two commands create disposable databases and restricted test logins,
+then remove them. Maintenance credentials need database/role creation rights.
+The existing ER entities, columns, PKs and FKs are unchanged by schema 20.
+
 - Customers and dealers register at `/account`. Passwords are stored as salted
   scrypt hashes. Session cookies are signed, `HttpOnly`, `SameSite=Lax`, and
   expire after seven days.
@@ -245,13 +301,13 @@ formal report, editable source, course ER/mapping diagrams and SQL evidence.
 Member details and the joint contribution statement are populated. Current
 application screenshots remain a separate student review task.
 
-The workflow regression creates a randomly named temporary database using the configured database
-role, applies the schemas and seeds, starts an isolated server on port 3101,
+The workflow regression creates a randomly named temporary database using DATABASE_ADMIN_URL, applies the schemas and seeds,
+creates a restricted test login, starts an isolated server on port 3101,
 and tests registration, admin verification, publishing, image validation and
 limits, buyer enquiries, ownership checks, filters, pagination, semantic search,
 listing status changes, and rate limiting. It removes its temporary database
-and stops its server afterward. The configured role therefore needs permission
-to create databases. Existing demo accounts and inventory are not used for test
+and stops its server afterward. The maintenance role therefore needs permission
+to create databases and restricted test roles. Existing demo accounts and inventory are not used for test
 writes. Run `db:embed` first so the seeded search vectors are available.
 
 This is a local college demo. Public deployment still needs an operator-chosen
@@ -271,7 +327,7 @@ contacted or the listing becomes unavailable. Only the customer's own amount,
 message and phone are editable; old offers remain visible. Dealer contact status
 is entered manually and does not detect external email/calls. Inventory
 analytics use asking prices; no confirmed-sales ledger, general user-management
-UI, or PostgreSQL end-user RLS/GRANT implementation is claimed.
+UI is claimed. PostgreSQL permissions and RLS are implemented by schema 20.
 
 Validation on 15 November 2026: auth tests, lint, isolated production build,
 93 workflow HTTP checks, 22 GET-only city/detail checks, live/fresh schema
