@@ -123,8 +123,14 @@ export async function POST(request: NextRequest) {
     const limited = await rateLimit("semantic-search", 120, 60);
     if (limited) return limited;
     const intent = parseSearchIntent(query);
+    const effectiveFuel = fuelType ?? intent.fuel;
+    // Explicit EV/CNG/LPG requests compare like units. A generic mileage query
+    // compares kmpl only; range per charge must never outrank km per litre.
+    const economyUnit = intent.minFuelEconomy !== null ? "kmpl"
+      : typeof effectiveFuel === "string" && effectiveFuel.toLowerCase() === "electric" ? "km/charge"
+      : typeof effectiveFuel === "string" && effectiveFuel.toLowerCase() === "cng" ? "km/kg" : "kmpl";
     const effectiveMaxPrice = Math.min(typeof maxPrice === "number" ? maxPrice : Infinity, intent.maxPrice ?? Infinity);
-    const embedding = await embedText(query);
+    const embedding = await embedText(intent.semanticQuery);
     const vector = `[${embedding.join(",")}]`;
     const result = await pool.query(
       `
@@ -139,6 +145,7 @@ export async function POST(request: NextRequest) {
         ald.vehicle_id,
         ald.manufacturing_year,
         ald.kms_driven,
+        to_jsonb(fe) AS fuel_economy,
         ald.colour,
         ald.ownership_count,
         ald.condition,
@@ -154,6 +161,9 @@ export async function POST(request: NextRequest) {
       FROM app.listing_embeddings embedding
       JOIN app.active_listing_details ald
         ON ald.listing_id = embedding.listing_id
+      JOIN app.vehicles search_vehicle ON search_vehicle.vehicle_id = ald.vehicle_id
+      LEFT JOIN app.fuel_economy_references fe
+        ON fe.variant_id = search_vehicle.variant_id AND fe.model_year = ald.manufacturing_year
       LEFT JOIN LATERAL (
         SELECT json_agg(
           json_build_object(
@@ -170,20 +180,35 @@ export async function POST(request: NextRequest) {
         AND ($3::NUMERIC IS NULL OR ald.asking_price <= $3)
         AND ($4::TEXT IS NULL OR LOWER(ald.fuel_type) = LOWER($4))
         AND ($5::TEXT IS NULL OR LOWER(ald.transmission) = LOWER($5))
-        AND ($8::TEXT IS NULL OR LOWER(ald.body_type) = LOWER($8))
+        AND ($8::TEXT[] IS NULL OR ald.body_type = ANY($8::TEXT[]))
+        AND ($10::INT IS NULL OR EXISTS (
+          SELECT 1 FROM app.vehicles v
+          JOIN app.vehicle_variants vv ON vv.variant_id = v.variant_id
+          WHERE v.vehicle_id = ald.vehicle_id AND vv.seating_capacity >= $10
+        ))
         AND ($9::TEXT IS NULL OR
           ($9 = 'automatic' AND ald.transmission IN ('Automatic', 'AMT', 'CVT', 'DCT', 'Single-speed')) OR
           ($9 = 'manual' AND ald.transmission = 'Manual'))
-      ORDER BY embedding.embedding <=> $1::vector, ald.listing_id
+        AND (NOT $11::BOOLEAN OR fe.unit = $14::TEXT)
+        AND ($12::NUMERIC IS NULL OR (fe.unit = 'kmpl' AND fe.value_low >= $12))
+      ORDER BY
+        CASE WHEN $13::TEXT = 'asc' THEN ald.kms_driven END ASC,
+        CASE WHEN $13::TEXT = 'desc' THEN ald.kms_driven END DESC,
+        CASE WHEN $11::BOOLEAN THEN fe.value_low END DESC NULLS LAST,
+        embedding.embedding <=> $1::vector, ald.listing_id
       LIMIT $6 OFFSET $7;
       `,
-      [vector, cityId ?? null, Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuelType ?? intent.fuel, transmission ?? null, pageSize + 1, (page - 1) * pageSize, intent.bodyType, transmission ? null : intent.transmissionGroup]
+      [vector, cityId ?? null, Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, effectiveFuel, transmission ?? null, pageSize + 1, (page - 1) * pageSize, intent.bodyTypes, transmission ? null : intent.transmissionGroup, intent.minSeats, intent.fuelEconomyFirst, intent.minFuelEconomy, intent.distanceOrder, economyUnit]
     );
 
     return NextResponse.json({
       success: true,
       query,
-      applied_filters: { city_id: cityId ?? null, max_price: Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuel_type: fuelType ?? intent.fuel, transmission: transmission ?? intent.transmissionGroup, body_type: intent.bodyType },
+      ranking: intent.distanceOrder ? `distance_${intent.distanceOrder}` : intent.fuelEconomyFirst ? "fuel_economy_desc" : "semantic",
+      ranking_note: intent.distanceOrder ? "Ordered by total distance driven (odometer kilometres)."
+        : intent.fuelEconomyFirst
+          ? `Higher reference ${economyUnit} first, using the lower end of reference ranges. Model figures, not measurements of each used car. Only references in the same unit are compared.` : null,
+      applied_filters: { city_id: cityId ?? null, max_price: Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuel_type: fuelType ?? intent.fuel, transmission: transmission ?? intent.transmissionGroup, body_type: intent.bodyType, body_types: intent.bodyTypes, min_seats: intent.minSeats, min_fuel_economy_kmpl: intent.minFuelEconomy },
       count: Math.min(result.rows.length, pageSize),
       page,
       has_more: result.rows.length > pageSize,

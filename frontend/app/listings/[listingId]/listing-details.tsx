@@ -3,6 +3,8 @@
 import Link from "next/link";
 import VehicleGallery from "../../../components/vehicle-gallery";
 import EnquiryForm from "../../../components/enquiry-form";
+import FuelEconomy from "../../../components/fuel-economy";
+import type { FuelEconomyReference } from "../../../lib/fuel-economy";
 import { useEffect, useState } from "react";
 import { ArrowLeft, CarFront, Fuel, Gauge, MapPin, Settings2 } from "lucide-react";
 
@@ -20,6 +22,7 @@ interface Listing {
   manufacturing_year: number;
   registration_year: number | null;
   kms_driven: number;
+  fuel_economy: FuelEconomyReference | null;
   colour: string | null;
   ownership_count: number;
   condition: string;
@@ -184,7 +187,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <Specification label="Year" value={String(listing.manufacturing_year)} icon={<CarFront size={18} />} />
             <Specification label="Registration year" value={listing.registration_year ? String(listing.registration_year) : "Not provided"} />
-            <Specification label="Kilometres driven" value={`${listing.kms_driven.toLocaleString("en-IN")} km`} icon={<Gauge size={18} />} />
+            <Specification label="Distance driven" value={`${listing.kms_driven.toLocaleString("en-IN")} km`} icon={<Gauge size={18} />} />
             <Specification label="Fuel" value={listing.fuel_type} icon={<Fuel size={18} />} />
             <Specification label="Transmission" value={listing.transmission} icon={<Settings2 size={18} />} />
             <Specification label="Body type" value={listing.body_type} />
@@ -202,6 +205,11 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
             />
             <Specification label="Seating capacity" value={`${listing.seating_capacity}`} />
           </div>
+        </section>
+
+        <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">
+          <h2 className="text-xl font-semibold">Mileage and efficiency</h2>
+          <div className="mt-4"><FuelEconomy reference={listing.fuel_economy} electric={listing.fuel_type === "Electric"} detailed /></div>
         </section>
 
         <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">

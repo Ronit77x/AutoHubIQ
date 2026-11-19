@@ -63,6 +63,8 @@ export async function GET(request: NextRequest) {
         v.vehicle_id,
         v.manufacturing_year,
         v.kms_driven,
+        to_jsonb(fe) AS fuel_economy,
+        vv.fuel_type,
         v.colour,
         v.condition,
         vv.variant_name,
@@ -74,6 +76,8 @@ export async function GET(request: NextRequest) {
         ON v.vehicle_id = vl.vehicle_id
       JOIN app.vehicle_variants vv
         ON vv.variant_id = v.variant_id
+      LEFT JOIN app.fuel_economy_references fe
+        ON fe.variant_id = v.variant_id AND fe.model_year = v.manufacturing_year
       JOIN app.vehicle_models vm
         ON vm.model_id = vv.model_id
       JOIN app.manufacturers m

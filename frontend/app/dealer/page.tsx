@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import WorkspaceHeader from "../../components/workspace-header";
+import FuelEconomy from "../../components/fuel-economy";
+import type { FuelEconomyReference } from "../../lib/fuel-economy";
 
 interface DealerProfile {
   dealership_name: string;
@@ -23,6 +25,8 @@ interface DealerListing {
   listing_status: string;
   manufacturing_year: number;
   kms_driven: number;
+  fuel_economy: FuelEconomyReference | null;
+  fuel_type: string;
   colour: string | null;
   condition: string;
   variant_name: string;
@@ -384,7 +388,7 @@ export default function DealerPage() {
                 />
               </label>
               <label className="space-y-2 text-sm font-semibold">
-                Kilometres driven
+                Distance driven (km)
                 <input
                   className={inputClass}
                   name="kms_driven"
@@ -525,8 +529,9 @@ export default function DealerPage() {
                     </h3>
                     <p className="text-sm text-slate-500">
                       {listing.variant_name} · {listing.manufacturing_year} ·{" "}
-                      {listing.kms_driven.toLocaleString("en-IN")} km
+                      Distance driven: {listing.kms_driven.toLocaleString("en-IN")} km
                     </p>
+                    <div className="mt-3"><FuelEconomy reference={listing.fuel_economy} electric={listing.fuel_type === "Electric"} /></div>
                     <p className="mt-2 text-sm font-semibold capitalize text-slate-700">
                       {listing.listing_status.replace("_", " ")} ·{" "}
                       {listing.condition.replace("_", " ")}

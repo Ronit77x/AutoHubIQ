@@ -28,6 +28,7 @@ export async function GET(
         v.manufacturing_year,
         v.registration_year,
         v.kms_driven,
+        to_jsonb(fe) AS fuel_economy,
         v.colour,
         v.ownership_count,
         v.condition,
@@ -55,6 +56,8 @@ export async function GET(
         ON vl.vehicle_id = v.vehicle_id
       JOIN app.vehicle_variants vv
         ON v.variant_id = vv.variant_id
+      LEFT JOIN app.fuel_economy_references fe
+        ON fe.variant_id = v.variant_id AND fe.model_year = v.manufacturing_year
       JOIN app.vehicle_models vm
         ON vv.model_id = vm.model_id
       JOIN app.manufacturers m

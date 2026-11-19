@@ -4,6 +4,8 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import FuelEconomy from "../components/fuel-economy";
+import type { FuelEconomyReference } from "../lib/fuel-economy";
 import {
   CarFront,
   MapPin,
@@ -35,6 +37,7 @@ interface Listing {
   description: string;
   manufacturing_year: number;
   kms_driven: number;
+  fuel_economy: FuelEconomyReference | null;
   colour: string;
   ownership_count: number;
   condition: string;
@@ -61,6 +64,7 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<Listing[] | null>(null);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState("");
+  const [rankingNote, setRankingNote] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [fuelType, setFuelType] = useState("");
   const [transmission, setTransmission] = useState("");
@@ -151,6 +155,7 @@ export default function Home() {
         if (!response.ok || !data.success) throw new Error(data.message ?? "Could not load listings");
 
         setHasMore(data.has_more);
+        setRankingNote(data.ranking_note ?? null);
         if (filters.query) setSearchResults(data.listings);
         else { setListings(data.listings); setSearchResults(null); }
       } catch (failure) {
@@ -284,7 +289,7 @@ export default function Home() {
                 onChange={(event) => setSearchQuery(event.target.value)}
                 minLength={3}
                 maxLength={500}
-                placeholder="e.g. automatic SUV under 15 lakh"
+                placeholder="e.g. small automatic car under 8 lakh"
                 className="min-w-0 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-accent-500"
               />
               <label className="text-xs font-semibold text-neutral-600" htmlFor="semantic-max-price">
@@ -320,9 +325,9 @@ export default function Home() {
               </label>
               <label className="text-sm font-semibold text-slate-700">Sort
                 <select value={sort} onChange={event => setSort(event.target.value)} disabled={Boolean(searchQuery.trim())} className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 font-normal disabled:opacity-60">
-                  <option value="newest">Newest first</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="mileage_asc">Lowest mileage</option>
+                  <option value="newest">Newest first</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="distance_asc">Distance driven: low to high</option><option value="fuel_economy_desc">Fuel economy: high to low (kmpl)</option>
                 </select>
-                {searchQuery.trim() && <span className="mt-1 block text-xs font-normal">Semantic results use relevance order.</span>}
+                {searchQuery.trim() && <span className="mt-1 block text-xs font-normal">Descriptions use relevance, or fuel economy / distance order when requested in your search.</span>}
               </label>
               {searchError && (
                 <p className="text-sm text-red-700 ">{searchError}</p>
@@ -340,6 +345,7 @@ export default function Home() {
             <div className="min-w-0">
 
             {error && <p role="alert" className="mb-5 text-red-700">{error}</p>}
+            {searchResults !== null && rankingNote && <p className="mb-4 rounded-lg bg-accent-50 p-3 text-sm text-gray-600">{rankingNote}</p>}
             {searching || loadingListings ? (
               <p className="py-16 text-center text-gray-500">
                 {searching
@@ -441,9 +447,10 @@ export default function Home() {
                           )}
 
                           <div className="my-5 grid grid-cols-2 gap-4 border-y border-gray-100 py-4 text-sm text-gray-600">
+                            <div className="col-span-2"><FuelEconomy reference={car.fuel_economy} electric={car.fuel_type === "Electric"} /></div>
                             <div className="flex items-center gap-2">
                               <Gauge size={17} className="text-accent-600" />
-                              {car.kms_driven.toLocaleString("en-IN")} km
+                              <span><span className="block text-xs text-gray-500">Distance driven</span>{car.kms_driven.toLocaleString("en-IN")} km</span>
                             </div>
 
                             <div className="flex items-center gap-2">

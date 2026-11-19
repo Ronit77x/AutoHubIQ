@@ -32,6 +32,8 @@ export async function GET(request: NextRequest) {
       price_asc: "vl.asking_price ASC, vl.listing_id DESC",
       price_desc: "vl.asking_price DESC, vl.listing_id DESC",
       mileage_asc: "v.kms_driven ASC, vl.listing_id DESC",
+      distance_asc: "v.kms_driven ASC, vl.listing_id DESC",
+      fuel_economy_desc: "CASE WHEN fe.unit = 'kmpl' THEN fe.value_low END DESC NULLS LAST, vl.listing_id DESC",
     };
     if (cityId > 32767 || !Number.isInteger(page) || page < 1 || page > 10000 || !Number.isInteger(pageSize) || pageSize < 1 || pageSize > 48 ||
       (maxPrice !== null && (!Number.isFinite(maxPrice) || maxPrice <= 0)) ||
@@ -52,6 +54,7 @@ export async function GET(request: NextRequest) {
         v.vehicle_id,
         v.manufacturing_year,
         v.kms_driven,
+        to_jsonb(fe) AS fuel_economy,
         v.colour,
         v.ownership_count,
         v.condition,
@@ -71,6 +74,9 @@ export async function GET(request: NextRequest) {
 
       JOIN app.vehicle_variants vv
         ON v.variant_id = vv.variant_id
+
+      LEFT JOIN app.fuel_economy_references fe
+        ON fe.variant_id = v.variant_id AND fe.model_year = v.manufacturing_year
 
       JOIN app.vehicle_models vm
         ON vv.model_id = vm.model_id

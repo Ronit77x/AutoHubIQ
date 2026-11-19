@@ -119,6 +119,31 @@ service. This storage choice is intended for the small college demo.
 
 ## Semantic vehicle search
 
+Distance driven is the odometer reading (`kms_driven`), shown in km. Mileage /
+fuel economy is a separate researched model reference shown in kmpl; EVs show
+range in km per full charge. Cards, detail pages and dealer inventory link to
+the source. These references are not measurements of the individual used car.
+
+Apply the additive reference table and the researched demo data with:
+
+```powershell
+npm.cmd run db:economy
+```
+
+`setup:local` also applies these references. The seed matches manufacturer,
+model, catalogue variant and manufacturing year; unmatched cars show
+"Not available". The generic demo variants do not identify every engine/trim,
+so some references are ranges. Source URLs, reference trims, notes and the
+review date are retained in `app.fuel_economy_references`.
+
+"High mileage", "good mileage" and "fuel efficient" prioritize higher
+reference kmpl, using the lower end of a range for conservative comparisons.
+"At least 20 kmpl" filters using that same lower bound. These operations run
+in PostgreSQL before pagination. Generic kmpl requests exclude EV range and
+km/kg; an explicit EV request compares range per charge instead.
+"Low mileage" / "less driven" sort by lower odometer distance, while
+"high kilometres" / "high distance driven" sort by higher odometer distance.
+
 Search uses the `onnx-community/all-MiniLM-L6-v2-ONNX` model through
 Transformers.js and PostgreSQL `pgvector`. Embeddings are 384-dimensional and
 normalized. The model runs locally after its model files are downloaded the
