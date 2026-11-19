@@ -209,7 +209,7 @@ export default function ListingDetails({ listingId }: { listingId: string }) {
 
         <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">
           <h2 className="text-xl font-semibold">Mileage and efficiency</h2>
-          <div className="mt-4"><FuelEconomy reference={listing.fuel_economy} electric={listing.fuel_type === "Electric"} detailed /></div>
+          <div className="mt-4"><FuelEconomy reference={listing.fuel_economy} electric={listing.fuel_type === "Electric"} /></div>
         </section>
 
         <section className="mt-8 rounded-xl border border-gray-200 bg-white p-6">

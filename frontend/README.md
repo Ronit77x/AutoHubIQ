@@ -121,8 +121,9 @@ service. This storage choice is intended for the small college demo.
 
 Distance driven is the odometer reading (`kms_driven`), shown in km. Mileage /
 fuel economy is a separate researched model reference shown in kmpl; EVs show
-range in km per full charge. Cards, detail pages and dealer inventory link to
-the source. These references are not measurements of the individual used car.
+range in km per full charge. Cards, detail pages and dealer inventory show
+the mileage value without source links or research notes. References and
+their sources remain stored internally; they are not measurements of the individual used car.
 
 Apply the additive reference table and the researched demo data with:
 

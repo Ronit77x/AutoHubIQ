@@ -207,7 +207,7 @@ export async function POST(request: NextRequest) {
       ranking: intent.distanceOrder ? `distance_${intent.distanceOrder}` : intent.fuelEconomyFirst ? "fuel_economy_desc" : "semantic",
       ranking_note: intent.distanceOrder ? "Ordered by total distance driven (odometer kilometres)."
         : intent.fuelEconomyFirst
-          ? `Higher reference ${economyUnit} first, using the lower end of reference ranges. Model figures, not measurements of each used car. Only references in the same unit are compared.` : null,
+          ? `Sorted by ${economyUnit === "km/charge" ? "range per charge" : "mileage (" + economyUnit + ")"}, highest first.` : null,
       applied_filters: { city_id: cityId ?? null, max_price: Number.isFinite(effectiveMaxPrice) ? effectiveMaxPrice : null, fuel_type: fuelType ?? intent.fuel, transmission: transmission ?? intent.transmissionGroup, body_type: intent.bodyType, body_types: intent.bodyTypes, min_seats: intent.minSeats, min_fuel_economy_kmpl: intent.minFuelEconomy },
       count: Math.min(result.rows.length, pageSize),
       page,
